@@ -19,6 +19,8 @@ Install from source:
 
 ## Developing
 
+The [node-pre-gyp](https://github.com/mapbox/node-pre-gyp#usage) tool is used to handle building from source and packaging.
+
 To recompile only the C++ files that have changed, first put `node-gyp` and `node-pre-gyp` on your PATH:
 
     export PATH=`npm explore npm -g -- pwd`/bin/node-gyp-bin:./node_modules/.bin:${PATH}
