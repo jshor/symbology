@@ -4,6 +4,11 @@ node_js:
   - "0.10"
   - "0.8"
 
+env:
+  global:
+   - secure: bKjyTiUGN568Ryr+JIqs2DxBnSE9EKQlf09wHAlbeonTQYm5u7PfkBryizddquJX3lXTfiIdXcsMM17Gr9osHSN3SQxCTYnJgHOZ+4eUmx62nv9G/I1Xt2DpR4vtfIcMjJ3cfbpHDgP6dwB3qysv5JDSb6Xhn++vt7O1ekTJhOE=
+   - secure: hh5aZtl3nrDiS7tTk6PgZtAc4p3/48j6Ob3O/dhfxyMHXD8JmmU7UxiAs3RucPrcANw9tsLnqB9Z2ETTax9G7Gkiii6UmG8+V6+KTWYWouG4deLFn+2kUc14f3MtJOnuEVwfwfRFUAM6P03PoWTxoOzFxkRefO8kY9wXdQfGmMc=
+
 before_install:
 # get commit message
 - COMMIT_MESSAGE=$(git show -s --format=%B $TRAVIS_COMMIT | tr -d '\n')
