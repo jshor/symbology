@@ -14,7 +14,7 @@
         "host"        : "https://node-pre-gyp-tests.s3-us-west-1.amazonaws.com"
     },
     "dependencies"  : {
-      "node-pre-gyp": "https://github.com/springmeyer/node-pre-gyp/tarball/master"
+      "node-pre-gyp": "0.5.x"
     },
     "bundledDependencies":["node-pre-gyp"],
     "scripts": {
