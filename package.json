@@ -1,0 +1,23 @@
+{
+    "name" : "node-addon-example",
+    "version" : "0.1.0",
+    "description" :"Hello world app packaged with node-pre-gyp",
+    "main" : "./index.js",
+    "author" : "Dane Springmeyer <springmeyer>",
+    "repository"   :  {
+       "type" : "git",
+       "url"  : "git://github.com/springmeyer/node-addon-example.git"
+    },
+    "binary": {
+        "module_name" : "node_addon_example",
+        "module_path" : "./lib/binding/",
+        "host"        : "https://node-pre-gyp-tests.s3-us-west-1.amazonaws.com"
+    },
+    "dependencies"  : {
+      "node-pre-gyp": "https://github.com/springmeyer/node-pre-gyp/tarball/master"
+    },
+    "bundledDependencies":["node-pre-gyp"],
+    "scripts": {
+        "install" : "node-pre-gyp install --fallback-to-build"
+    }
+}
