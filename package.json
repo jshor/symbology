@@ -10,7 +10,9 @@
     },
     "binary": {
         "module_name" : "node_addon_example",
-        "module_path" : "./lib/binding/",
+        "module_path" : "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
+        "remote_path" : "./{module_name}/v{version}/{configuration}/",
+        "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
         "host"        : "https://node-pre-gyp-tests.s3-us-west-1.amazonaws.com"
     },
     "dependencies"  : {
@@ -18,6 +20,7 @@
     },
     "bundledDependencies":["node-pre-gyp"],
     "scripts": {
-        "install" : "node-pre-gyp install --fallback-to-build"
+        "install" : "node-pre-gyp install --fallback-to-build",
+        "test": "node index.js"
     }
 }
