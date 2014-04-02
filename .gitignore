@@ -10,7 +10,8 @@ lib-cov
 pids
 logs
 results
-
+lib/binding
+*.tgz
 npm-debug.log
 node_modules
 build
