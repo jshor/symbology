@@ -1,0 +1,9 @@
+node_modules
+lib/binding
+build
+test
+*.tgz
+npm-debug.log
+.npmignore
+.gitignore
+.travis.yml
