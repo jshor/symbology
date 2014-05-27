@@ -5,7 +5,7 @@ Sample application of a Node C++ addon packaged with [node-pre-gyp](https://gith
 
 If you are interested in learning how to write C++ addons see the [official guide](http://nodejs.org/api/addons.html#addons_hello_world).
 
-This repo is meant to be copied from as start code for your own C++ module. And the docs below are meant to be a template for how you might document your module once packaged with `node-pre-gyp`.
+This repo is intended as starter code for your own C++ module - feel free to copy and modify. The docs below are meant to be a template for how you might document your module once packaged with `node-pre-gyp`.
 
 ## Depends
 
