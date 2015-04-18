@@ -36,7 +36,7 @@
 	"lib/upcean.c"
       ],
 	  "libraries": [
-	    "-lpng", "-L vendor/lpng"
+	    "-lpng", "-L lpng"
 	  ]
     }
   ]
