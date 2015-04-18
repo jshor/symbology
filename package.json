@@ -1,0 +1,10 @@
+{
+  "name": "zint",
+  "version": "0.0.1",
+  "description": "Generate 1D or 2D barcodes in png or svg.",
+  "main": "./build/Release/zint.node",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "gypfile": true
+}
