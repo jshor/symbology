@@ -67,15 +67,17 @@ const int C16KStopValues[16] = {0, 1, 2, 3, 4, 5, 6, 7, 4, 5, 6, 7, 0, 1, 2, 3};
 
 void grwp16(int *indexliste)
 {
+	int i;
 	/* bring together same type blocks */
 	if(*(indexliste) > 1) {
-		for (int i = 1; i < *indexliste; i++) {
+		for (i = 1; i < *indexliste; i++) {
 			if(list[1][i - 1] == list[1][i]) {
+				int j;
 				/* bring together */
 				list[0][i - 1] = list[0][i - 1] + list[0][i];
 
 				/* decreace the list */
-				for (int j = i + 1 ;j < *indexliste; j++) {
+				for (j = i + 1 ;j < *indexliste; j++) {
 					list[0][j - 1] = list[0][j];
 					list[1][j - 1] = list[1][j];
 				}
@@ -88,9 +90,9 @@ void grwp16(int *indexliste)
 
 void dxsmooth16(int *indexliste)
 { /* Implements rules from ISO 15417 Annex E */
-	int current, last, next, length;
+	int i, current, last, next, length;
 
-	for(int i = 0; i < *indexliste; i++) {
+	for(i = 0; i < *indexliste; i++) {
 		current = list[1][i];
 		length = list[0][i];
 
@@ -441,7 +443,6 @@ int code16k(struct zint_symbol *symbol, uint8_t source[], int length)
 		values[bar_characters] = (7 * (rows_needed - 2)) + m; /* see 4.3.4.2 */
 		bar_characters++;
 	}
-
 	current_set = set[0];
 	f_state = 0; /* f_state remembers if we are in Extended ASCII mode (value 1) or
 	in ISO/IEC 646 mode (value 0) */
@@ -568,7 +569,7 @@ int code16k(struct zint_symbol *symbol, uint8_t source[], int length)
 		}
 		/* printf("tp9 read=%d surrent set=%c\n", read, set[read]); */
 	} while (read < ustrlen(source));
-
+	//int i;
 	pads_needed = 5 - ((bar_characters + 2) % 5);
 	if(pads_needed == 5) {
 		pads_needed = 0;

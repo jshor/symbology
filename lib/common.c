@@ -81,9 +81,10 @@ char itoc(int source)
 /** Converts lower case characters to upper case in a string source[] */
 void to_upper(uint8_t source[])
 {
+	unsigned int i;
 	unsigned int src_len = ustrlen(source);
 
-	for (unsigned int i = 0; i < src_len; i++) {
+	for (i = 0; i < src_len; i++) {
 		if ((source[i] >= 'a') && (source[i] <= 'z')) {
 			source[i] = (source[i] - 'a') + 'A'; }
 	}
@@ -93,10 +94,11 @@ int is_sane(char test_string[], uint8_t source[], int length)
 { /* Verifies that a string only uses valid characters */
 	unsigned int latch;
 	unsigned int lt = strlen(test_string);
+	unsigned int i, j;
 
-	for(unsigned int i = 0; i < length; i++) {
+	for(i = 0; i < length; i++) {
 		latch = FALSE;
-		for(unsigned int j = 0; j < lt; j++) {
+		for(j = 0; j < lt; j++) {
 			if (source[i] == test_string[j]) {
 				latch = TRUE;
 				break;
@@ -112,9 +114,9 @@ int is_sane(char test_string[], uint8_t source[], int length)
 
 int posn(char set_string[], char data)
 { /* Returns the position of data in set_string */
-	unsigned int n = strlen(set_string);
+	unsigned int n = strlen(set_string), i;
 
-	for(unsigned int i = 0; i < n; i++)
+	for(i = 0; i < n; i++)
 		if (data == set_string[i])
 			return i;
 	return 0;
@@ -123,9 +125,9 @@ int posn(char set_string[], char data)
 /** Replaces huge switch statements for looking up in tables */
 void lookup(char set_string[], const char *table[], char data, char dest[])
 {
-	unsigned int n = strlen(set_string);
+	unsigned int n = strlen(set_string), i;
 
-	for(unsigned int i = 0; i < n; i++)
+	for(i = 0; i < n; i++)
 		if (data == set_string[i])
 			concat(dest, table[i]);
 }
@@ -149,14 +151,14 @@ void expand(struct zint_symbol *symbol, char data[])
 { /* Expands from a width pattern to a bit pattern */
 
 	unsigned int reader, n = strlen(data);
-	int writer;
+	int writer, i;
 	char latch;
 
 	writer = 0;
 	latch = '1';
 
 	for(reader = 0; reader < n; reader++) {
-		for(int i = 0; i < ctoi(data[reader]); i++) {
+		for(i = 0; i < ctoi(data[reader]); i++) {
 			if(latch == '1') { set_module(symbol, symbol->rows, writer); }
 			writer++;
 		}

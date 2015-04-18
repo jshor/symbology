@@ -184,11 +184,11 @@ int ps_plot(struct zint_symbol *symbol)
 
 	/* Start writing the header */
 	fprintf(feps, "%%!PS-Adobe-3.0 EPSF-3.0\n");
-	fprintf(feps, "%%%%Creator: Zint %s\n", ZINT_VERSION);
+	fprintf(feps, "%%%%Creator: Node-Zint \n");
 	if(ustrlen(symbol->text) != 0) {
 		fprintf(feps, "%%%%Title: %s\n",symbol->text);
 	} else {
-		fprintf(feps, "%%%%Title: Zint Generated Symbol\n");
+		fprintf(feps, "%%%%Title: Node-Zint Generated Symbol\n");
 	}
 	fprintf(feps, "%%%%Pages: 0\n");
 	if(symbol->symbology != BARCODE_MAXICODE) {

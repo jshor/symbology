@@ -3,7 +3,7 @@
     {
       "target_name": "zint",
       "sources": [ 
-	"cpphello.cpp",
+	"zint.cpp",
 	"lib/2of5.c",
 	"lib/auspost.c",
 	"lib/aztec.c",
