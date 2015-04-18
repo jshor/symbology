@@ -4,3 +4,4 @@ build/
 *.swp
 *.swo
 .directory
+out.png
