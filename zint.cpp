@@ -23,5 +23,5 @@ void init(Handle<Object> exports) {
   NODE_SET_METHOD(exports, "foo", foo);
 }
 
-NODE_MODULE(cpphello, init)
+NODE_MODULE(zint, init)
 
