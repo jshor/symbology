@@ -58,8 +58,8 @@ const char *JapanTable[19] = {"114", "132", "312", "123", "141", "321", "213", "
 int postnet(struct zint_symbol *symbol, uint8_t source[], char dest[], int length)
 {
 	/* Handles the PostNet system used for Zip codes in the US */
-	unsigned int sum, check_digit;
-	int error_number, i;
+	unsigned int i, sum, check_digit;
+	int error_number;
 
 	error_number = 0;
 
