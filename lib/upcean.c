@@ -45,11 +45,12 @@ const char *EANsetB[10] = {"1123", "1222", "2212", "1141", "2311", "1321", "4111
 
 char upc_check(char source[])
 { /* Calculate the correct check digit for a UPC barcode */
-	unsigned int i, count, check_digit;
+	unsigned int count, check_digit;
+	int i;
 
 	count = 0;
 
-	for (i = 0; i < strlen(source); i++) {
+	for (i = 0; i < (int)strlen(source); i++) {
 		count += ctoi(source[i]);
 
 		if (!(i & 1)) {
@@ -102,7 +103,8 @@ void upca(struct zint_symbol *symbol, uint8_t source[], char dest[])
 
 void upce(struct zint_symbol *symbol, uint8_t source[], char dest[])
 { /* UPC E is a zero-compressed version of UPC A */
-	unsigned int i, num_system;
+	unsigned int num_system;
+	int i;
 	char emode, equivalent[12], check_digit, parity[8], temp[8];
 	char hrt[9];
 
@@ -196,7 +198,7 @@ void upce(struct zint_symbol *symbol, uint8_t source[], char dest[])
 	/* start character */
 	concat (dest, "111");
 
-	for(i = 0; i <= ustrlen(source); i++) {
+	for(i = 0; i <= (int)ustrlen(source); i++) {
 		switch(parity[i]) {
 			case 'A': lookup(NEON, EANsetA, source[i], dest); break;
 			case 'B': lookup(NEON, EANsetB, source[i], dest); break;
@@ -215,7 +217,8 @@ void upce(struct zint_symbol *symbol, uint8_t source[], char dest[])
 void add_on(uint8_t source[], char dest[], int mode)
 { /* EAN-2 and EAN-5 add-on codes */
 	char parity[6];
-	unsigned int i, code_type;
+	int i;
+	unsigned int code_type;
 
 	/* If an add-on then append with space */
 	if (mode != 0)
@@ -262,7 +265,7 @@ void add_on(uint8_t source[], char dest[], int mode)
 		strcpy(parity, EAN5Parity[parity_bit]);
 	}
 
-	for(i = 0; i < ustrlen(source); i++)
+	for(i = 0; i < (int)ustrlen(source); i++)
 	{
 		switch(parity[i]) {
 			case 'A': lookup(NEON, EANsetA, source[i], dest); break;
@@ -270,7 +273,7 @@ void add_on(uint8_t source[], char dest[], int mode)
 		}
 
 		/* Glyph separator */
-		if(i != (ustrlen(source) - 1))
+		if(i != (int)(ustrlen(source) - 1))
 		{
 			concat (dest, "11");
 		}
@@ -582,8 +585,8 @@ int eanx(struct zint_symbol *symbol, uint8_t source[], int src_len)
 	/* splits string to parts before and after '+' parts */
 	uint8_t first_part[20] = { 0 }, second_part[20] = { 0 }, dest[1000] = { 0 };
 	uint8_t local_source[20] = { 0 };
-	unsigned int latch, reader, writer, with_addon;
-	int error_number, i;
+	unsigned int latch, writer, with_addon;
+	int error_number, reader, i;
 
 
 	with_addon = FALSE;

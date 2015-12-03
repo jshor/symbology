@@ -1,0 +1,98 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/Cellar/node/5.0.0/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'install' ]
+2 info using npm@3.3.9
+3 info using node@v5.0.0
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readLocalPackageData
+7 silly install normalizeTree
+8 silly loadCurrentTree Finishing
+9 silly loadIdealTree Starting
+10 silly install loadIdealTree
+11 silly cloneCurrentTree Starting
+12 silly install cloneCurrentTreeToIdealTree
+13 silly cloneCurrentTree Finishing
+14 silly loadShrinkwrap Starting
+15 silly install loadShrinkwrap
+16 silly loadShrinkwrap Finishing
+17 silly loadAllDepsIntoIdealTree Starting
+18 silly install loadAllDepsIntoIdealTree
+19 silly loadAllDepsIntoIdealTree Finishing
+20 silly idealTree:prePrune zint@0.0.1
+21 silly loadIdealTree Finishing
+22 silly currentTree zint@0.0.1
+23 silly idealTree zint@0.0.1
+24 silly generateActionsToTake Starting
+25 silly install generateActionsToTake
+26 silly generateActionsToTake Finishing
+27 silly diffTrees action count 0
+28 silly decomposeActions action count 0
+29 silly executeActions Starting
+30 silly install executeActions
+31 silly doSerial global-install 0
+32 silly doParallel fetch 0
+33 verbose lock using /Users/inrhythm019/.npm/_locks/staging-00b2f0950b231185.lock for /Users/inrhythm019/Documents/node-zint/node_modules/.staging
+34 silly doParallel extract 0
+35 silly doParallel preinstall 0
+36 silly doReverseSerial remove 0
+37 silly doSerial move 0
+38 silly doSerial finalize 0
+39 silly doSerial build 0
+40 silly doSerial global-link 0
+41 silly doParallel update-linked 0
+42 silly doSerial install 0
+43 silly doSerial postinstall 0
+44 verbose unlock done using /Users/inrhythm019/.npm/_locks/staging-00b2f0950b231185.lock for /Users/inrhythm019/Documents/node-zint/node_modules/.staging
+45 silly executeActions Finishing
+46 silly rollbackFailedOptional Starting
+47 silly rollbackFailedOptional Finishing
+48 silly runTopLevelLifecycles Starting
+49 silly install runTopLevelLifecycles
+50 silly preinstall zint@0.0.1 /Users/inrhythm019/Documents/node-zint/zint-9c5d26b96c4adb7d18f4db568d8e5cb0
+51 info lifecycle zint@0.0.1~preinstall: zint@0.0.1
+52 silly lifecycle zint@0.0.1~preinstall: no script for preinstall, continuing
+53 silly build zint@0.0.1
+54 info linkStuff zint@0.0.1
+55 silly linkStuff zint@0.0.1 has /Users/inrhythm019/Documents as its parent node_modules
+56 verbose linkBins zint@0.0.1
+57 verbose linkMans zint@0.0.1
+58 silly install zint@0.0.1 /Users/inrhythm019/Documents/node-zint/zint-9c5d26b96c4adb7d18f4db568d8e5cb0
+59 info lifecycle zint@0.0.1~install: zint@0.0.1
+60 verbose lifecycle zint@0.0.1~install: unsafe-perm in lifecycle true
+61 verbose lifecycle zint@0.0.1~install: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/Users/inrhythm019/Documents/node-zint/node_modules/.bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/TeX/texbin
+62 verbose lifecycle zint@0.0.1~install: CWD: /Users/inrhythm019/Documents/node-zint
+63 silly lifecycle zint@0.0.1~install: Args: [ '-c', 'node-gyp rebuild' ]
+64 silly lifecycle zint@0.0.1~install: Returned: code: 1  signal: null
+65 info lifecycle zint@0.0.1~install: Failed to exec install script
+66 warn EPACKAGEJSON zint@0.0.1 No repository field.
+67 warn EPACKAGEJSON zint@0.0.1 No license field.
+68 verbose stack Error: zint@0.0.1 install: `node-gyp rebuild`
+68 verbose stack Exit status 1
+68 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:233:16)
+68 verbose stack     at emitTwo (events.js:87:13)
+68 verbose stack     at EventEmitter.emit (events.js:172:7)
+68 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/spawn.js:24:14)
+68 verbose stack     at emitTwo (events.js:87:13)
+68 verbose stack     at ChildProcess.emit (events.js:172:7)
+68 verbose stack     at maybeClose (internal/child_process.js:818:16)
+68 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)
+69 verbose pkgid zint@0.0.1
+70 verbose cwd /Users/inrhythm019/Documents/node-zint
+71 error Darwin 15.0.0
+72 error argv "/usr/local/Cellar/node/5.0.0/bin/node" "/usr/local/bin/npm" "install"
+73 error node v5.0.0
+74 error npm  v3.3.9
+75 error code ELIFECYCLE
+76 error zint@0.0.1 install: `node-gyp rebuild`
+76 error Exit status 1
+77 error Failed at the zint@0.0.1 install script 'node-gyp rebuild'.
+77 error This is most likely a problem with the zint package,
+77 error not with npm itself.
+77 error Tell the author that this fails on your system:
+77 error     node-gyp rebuild
+77 error You can get their info via:
+77 error     npm owner ls zint
+77 error There is likely additional logging output above.
+78 verbose exit [ 1, true ]
