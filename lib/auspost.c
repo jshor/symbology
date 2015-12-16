@@ -56,7 +56,7 @@ void rs_error(char data_pattern[])
 	char triple[31], inv_triple[31];
 	uint8_t result[5];
 
-	for(reader = 2; reader < strlen(data_pattern); reader += 3, triple_writer++) {
+	for(reader = 2; reader < (int)strlen(data_pattern); reader += 3, triple_writer++) {
 		triple[triple_writer] = convert_pattern(data_pattern[reader], 4)
 			+ convert_pattern(data_pattern[reader + 1], 2)
 			+ convert_pattern(data_pattern[reader + 2], 0);

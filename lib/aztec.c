@@ -62,7 +62,7 @@ int aztec_text_process(uint8_t source[], const unsigned int src_len, char binary
 	maplength = 0;
 	debug = 0;
 
-	for(i = 0; i < src_len; i++) {
+	for(i = 0; i < (int)src_len; i++) {
 		if(gs1 && (i == 0)) {
 			/* Add FNC1 to beginning of GS1 messages */
 			charmap[maplength] = 0;
