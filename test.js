@@ -3,4 +3,4 @@ var zint = require('./');
 
 assert.equal(typeof zint.foo, 'function');
 
-console.log(zint.foo());
+console.log(zint.foo("sdfsdfs", "0000FF", 142));

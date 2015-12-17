@@ -35,9 +35,7 @@
         "lib/telepen.c",
         "lib/upcean.c"
       ],
-      "libraries": [
-        "-lpng", "-L lpng"
-      ]
+      "libraries": ["-lpng"]
     }
   ]
 }
