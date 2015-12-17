@@ -1,9 +1,5 @@
 #include <v8.h>
-// #include <node.h>
 #include "lib/zint.h"
-
-// using namespace v8;
-
 #include <string>
 #include <iostream>
 #include <node.h>
@@ -48,8 +44,8 @@ namespace zint {
   void argToChrArr(Value *arg, char* outArr) {
     char* chrArr = argToChr(arg);
 
-    for(int i=0; i<sizeof(outArr); i++) {
-      if(i < sizeof(chrArr)) {
+    for(int i=0; i<(int)sizeof(outArr); i++) {
+      if(i < (int)sizeof(chrArr)) {
         outArr[i] = chrArr[i];
       }
     }
@@ -62,8 +58,8 @@ namespace zint {
   void argToUint8Arr(Value *arg, uint8_t* outArr) {
     unsigned char* chrArr = argToUnsignedChr(arg);
 
-    for(int i=0; i<sizeof(outArr); i++) {
-      if(i < sizeof(chrArr)) {
+    for(int i=0; i<(int)sizeof(outArr); i++) {
+      if(i < (int)sizeof(chrArr)) {
         outArr[i] = chrArr[i];
       }
     }
@@ -76,98 +72,67 @@ namespace zint {
     return (int)(arg->Int32Value());
   }
 
+  /**
+   * Conversion from v8::Value to int
+   */
+  float argToFloat(Value *arg) {
+    return (float)(arg->NumberValue());
+  }
+
   void Foo (const FunctionCallbackInfo<Value>& args) {
+    struct zint_symbol *symbol;
 
-    struct zint_symbol *my_symbol;
+    symbol = ZBarcode_Create();
 
-    my_symbol = ZBarcode_Create();
+    // basic symbology info and render size
+    symbol->symbology = argToInt(*args[1]);
+    symbol->height = argToInt(*args[2]);
+    symbol->whitespace_width = argToInt(*args[3]);
+    symbol->border_width = argToInt(*args[4]);
+    // symbol->output_options = argToInt(*args[5]);
+    symbol->scale = argToFloat(*args[9]);
+    
+    // colors
+    argToChrArr(*args[6], symbol->fgcolour);
+    argToChrArr(*args[7], symbol->bgcolour);
+    
+    // file name to render
+    // argToChrArr(*args[8], symbol->outfile); // doesn't work for some reason
 
+    // options (-1 indicates not set)
+    if(symbol->option_1 > -1) {
+      symbol->option_1 = argToInt(*args[10]);
+    }
+    if(symbol->option_2 > -1) {
+      symbol->option_2 = argToInt(*args[11]);
+    }
+    if(symbol->option_3 > -1) {
+      symbol->option_3 = argToInt(*args[12]);
+    }
 
+    // text to display
+    argToUint8Arr(*args[3], symbol->text);
 
-
-    // my_symbol->text = param1;
-    my_symbol->symbology = argToInt(*args[2]);
-
-
-    unsigned char* thing;
-
-    thing = argToUnsignedChr(*args[0]);
-
-    char bgcolor[10];
-
-    argToChrArr(*args[1], my_symbol->fgcolour);
-
-    uint8_t text[128];
-
-    argToUint8Arr(*args[3], text);
-
-
-
-
-    // strcpy(bgcolor, argToChrT(*args[1])); // assume input is exactly 6 characters
-
-    // strcpy(my_symbol->fgcolour, bgcolor);
-
-    ZBarcode_Encode_and_Print(my_symbol, thing, 0, 0);
-    ZBarcode_Delete(my_symbol);
+    // create barcode
+    ZBarcode_Encode_and_Print(symbol, argToUnsignedChr(*args[0]), 0, 0);
+    ZBarcode_Delete(symbol);
   }
 
   void Init(Local<Object> exports) {
-    // const char* x = "hello";
-    // unsigned char* y;
-
-    // y = (unsigned char*) x;
-
-    // struct zint_symbol *my_symbol;
-
-    // my_symbol = ZBarcode_Create();
-
-    // // my_symbol->text = param1;
-    // my_symbol->symbology = 142;
-
-    // ZBarcode_Encode_and_Print(my_symbol, y, 0, 0);
-    // ZBarcode_Delete(my_symbol);  
-//   int symbology;
-//   int height;
-//   int whitespace_width;
-//   int border_width;
-//   int output_options;
-//   char fgcolour[10];
-//   char bgcolour[10];
-//   char outfile[FILENAME_MAX];
-//   float scale;
-//   int option_1;
-//   int option_2;
-//   int option_3;
-//   int show_hrt;
-//   int input_mode;
-//   uint8_t text[128];
-//   int rows;
-//   int width;
-//   char primary[128];
-//   char errtxt[100];
-// #define ZINT_ROWS_MAX  178
-// #define ZINT_COLS_MAX  178
-//   uint8_t encoded_data[ZINT_ROWS_MAX][ZINT_COLS_MAX];
-//   int row_height[ZINT_ROWS_MAX]; /* Largest symbol is 177x177 QR Code */
-//   char *bitmap;
-//   int bitmap_width;
-//   int bitmap_height;
-    // my_symbol->height
-
-
-
-  // m_zintSymbol->output_options=m_border;
-  // m_zintSymbol->symbology=m_symbol;
-  // m_zintSymbol->height=m_height;
-  // m_zintSymbol->whitespace_width=m_whitespace;
-  // m_zintSymbol->border_width=m_borderWidth;
-  // m_zintSymbol->option_1=m_securityLevel;
-  // m_zintSymbol->input_mode = m_input_mode;
-  // m_zintSymbol->option_2=m_width;
-
-    // ZBarcode_Encode_and_Print(my_symbol, y, 0, 0);
-    // ZBarcode_Delete(my_symbol);
+    // int show_hrt;
+    // int input_mode;
+    // uint8_t text[128];
+    // int rows;
+    // int width;
+    // char primary[128];
+    // char errtxt[100];
+    // #define ZINT_ROWS_MAX  178
+    // #define ZINT_COLS_MAX  178
+    // uint8_t encoded_data[ZINT_ROWS_MAX][ZINT_COLS_MAX];
+    // int row_height[ZINT_ROWS_MAX]; /* Largest symbol is 177x177 QR Code */
+    // char *bitmap;
+    // int bitmap_width;
+    // int bitmap_height;
 
     NODE_SET_METHOD(exports, "foo", Foo);
   }
