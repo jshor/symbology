@@ -55,8 +55,18 @@ namespace zint {
     }
   }
 
+  /**
+   * Conversion from v8::Value to uint8_t*,
+   * then copies to uint8_t* to outArr.
+   */
   void argToUint8Arr(Value *arg, uint8_t* outArr) {
-    // uint8_t* 
+    unsigned char* chrArr = argToUnsignedChr(arg);
+
+    for(int i=0; i<sizeof(outArr); i++) {
+      if(i < sizeof(chrArr)) {
+        outArr[i] = chrArr[i];
+      }
+    }
   }
 
   /**
@@ -86,6 +96,13 @@ namespace zint {
     char bgcolor[10];
 
     argToChrArr(*args[1], my_symbol->fgcolour);
+
+    uint8_t text[128];
+
+    argToUint8Arr(*args[3], text);
+
+
+
 
     // strcpy(bgcolor, argToChrT(*args[1])); // assume input is exactly 6 characters
 
