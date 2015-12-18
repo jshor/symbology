@@ -4,3 +4,4 @@
 *.swo
 .directory
 out.png
+npm-debug.log
