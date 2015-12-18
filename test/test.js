@@ -4,7 +4,7 @@ var zint = require('../node-zint');
 assert.equal(typeof zint.createFile, 'function');
 
 var zintSymbol = {
-  symbology: zint.BARCODE_PDF417,
+  symbology: 20,
   fgColor: 'fff000',
   bgColor: '000000',
   outFile: 'outsd.png',
@@ -19,7 +19,7 @@ var zintSymbol = {
 console.log('---- Running ----');
 
 zint
-  .createStream(zintSymbol, "test stuff")
+  .createStream(zintSymbol, "yoyoyo", 'png')
   .then(function(data) {
     console.log('Result: ', data);
   }, function(err) { 

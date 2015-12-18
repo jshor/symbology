@@ -39,22 +39,22 @@ function mergeSettings(symbologyStruct) {
 /**
  * Returns a file extension from a given file name.
  */
-function getExt(fileName) {
-  return fileName.substring(fileName.lastIndexOf('.')+1, fileName.length);
+function getExt(filePath) {
+  return filePath.substring(filePath.lastIndexOf('.')+1, filePath.length);
 }
 
 /**
  * Reads a png, converts to base64 string, and returns it on callback.
  */
-function readPngToBase64(onSuccess, onError, fileName) {
-  fs.readFile(fileName, 'binary', function (err, data) {
+function readPngToBase64(onSuccess, onError, filePath) {
+  fs.readFile(filePath, 'binary', function (err, data) {
     if (err) {
       onError(err);
+    } else {
+      var content = 'data:image/png;base64,';
+      content += new Buffer(data, 'binary').toString('base64');
     }
-    var content = 'data:image/png;base64,';
-    content += new Buffer(data, 'binary').toString('base64');
 
-    console.log('sfsdfsdfsdf');
     onSuccess(content);
   });
 }
@@ -62,12 +62,13 @@ function readPngToBase64(onSuccess, onError, fileName) {
 /**
  * Reads and returns an svg on callback.
  */
-function readSvg(onSuccess, onError, fileName) {
-  fs.readFile(fileName, 'utf8', function (err, data) {
+function readSvg(onSuccess, onError, filePath) {
+  fs.readFile(filePath, 'utf8', function (err, data) {
     if (err) {
       onError(err);
+    } else {
+      onSuccess(data);
     }
-    onSuccess(data);
   });
 }
 
@@ -75,24 +76,33 @@ function readSvg(onSuccess, onError, fileName) {
  * Create a new symbology file using the zint endpoint.
  */
 function createSymbology(symbologyStruct, barcodeData) {
-    return zint.createSymbology(
-      barcodeData,
-      symbologyStruct.symbology,
-      symbologyStruct.height,
-      symbologyStruct.whitespaceWidth,
-      symbologyStruct.borderWidth,
-      symbologyStruct.outputOptions,
-      symbologyStruct.fgColor,
-      symbologyStruct.bgColor,
-      symbologyStruct.outFile,
-      symbologyStruct.scale,
-      symbologyStruct.option1,
-      symbologyStruct.option2,
-      symbologyStruct.option3,
-      // symbologyStruct.show_hrt,
-      // symbologyStruct.input_mode,
-      (symbologyStruct.text || barcodeData)
-    );
+  return zint.createSymbology(
+    barcodeData,
+    symbologyStruct.symbology,
+    symbologyStruct.height,
+    symbologyStruct.whitespaceWidth,
+    symbologyStruct.borderWidth,
+    symbologyStruct.outputOptions,
+    symbologyStruct.fgColor,
+    symbologyStruct.bgColor,
+    symbologyStruct.outFile,
+    symbologyStruct.scale,
+    symbologyStruct.option1,
+    symbologyStruct.option2,
+    symbologyStruct.option3,
+    // symbologyStruct.show_hrt,
+    // symbologyStruct.input_mode,
+    (symbologyStruct.text || barcodeData)
+  );
+}
+
+/**
+ * Returns a random file name for writing.
+ */
+function getTempFile(ext) {
+  return './temp/' 
+    + Math.random().toString(36).substring(7)
+    + '.' + ext;
 }
 
 /**
@@ -104,30 +114,30 @@ exp.createFile = function(symbologyStruct, barcodeData) {
   return new Promise(function(resolve, reject) {
     var result = createSymbology(symbologyStruct, barcodeData);
 
-    // TODO: check for errors and handle accordingly
-    resolve(result);
+    if(result.code <= 2) {
+      resolve(result);
+    } else {
+      reject(result);
+    }
   });
 };
 
 /**
  * Create and stream a new symbology.
  */
-exp.createStream = function(symbologyStruct, barcodeData) {
-  // TODO: ignore file name, force temp file name...
+exp.createStream = function(symbologyStruct, barcodeData, type) {
+  var filePath = getTempFile(type);
+  symbologyStruct.outFile = filePath;
   var result = createSymbology(symbologyStruct, barcodeData);
-  var fileName = symbologyStruct.outFile;
 
   return new Promise(function(resolve, reject) {
 
     if(result.code <= 2) {
-      var ext = getExt(symbologyStruct.outFile);
-
       /*
        * Success, attach file data to `data` property.
        */
       function onSuccess(data) {
         result.data = data;
-        console.log('success!');
         resolve(result);
       }
 
@@ -142,13 +152,13 @@ exp.createStream = function(symbologyStruct, barcodeData) {
         reject(result);
       }
       
-      if(ext === 'png') {
-        readPngToBase64(onSuccess, onError, fileName);
+      if(type === 'png') {
+        readPngToBase64(onSuccess, onError, filePath);
       } else {
-        readSvg(onSuccess, onError, fileName);
+        readSvg(onSuccess, onError, filePath);
       }
 
-      // TODO: delete the temp file...
+      fs.unlinkSync(filePath);
     } else {
       reject(result);
     }
