@@ -121,9 +121,7 @@ namespace zint {
     argToChrArr(*args[7], symbol->bgcolour);
     
     // file name to render
-    // argToChrArr(*args[8], symbol->outfile); // doesn't work for some reason
-    // symbol->outfile = "test.png";
-    // strcpy(symbol->outfile, file_name);
+    strcpy(symbol->outfile, argToChr(*args[8]));
 
     // text to display
     argToUint8Arr(*args[3], symbol->text);
