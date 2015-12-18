@@ -140,7 +140,7 @@ namespace zint {
     Isolate* isolate = args.GetIsolate();
 
     Local<Object> obj = Object::New(isolate);
-    obj->Set(String::NewFromUtf8(isolate, "msg"), String::NewFromUtf8(isolate, errorMessage));
+    obj->Set(String::NewFromUtf8(isolate, "message"), String::NewFromUtf8(isolate, errorMessage));
     obj->Set(String::NewFromUtf8(isolate, "code"), v8::Integer::New(isolate, status_code));
 
     args.GetReturnValue().Set(obj);
