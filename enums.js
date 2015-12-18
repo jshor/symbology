@@ -55,7 +55,7 @@ var BARCODE_CODE11 = 1,
   BARCODE_ONECODE = 85,
   BARCODE_PLESSEY = 86,
 
-/* Tbarcode = 8 codes */
+  /* Tbarcode = 8 codes */
   BARCODE_TELEPEN_NUM = 87,
   BARCODE_ITF14 = 89,
   BARCODE_KIX = 90,
@@ -63,7 +63,7 @@ var BARCODE_CODE11 = 1,
   BARCODE_DAFT = 93,
   BARCODE_MICROQR = 97,
 
-/* Tbarcode = 9 codes */
+  /* Tbarcode = 9 codes */
   BARCODE_HIBC_128 = 98,
   BARCODE_HIBC_39 = 99,
   BARCODE_HIBC_DM = 102,
@@ -73,7 +73,7 @@ var BARCODE_CODE11 = 1,
   BARCODE_HIBC_BLOCKF = 110,
   BARCODE_HIBC_AZTEC = 112,
 
-/* Zint specific */
+  /* Zint specific */
   BARCODE_AZRUNE = 128,
   BARCODE_CODE32 = 129,
   BARCODE_EANX_CC = 130,

@@ -1,7 +1,7 @@
 {
   "name": "zint",
   "version": "0.0.1",
-  "description": "Generate 1D or 2D barcodes in png or svg.",
+  "description": "Generate 50+ different types of 1D or 2D barcodes and stream using base64 png or svg.",
   "main": "./lib/build/Release/zint.node",
   "scripts": {
     "test": "node test/test.js"
