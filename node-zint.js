@@ -100,7 +100,7 @@ function createSymbology(symbologyStruct, barcodeData) {
  * Returns a random file name for writing.
  */
 function getTempFile(ext) {
-  return './temp/' 
+  return './' 
     + Math.random().toString(36).substring(7)
     + '.' + ext;
 }
