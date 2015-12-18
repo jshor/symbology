@@ -1,7 +1,7 @@
 var assert = require('assert');
 var zint = require('../node-zint');
 
-assert.equal(typeof zint, 'function');
+assert.equal(typeof zint.createFile, 'function');
 
 var zintSymbol = {
   symbology: 57,
@@ -17,5 +17,5 @@ var zintSymbol = {
 };
 
 console.log('---- Running ----');
-console.log('Result: ', zint(zintSymbol, "test stuff"));
+console.log('Result: ', zint.createFile(zintSymbol, "test stuff"));
 console.log('------ End ------');

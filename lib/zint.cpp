@@ -130,8 +130,10 @@ namespace zint {
     char* errorMessage;
     errorMessage = symbol->errtxt;
 
+    int status_code;
+
     // create barcode
-    ZBarcode_Encode_and_Print(symbol, argToUnsignedChr(*args[0]), 0, 0);
+    status_code = ZBarcode_Encode_and_Print(symbol, argToUnsignedChr(*args[0]), 0, 0);
     ZBarcode_Delete(symbol);
 
     // return an object containing status and error message (if any)
@@ -139,6 +141,7 @@ namespace zint {
 
     Local<Object> obj = Object::New(isolate);
     obj->Set(String::NewFromUtf8(isolate, "msg"), String::NewFromUtf8(isolate, errorMessage));
+    obj->Set(String::NewFromUtf8(isolate, "code"), v8::Integer::New(isolate, status_code));
 
     args.GetReturnValue().Set(obj);
   }

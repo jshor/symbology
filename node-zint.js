@@ -1,10 +1,5 @@
 var zint = require('./');
-
-var DATA_MODE = 1,// uses full ASCII range interpreted as Latin-1 or binary
-    UNICODE_MODE = 2, // uses pre-formatted UTF-8 input
-    GS1_MODE = 3; // encodes GS1 data using FNC1 characters
-
-var BINARY_MODE = 1;
+var exp = require('./enums');
 
 /**
  * zintSymbol struct, populated with default values
@@ -41,9 +36,9 @@ function mergeSettings(symbologyStruct) {
 }
 
 /**
- * Export function to call zint module
+ * Create a new file on the file system.
  */
-module.exports = function(symbologyStruct, barcodeData) {
+exp.createFile = function(symbologyStruct, barcodeData) {
   mergeSettings(symbologyStruct);
 
   return zint.createSymbology(
@@ -64,4 +59,6 @@ module.exports = function(symbologyStruct, barcodeData) {
     // symbologyStruct.input_mode,
     (symbologyStruct.text || barcodeData)
   );
-}
+};
+
+module.exports = exp;
