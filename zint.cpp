@@ -79,7 +79,11 @@ namespace zint {
     return (float)(arg->NumberValue());
   }
 
-  void Foo (const FunctionCallbackInfo<Value>& args) {
+  /**
+   * Creates a new barcode in the temp directory and returns an object
+   * containing the status of the symbology creation.
+   */
+  void createSymbology (const FunctionCallbackInfo<Value>& args) {
     struct zint_symbol *symbol;
 
     symbol = ZBarcode_Create();
@@ -97,7 +101,9 @@ namespace zint {
     argToChrArr(*args[7], symbol->bgcolour);
     
     // file name to render
-    // argToChrArr(*args[8], symbol->outfile); // doesn't work for some reason
+    argToChrArr(*args[8], symbol->outfile); // doesn't work for some reason
+    // symbol->outfile = "test.png";
+    // strcpy(symbol->outfile, file_name);
 
     // options (-1 indicates not set)
     if(symbol->option_1 > -1) {
@@ -113,30 +119,26 @@ namespace zint {
     // text to display
     argToUint8Arr(*args[3], symbol->text);
 
+    // copy error message to return in object
+    char* errorMessage;
+    errorMessage = symbol->errtxt;
+
     // create barcode
     ZBarcode_Encode_and_Print(symbol, argToUnsignedChr(*args[0]), 0, 0);
     ZBarcode_Delete(symbol);
+
+    // return an object containing status and error message (if any)
+    Isolate* isolate = args.GetIsolate();
+
+    Local<Object> obj = Object::New(isolate);
+    obj->Set(String::NewFromUtf8(isolate, "msg"), String::NewFromUtf8(isolate, errorMessage));
+
+    args.GetReturnValue().Set(obj);
   }
 
   void Init(Local<Object> exports) {
-    // int show_hrt;
-    // int input_mode;
-    // uint8_t text[128];
-    // int rows;
-    // int width;
-    // char primary[128];
-    // char errtxt[100];
-    // #define ZINT_ROWS_MAX  178
-    // #define ZINT_COLS_MAX  178
-    // uint8_t encoded_data[ZINT_ROWS_MAX][ZINT_COLS_MAX];
-    // int row_height[ZINT_ROWS_MAX]; /* Largest symbol is 177x177 QR Code */
-    // char *bitmap;
-    // int bitmap_width;
-    // int bitmap_height;
-
-    NODE_SET_METHOD(exports, "foo", Foo);
+    NODE_SET_METHOD(exports, "createSymbology", createSymbology);
   }
 
-  NODE_MODULE(zint, Init)
-
+  NODE_MODULE(zint, Init);
 }
