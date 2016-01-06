@@ -19,6 +19,9 @@
       "nan": "2.x",
       "node-pre-gyp": "0.x"
     },
+    "devDependencies": {
+        "aws-sdk": "2.0.12"
+    },
     "bundledDependencies":["node-pre-gyp"],
     "scripts": {
         "install" : "node-pre-gyp install --fallback-to-build",

@@ -18,8 +18,6 @@ before_install:
 - export PATH=./node_modules/.bin/:$PATH
 # put global node-gyp on PATH
 - npm install node-gyp -g
-# install aws-sdk so it is available for publishing
-- npm install aws-sdk
 # figure out if we should publish
 - PUBLISH_BINARY=false
 # if we are building a tag then publish

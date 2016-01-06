@@ -1,6 +1,8 @@
 node-addon-example
 ==================
 
+[![Build Status](https://travis-ci.org/springmeyer/node-addon-example.svg?branch=master)](https://travis-ci.org/springmeyer/node-addon-example)
+
 Sample application of a Node C++ addon packaged with [node-pre-gyp](https://github.com/mapbox/node-pre-gyp).
 
 If you are interested in learning how to write C++ addons see the [official guide](http://nodejs.org/api/addons.html#addons_hello_world).
@@ -9,7 +11,7 @@ This repo is intended as starter code for your own C++ module - feel free to cop
 
 ## Depends
 
-- Node.js 0.10.x or 0.8.x
+- Node.js 0.10.x, 0.12.x, 4, or 5
 
 ## Install
 
@@ -25,19 +27,14 @@ Install from source:
 
 The [node-pre-gyp](https://github.com/mapbox/node-pre-gyp#usage) tool is used to handle building from source and packaging.
 
-To recompile only the C++ files that have changed, first put `node-gyp` and `node-pre-gyp` on your PATH:
+Simply run:
 
-    export PATH=`npm explore npm -g -- pwd`/bin/node-gyp-bin:./node_modules/.bin:${PATH}
-
-Then simply run:
-
-    node-pre-gyp build
+    ./node_modules/.bin/node-pre-gyp build
 
 ### Packaging
 
-    node-pre-gyp build package
+    ./node_modules/.bin/node-pre-gyp build package
 
 ### Publishing
 
-    npm install aws-sdk
-    node-pre-gyp publish
+    ./node_modules/.bin/node-pre-gyp publish
