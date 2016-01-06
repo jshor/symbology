@@ -41,7 +41,7 @@ before_install:
 
 install:
 # ensure source install works
-- npm install --build-from-source
+- npm install --build-from-source --clang=1
 # test our module
 - node index.js
 
