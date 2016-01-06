@@ -5,6 +5,9 @@
     {
       "target_name": "<(module_name)",
       "sources": [ "binding.cpp" ],
+      "include_dirs": [
+        "<!(node -e \"require('nan')\")"
+      ]
     },
     {
       "target_name": "action_after_build",

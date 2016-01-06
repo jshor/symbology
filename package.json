@@ -16,7 +16,8 @@
         "host"        : "https://node-pre-gyp-tests.s3-us-west-1.amazonaws.com"
     },
     "dependencies"  : {
-      "node-pre-gyp": "0.5.x"
+      "nan": "2.x",
+      "node-pre-gyp": "0.x"
     },
     "bundledDependencies":["node-pre-gyp"],
     "scripts": {
