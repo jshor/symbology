@@ -6,5 +6,8 @@
   "scripts": {
     "test": "node test/test.js"
   },
-  "gypfile": true
+  "gypfile": true,
+  "devDependencies": {
+    "chai": "^3.4.1"
+  }
 }

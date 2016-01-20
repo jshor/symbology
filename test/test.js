@@ -1,7 +1,7 @@
-var assert = require('assert');
+var chai = require('chai');
 var zint = require('../node-zint');
 
-assert.equal(typeof zint.createFile, 'function');
+// assert.equal(typeof zint.createFile, 'function');
 
 var zintSymbol = {
   symbology: 20,
