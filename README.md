@@ -1,5 +1,7 @@
 # node-zint
 
+[![Coverage Status](https://coveralls.io/repos/github/jshor/node-zint/badge.svg?branch=master)](https://coveralls.io/github/jshor/node-zint?branch=master)
+
 # ATTENTION: This module is still in development. It is not yet ready for public use.
 
 

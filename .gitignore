@@ -3,7 +3,7 @@
 *.swp
 *.swo
 .directory
-out.png
+*.png
 npm-debug.log
 node_modules
 .coveralls.yml
