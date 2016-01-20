@@ -147,7 +147,7 @@ exp.createStream = function(symbologyStruct, barcodeData, type) {
       function onError(err) {
         result = {
           code: 12,
-          message: 'error: could not read ' + symbologyStruct.outFile
+          message: 'error: could not access ' + symbologyStruct.outFile
         };
         reject(result);
       }
@@ -158,7 +158,11 @@ exp.createStream = function(symbologyStruct, barcodeData, type) {
         readSvg(onSuccess, onError, filePath);
       }
 
-      fs.unlinkSync(filePath);
+      try {
+        fs.unlinkSync(filePath);
+      } catch (e) {
+        onError(e);
+      }
     } else {
       reject(result);
     }
