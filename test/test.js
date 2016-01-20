@@ -51,41 +51,41 @@ var createFolder = function(dir) {
 
 var noop = function() {};
 
-console.log('---- Running ----');
+// console.log('---- Running ----');
 
 describe('the barnode library', function() {
   describe('the createStream function', function() {
     it('should return an object with status code and png base64 data', function() {
       return zint
         .createStream(getSymbol(), '12345', 'png')
-          .then(function(data) {
-            expect(data.code).to.be.a('number');
-            expect(data.code).to.equal(0);
-            expect(data.data).to.match(regex.base64);
-          });
+        .then(function(data) {
+          expect(data.code).to.be.a('number');
+          expect(data.code).to.equal(0);
+          expect(data.data).to.match(regex.base64);
+        });
     });
 
     it('should return an object with status code and svg xml data', function() {
       return zint
         .createStream(getSymbol(), '12345', 'svg')
-          .then(function(data) {
-            expect(data.code).to.be.a('number');
-            expect(data.code).to.equal(0);
-            expect(data.data).to.match(regex.xml);
-          });
+        .then(function(data) {
+          expect(data.code).to.be.a('number');
+          expect(data.code).to.equal(0);
+          expect(data.data).to.match(regex.xml);
+        });
     });
 
     it('should fail with a nonzero status code and a message', function() {
 
       return zint
         .createStream(getSymbol({symbology: 500}), '12345', 'png')
-          .then(noop, function(data) {
-            expect(data.code).to.be.a('number');
-            expect(data.code).to.not.equal(0);
-            expect(data.message).to.not.be.null;
-            expect(data.message).to.be.a('string');
-            expect(data.message).to.have.length.at.least(1);
-          });
+        .then(noop, function(data) {
+          expect(data.code).to.be.a('number');
+          expect(data.code).to.not.equal(0);
+          expect(data.message).to.not.be.null;
+          expect(data.message).to.be.a('string');
+          expect(data.message).to.have.length.at.least(1);
+        });
     });
   });
 
@@ -100,13 +100,17 @@ describe('the barnode library', function() {
 
       return zint
         .createFile(getSymbol({outFile: fileName}), '12345', 'png')
-          .then(function(data) {
-            var itExists = fileExists(fileName);
+        .then(function(data) {
+          var itExists = fileExists(fileName);
 
-            expect(data.code).to.be.a('number');
-            expect(data.code).to.equal(0);
-            expect(itExists).to.be.true;
-          });
+          expect(data.code).to.be.a('number');
+          expect(data.code).to.equal(0);
+          expect(itExists).to.be.true;
+        });
+    });
+
+    it('should render a png file', function() {
+      
     });
 
     // it('should not render a file when given invalid param(s)', function() {
@@ -127,4 +131,4 @@ describe('the barnode library', function() {
 
 
 
-console.log('------ End ------');
+// console.log('------ End ------');

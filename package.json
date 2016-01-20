@@ -4,12 +4,14 @@
   "description": "Generate 50+ different types of 1D or 2D barcodes and stream using base64 png or svg.",
   "main": "./lib/build/Release/zint.node",
   "scripts": {
-    "test": "node ./node_modules/mocha/bin/mocha test/test.js"
+   "test": "./node_modules/mocha/bin/mocha ./test/*",
+   "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*"
   },
   "gypfile": true,
   "devDependencies": {
     "chai": "^3.4.1",
     "coveralls": "^2.11.6",
+    "istanbul": "^0.4.2",
     "mocha": "^2.3.4",
     "mocha-lcov-reporter": "^1.0.0"
   },
