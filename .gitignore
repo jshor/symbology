@@ -6,3 +6,4 @@
 out.png
 npm-debug.log
 node_modules
+.coveralls.yml
