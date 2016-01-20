@@ -9,5 +9,8 @@
   "gypfile": true,
   "devDependencies": {
     "chai": "^3.4.1"
+    },
+  "dependencies": {
+    "segfault-handler": "^1.0.0"
   }
 }

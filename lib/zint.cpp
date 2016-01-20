@@ -93,11 +93,12 @@ namespace zint {
     symbol->height = argToInt(*args[2]);
     symbol->whitespace_width = argToInt(*args[3]);
     symbol->border_width = argToInt(*args[4]);
-    symbol->scale = argToFloat(*args[9]);
 
     // options (-1 indicates not set)
     int option_1, option_2, option_3, output_options;
+    float scale;
 
+    scale = argToFloat(*args[9]);
     option_1 = argToInt(*args[10]);
     option_2 = argToInt(*args[11]);
     option_3 = argToInt(*args[12]);
@@ -114,6 +115,9 @@ namespace zint {
     }
     if(output_options > -1) {
       symbol->output_options = output_options;
+    }
+    if(scale > 0) {
+      symbol->scale = scale;
     }
     
     // colors

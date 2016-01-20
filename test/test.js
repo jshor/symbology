@@ -1,13 +1,14 @@
 var chai = require('chai');
+var mocha = require('mocha');
 var zint = require('../node-zint');
 
-// assert.equal(typeof zint.createFile, 'function');
+chai.expect();
 
 var zintSymbol = {
   symbology: 20,
   fgColor: 'fff000',
   bgColor: '000000',
-  outFile: 'outsd.png',
+  outFile: 'outFile.png',
   scale: 1.0,
   option1: -1,
   option2: -1,
