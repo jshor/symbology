@@ -15,3 +15,12 @@ lib/binding
 npm-debug.log
 node_modules
 build
+*~
+*.[ao]
+*.swp
+*.swo
+.directory
+*.png
+npm-debug.log
+node_modules
+.coveralls.yml
