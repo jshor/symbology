@@ -99,7 +99,7 @@ namespace barnode {
   /**
    * Renders symbology and returns an object with PNG bitmap data, EPS binary data, or SVG XML.
    */
-  Local<Object> createStreamHandle(Isolate* isolate, zint_symbol *symbol, uint8_t *data) {
+  Local<Object> createStreamHandle(Isolate* isolate, zint_symbol *symbol, uint8_t *data, char *str) {
     int status_code = ZBarcode_Encode_and_Buffer(symbol, data, 0, 0);
 
     Local<Object> obj = Object::New(isolate);
@@ -117,6 +117,7 @@ namespace barnode {
       obj->Set(String::NewFromUtf8(isolate, "width"), v8::Integer::New(isolate, symbol->bitmap_width));
       obj->Set(String::NewFromUtf8(isolate, "height"), v8::Integer::New(isolate, symbol->bitmap_height));
     }
+    obj->Set(String::NewFromUtf8(isolate, "inputData"), String::NewFromUtf8(isolate, str));
     obj->Set(String::NewFromUtf8(isolate, "message"), String::NewFromUtf8(isolate, symbol->errtxt));
     obj->Set(String::NewFromUtf8(isolate, "code"), v8::Integer::New(isolate, status_code));
 
@@ -126,13 +127,14 @@ namespace barnode {
   /**
    * Renders symbology and creates a PNG, EPS, or SVG file.
    */
-  Local<Object> createFileHandle(Isolate* isolate, zint_symbol *symbol, uint8_t *data) {
+  Local<Object> createFileHandle(Isolate* isolate, zint_symbol *symbol, uint8_t *data, char *str) {
     int status_code = ZBarcode_Encode_and_Print(symbol, data, 0, 0);
 
     Local<Object> obj = Object::New(isolate);
     if(status_code <= 2) {
       obj->Set(String::NewFromUtf8(isolate, "fileName"), String::NewFromUtf8(isolate, symbol->outfile));
     }
+    obj->Set(String::NewFromUtf8(isolate, "inputData"), String::NewFromUtf8(isolate, str));
     obj->Set(String::NewFromUtf8(isolate, "message"), String::NewFromUtf8(isolate, symbol->errtxt));
     obj->Set(String::NewFromUtf8(isolate, "code"), v8::Integer::New(isolate, status_code));
 
@@ -199,7 +201,7 @@ namespace barnode {
     Isolate* isolate = args.GetIsolate();
     Local<Object> obj;
     
-    obj = createFileHandle(isolate, symbol, argToUnsignedChr(*args[0]));
+    obj = createFileHandle(isolate, symbol, argToUnsignedChr(*args[0]), argToChr(*args[0]));
     ZBarcode_Delete(symbol);
     args.GetReturnValue().Set(obj);
   }
@@ -214,7 +216,7 @@ namespace barnode {
     Isolate* isolate = args.GetIsolate();
     Local<Object> obj;
 
-    obj = createStreamHandle(isolate, symbol, argToUnsignedChr(*args[0]));
+    obj = createStreamHandle(isolate, symbol, argToUnsignedChr(*args[0]), argToChr(*args[0]));
     ZBarcode_Delete(symbol);
     args.GetReturnValue().Set(obj);
   }
