@@ -5,6 +5,8 @@
 #include <node.h>
 #include <node_buffer.h>
 #include <typeinfo>
+#include <stdio.h>
+#include <string.h>
 
 namespace barnode {
 
