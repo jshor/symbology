@@ -83,6 +83,7 @@ describe('the barnode library', function() {
 
           expect(data.code).to.be.a('number');
           expect(data.code).to.equal(0);
+          expect(data.message).to.be.null; // force travis to say what this is
           expect(itExists).to.be.true;
         }, handleErr);
     });
@@ -94,6 +95,7 @@ describe('the barnode library', function() {
             fileName: filePath
           }), '12345')
           .then(noop, function(data) {
+          expect(data.message).to.be.null; // force travis to say what this is
             expect(data.code).to.be.a('number');
             console.log('ERROR: ', data);
             expect(data.code).to.not.equal(0);
@@ -116,6 +118,7 @@ describe('the barnode library', function() {
       return zint
         .createFile(getSymbol({fileName: filePath}), '54321')
         .then(function(data) {
+          expect(data.message).to.be.null; // force travis to say what this is
           var itExists = fileExists(filePath);
 
           expect(data.code).to.be.a('number');
@@ -128,13 +131,18 @@ describe('the barnode library', function() {
       zint
         .createFile(getSymbol({fileName: filePath}), '54321')
         .then(function(data) {
-          var fileContents = fs.readFile(filePath, 'utf8', function(err, fileData) {
-            if(err) {
-              throw err;
-            }
-            expect(fileData).to.match(regex.xml);
-            done();
-          });
+          expect(data.message).to.be.null; // force travis to say what this is
+          if(fileExists(filePath)) {
+            var fileContents = fs.readFile(filePath, 'utf8', function(err, fileData) {
+              if(err) {
+                return err;
+              }
+              expect(fileData).to.match(regex.xml);
+              done();
+            });
+          } else {
+            return;
+          }
         }, handleErr);
     });
   });
