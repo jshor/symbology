@@ -1,31 +1,41 @@
 {
     "name" : "node-addon-example",
     "version" : "0.1.4",
-    "description" :"Hello world app packaged with node-pre-gyp",
+    "description": "Generate 50+ different types of 1D or 2D barcodes and stream using base64 png or svg.",
     "main" : "./index.js",
     "author" : "Dane Springmeyer <springmeyer>",
-    "repository"   :  {
-       "type" : "git",
-       "url"  : "git://github.com/springmeyer/node-addon-example.git"
+    "repository":  {
+      "type": "git",
+      "url": "git://github.com/springmeyer/node-addon-example.git"
     },
     "binary": {
-        "module_name" : "node_addon_example",
-        "module_path" : "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
-        "remote_path" : "./{module_name}/v{version}/{configuration}/",
-        "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
-        "host"        : "https://node-pre-gyp-tests.s3-us-west-1.amazonaws.com"
+      "module_name" : "node_addon_example",
+      "module_path" : "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
+      "remote_path" : "./{module_name}/v{version}/{configuration}/",
+      "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
+      "host"        : "https://node-pre-gyp-tests.s3-us-west-1.amazonaws.com"
     },
     "dependencies"  : {
       "nan": "2.x",
-      "node-pre-gyp": "0.x"
+      "node-pre-gyp": "0.x",
+      "pngjs": "^2.2.0",
+      "pngjs-image": "^0.11.6",
+      "segfault-handler": "^1.0.0"
     },
     "devDependencies": {
-        "aws-sdk": "2.0.12"
+      "chai": "^3.4.1",
+      "coveralls": "^2.11.6",
+      "istanbul": "^0.4.2",
+      "mocha": "^2.3.4",
+      "mocha-lcov-reporter": "^1.0.0",
+      "node-gyp": "^3.2.1",
+      "aws-sdk": "~2.0.0-rc.15",
+      "aws-sdk": "2.0.12"
     },
     "bundledDependencies":["node-pre-gyp"],
     "scripts": {
-        "install" : "node-pre-gyp install --fallback-to-build",
-        "test": "node index.js",
-        "prepublish": "npm ls"
+      "install" : "node-pre-gyp install --fallback-to-build",
+      "test": "node index.js",
+      "prepublish": "npm ls"
     }
 }
