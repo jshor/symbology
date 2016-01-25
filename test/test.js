@@ -39,7 +39,9 @@ function removeFile(filePath) {
 
 var noop = function() {};
 
-// console.log('---- Running ----');
+function handleErr(err) {
+  console.log('HARD ERROR: ', err);
+}
 
 describe('the barnode library', function() {
   describe('the createStream function', function() {
@@ -50,7 +52,7 @@ describe('the barnode library', function() {
           expect(data.code).to.be.a('number');
           expect(data.code).to.equal(0);
           expect(data.data).to.match(regex.base64);
-        });
+        }, handleErr);
     });
 
     it('should fail with a nonzero status code and a message', function() {
@@ -62,7 +64,7 @@ describe('the barnode library', function() {
           expect(data.message).to.not.be.null;
           expect(data.message).to.be.a('string');
           expect(data.message).to.have.length.at.least(1);
-        });
+        }, handleErr);
     });
   });
 
@@ -82,7 +84,7 @@ describe('the barnode library', function() {
           expect(data.code).to.be.a('number');
           expect(data.code).to.equal(0);
           expect(itExists).to.be.true;
-        });
+        }, handleErr);
     });
 
     it('should not render a file when given invalid param(s)', function() {
@@ -93,6 +95,7 @@ describe('the barnode library', function() {
           }), '12345')
           .then(noop, function(data) {
             expect(data.code).to.be.a('number');
+            console.log('ERROR: ', data);
             expect(data.code).to.not.equal(0);
             expect(data.message).to.not.be.null;
             expect(data.message).to.be.a('string');
@@ -118,7 +121,7 @@ describe('the barnode library', function() {
           expect(data.code).to.be.a('number');
           expect(data.code).to.equal(0);
           expect(itExists).to.be.true;
-        });
+        }, handleErr;
     });
 
     it('should render an SVG file with valid XML data', function(done) {
@@ -132,11 +135,7 @@ describe('the barnode library', function() {
             expect(fileData).to.match(regex.xml);
             done();
           });
-        });
+        }, handleErr);
     });
   });
 });
-
-
-
-// console.log('------ End ------');
