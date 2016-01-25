@@ -1,21 +1,21 @@
 {
-  "name" : "node-addon-example",
-  "version" : "0.1.4",
+  "name": "barnode",
+  "version": "0.1.4",
   "description": "Generate 50+ different types of 1D or 2D barcodes and stream using base64 png or svg.",
-  "main" : "./index.js",
-  "author" : "Dane Springmeyer <springmeyer>",
+  "main": "./index.js",
+  "author" : "Josh Shor <jshor>",
   "repository":  {
     "type": "git",
-    "url": "git://github.com/springmeyer/node-addon-example.git"
+    "url": "git://github.com/jshor/node-zint.git"
   },
   "binary": {
-    "module_name" : "node_addon_example",
-    "module_path" : "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
-    "remote_path" : "./{module_name}/v{version}/{configuration}/",
+    "module_name": "node_addon_example",
+    "module_path": "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
+    "remote_path": "./{module_name}/v{version}/{configuration}/",
     "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
-    "host"        : "https://node-pre-gyp-tests.s3-us-west-1.amazonaws.com"
+    "host": "https://node-pre-gyp-tests.s3-us-west-1.amazonaws.com"
   },
-  "dependencies"  : {
+  "dependencies": {
     "nan": "2.x",
     "node-pre-gyp": "0.x",
     "pngjs": "^2.2.0",
