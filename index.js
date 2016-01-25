@@ -1,4 +1,8 @@
-var zint = require('./');
+var binary = require('node-pre-gyp');
+var path = require('path');
+var binding_path = binary.find(path.resolve(path.join(__dirname,'./package.json')));
+var barnode = require(binding_path);
+
 var exp = require('./enums');
 var fs = require('fs');
 var PNGImage = require('pngjs-image');
@@ -53,7 +57,7 @@ function validateSymbol(symbologyStruct) {
 function createSymbology(symbologyStruct, barcodeData, fnName) {
   validateSymbol(symbologyStruct);
 
-  return zint[fnName](
+  return barnode[fnName](
     barcodeData,
     symbologyStruct.symbology,
     symbologyStruct.height,
@@ -163,7 +167,6 @@ exp.createStream = function(symbol, barcodeData, type) {
  */
 exp.createFile = function(symbol, barcodeData) {
   var res = createSymbology(symbol, barcodeData, 'createFile');
-  console.log('reS: ', res);
 
   return new Promise(function(resolve) {
     resolve(res);

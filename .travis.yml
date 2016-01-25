@@ -35,13 +35,13 @@ before_install:
 # if we are building a tag then publish
 - if [[ $TRAVIS_BRANCH == `git describe --tags --always HEAD` ]]; then PUBLISH_BINARY=true; fi;
 # or if we put [publish binary] in the commit message
-- if test-travis "${COMMIT_MESSAGE#*'[publish binary]'}" != "$COMMIT_MESSAGE"; then PUBLISH_BINARY=true; fi;
+- if test "${COMMIT_MESSAGE#*'[publish binary]'}" != "$COMMIT_MESSAGE"; then PUBLISH_BINARY=true; fi;
 
 install:
 # ensure source install works
 - npm install --build-from-source --clang=1
 # test our module
-- node index.js
+- npm run test-travis
 
 before_script:
 # if publishing, do it
