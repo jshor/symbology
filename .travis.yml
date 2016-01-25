@@ -17,9 +17,10 @@ addons:
      - clang-3.5
 
 env:
-  global:
-   - secure: bKjyTiUGN568Ryr+JIqs2DxBnSE9EKQlf09wHAlbeonTQYm5u7PfkBryizddquJX3lXTfiIdXcsMM17Gr9osHSN3SQxCTYnJgHOZ+4eUmx62nv9G/I1Xt2DpR4vtfIcMjJ3cfbpHDgP6dwB3qysv5JDSb6Xhn++vt7O1ekTJhOE=
-   - secure: hh5aZtl3nrDiS7tTk6PgZtAc4p3/48j6Ob3O/dhfxyMHXD8JmmU7UxiAs3RucPrcANw9tsLnqB9Z2ETTax9G7Gkiii6UmG8+V6+KTWYWouG4deLFn+2kUc14f3MtJOnuEVwfwfRFUAM6P03PoWTxoOzFxkRefO8kY9wXdQfGmMc=
+  node_pre_gyp_accessKeyId:
+    secure: CPTkx4cPnvUnyw/L0bLL1bRm5NkpICfba9vHxaQLXHk=
+  node_pre_gyp_secretAccessKey:
+    secure: QcWvnu7C+DaNOn3JsFLIKweV6mNOH59NnkNLWS8kW4C5vWH/qFJo5JqP49JXdU4S
 
 before_install:
 - if [[ $(uname -s) == 'Linux' ]]; then
@@ -37,7 +38,7 @@ before_install:
 # if we are building a tag then publish
 - if [[ $TRAVIS_BRANCH == `git describe --tags --always HEAD` ]]; then PUBLISH_BINARY=true; fi;
 # or if we put [publish binary] in the commit message
-- if test "${COMMIT_MESSAGE#*'[publish binary]'}" != "$COMMIT_MESSAGE"; then PUBLISH_BINARY=true; fi;
+- if test-travis "${COMMIT_MESSAGE#*'[publish binary]'}" != "$COMMIT_MESSAGE"; then PUBLISH_BINARY=true; fi;
 
 install:
 # ensure source install works
