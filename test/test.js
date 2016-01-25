@@ -49,6 +49,7 @@ describe('the barnode library', function() {
       return zint
         .createStream(getSymbol(), '12345', 'png')
         .then(function(data) {
+          console.log('DATA result: ', data);
           expect(data.code).to.be.a('number');
           expect(data.code).to.equal(0);
           expect(data.data).to.match(regex.base64);
@@ -59,6 +60,7 @@ describe('the barnode library', function() {
       return zint
         .createStream(getSymbol({symbology: 500}), '12345', 'png')
         .then(noop, function(data) {
+          console.log('DATA result: ', data);
           expect(data.code).to.be.a('number');
           expect(data.code).to.not.equal(0);
           expect(data.message).to.not.be.null;
@@ -79,6 +81,7 @@ describe('the barnode library', function() {
       return zint
         .createFile(getSymbol({fileName: filePath}), '54321')
         .then(function(data) {
+          console.log('DATA result: ', data);
           var itExists = fileExists(filePath);
 
           expect(data.code).to.be.a('number');
@@ -118,6 +121,7 @@ describe('the barnode library', function() {
       return zint
         .createFile(getSymbol({fileName: filePath}), '54321')
         .then(function(data) {
+          console.log('DATA result: ', data);
           expect(data.message).to.be.null; // force travis to say what this is
           var itExists = fileExists(filePath);
 
@@ -131,6 +135,7 @@ describe('the barnode library', function() {
       zint
         .createFile(getSymbol({fileName: filePath}), '54321')
         .then(function(data) {
+          console.log('DATA result: ', data);
           expect(data.message).to.be.null; // force travis to say what this is
           if(fileExists(filePath)) {
             var fileContents = fs.readFile(filePath, 'utf8', function(err, fileData) {

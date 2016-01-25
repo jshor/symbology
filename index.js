@@ -51,7 +51,7 @@ function validateSymbol(symbologyStruct) {
  * 
  * @param  {ZintSymbol} symbologyStruct
  * @param  {String}     barcodeData
- * @param  {String}     fnName           name of fn to call from zint lib
+ * @param  {String}     fnName          name of fn to call from zint lib
  * @return {Struct}                     result of called function
  */
 function createSymbology(symbologyStruct, barcodeData, fnName) {
