@@ -121,7 +121,7 @@ describe('the barnode library', function() {
           expect(data.code).to.be.a('number');
           expect(data.code).to.equal(0);
           expect(itExists).to.be.true;
-        }, handleErr;
+        }, handleErr);
     });
 
     it('should render an SVG file with valid XML data', function(done) {
