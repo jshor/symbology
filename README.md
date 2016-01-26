@@ -7,33 +7,33 @@
 
 ## Introduction
 
-A Node.js wrapper for the Zint Barcode generator library.
-
-This library will allow you to generate over 50+ different types of 1D or 2D symbologies, including barcodes for books, grocery, shipping carriers, healthcare, and international codes. It can save a png or svg image, or stream a base64 png representation or svg.
+This Node.js module will allow you to generate over 50+ different types of 1D or 2D symbologies, including barcodes for books, grocery, shipping carriers, healthcare, and international codes. It can save a png, svg, or eps image, or stream a base64 png bitmap.
 
 ## Installation
 
 node-zint can be [downloaded directly]() or installed via [npm]().
 
-    npm install node-zint --save
-
+```
+npm install node-zint --save
+```
 ## Usage
 
 ### Import the module
 
-    var zint = require('../node-zint');
-
+```
+var zint = require('../node-zint');
+```
 
 ### Struct
 
 Prepare a zint-struct json object with your desired settings (see [docs]() for more info):
 
-  var zintSymbol = {
-    symbology: zint.BARCODE_CODE128,
-    fgColor: 'fff000',
-    bgColor: '000000',
-    outFile: 'myBarcode.png'
-  };
+    var zintSymbol = {
+      symbology: zint.BARCODE_CODE128,
+      foregroundColor: 'fff000',
+      backgroundColor: '000000',
+      fileName: '/my/directory/barcode.png'
+    };
 
 ### Available functions
 
@@ -49,26 +49,26 @@ Writes a stream in to the output object in a property `data`.
 |--------------|----------|------------------------------|
 | `zintStruct` | `Struct` | Struct of symbology settings |
 | `data`       | `String` | Desired data to encode       |
-| `type`       | `String` | `png` or `svg`               |
+| `type`       | `String` | `png`, `svg` or `eps`        |
 
 
 ### Example:
-
-    zint
-      .createStream(zintSymbol, '12345', 'png')
-      .then(function(data) {
-        console.log('Result: ', data);
-      }, function(err) { 
-        console.log('Error: ', err); 
-      });
-
+```
+zint
+  .createStream(zintSymbol, '12345', 'png')
+  .then(function(data) {
+    console.log('Result: ', data);
+  }, function(err) { 
+    console.log('Error: ', err); 
+  });
+```
 ### Returns:
 ```
-  { 
-    message: '',
-    code: 0,
-    data: 'data:image/png;base64,iVBOR [...] g==' 
-  }
+{ 
+  message: '',
+  code: 0,
+  data: 'data:image/png;base64,iVBOR [...] g==' 
+}
 ```
 ----------
 
@@ -85,22 +85,22 @@ Writes a stream in to the output object in a property `data`.
 ### Example:
 
 ```
-  zint
-    .createFile(zintSymbol, '12345')
-    .then(function(data) {
-      console.log('Result: ', data);
-    }, function(err) { 
-      console.log('Error: ', err); 
-    });
+zint
+  .createFile(zintSymbol, '12345')
+  .then(function(data) {
+    console.log('Result: ', data);
+  }, function(err) { 
+    console.log('Error: ', err); 
+  });
 ```
 
-### This creates a file with the specified `outFile` and returns:
+### This creates a file in the specified `fileName` and returns:
 
 ```
-  { 
-    message: 'error: specified symbology is out of range',
-    code: 2
-  }
+{ 
+  message: 'error: specified symbology is out of range',
+  code: 2
+}
 ```
 
 ## Available settings (struct)
@@ -123,16 +123,16 @@ TODO: make a table for this...
 
 There are 53 different available symbology types. For an exhaustive list, please [see the symbology readme]().
 
-## Development
+## Development (outdated info)
 
 To compile the latest, ensure you have [node-gyp]() installed. Then run:
 
 ```
-  node-gyp build
+node-gyp build
 ```
 
 For running tests,
 
 ```
-  npm test
+npm test
 ```
