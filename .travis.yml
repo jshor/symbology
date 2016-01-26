@@ -62,3 +62,4 @@ script:
 after_success:
 # if success then query and display all published binaries
 - node-pre-gyp info
+- cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
