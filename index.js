@@ -176,6 +176,4 @@ exp.createFile = function(symbol, barcodeData) {
   });
 };
 
-
-
 module.exports = exp;
