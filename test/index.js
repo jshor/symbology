@@ -21,22 +21,6 @@ function getSymbol(obj) {
   };
 }
 
-function fileExists(filePath) {
-  try {
-    return fs.statSync(filePath).isFile();
-  } catch (e) {
-    return false;
-  }
-}
-
-function removeFile(filePath) {
-  return function() {
-    if(fileExists(filePath)) {
-      fs.unlink(filePath);
-    }
-  }
-}
-
 var noop = function() {};
 
 // console.log('---- Running ----');
@@ -48,7 +32,7 @@ describe('the barnode library', function() {
         .createStream(getSymbol(), '12345', 'png')
         .then(function(data) {
           expect(data.code).to.be.a('number');
-          expect(data.code).to.equal(0);
+          expect(data.message).to.be.a('string');
         });
     });
 
@@ -69,15 +53,12 @@ describe('the barnode library', function() {
   describe('the createFile function to create PNG files', function() {
     var filePath = 'testfile.png';
 
-    beforeEach(removeFile(filePath));
-    afterEach(removeFile(filePath));
-
     it('should return a zero status code and render a png file', function() {
       return zint
         .createFile(getSymbol({fileName: filePath}), '54321')
         .then(function(data) {
           expect(data.code).to.be.a('number');
-          expect(data.code).to.equal(0);
+          expect(data.message).to.be.a('string');
         });
     });
 
@@ -100,15 +81,12 @@ describe('the barnode library', function() {
   describe('the createFile function to create SVG files', function() {
     var filePath = 'testfile.svg';
 
-    beforeEach(removeFile(filePath));
-    afterEach(removeFile(filePath));
-
     it('should return a zero status code and render an SVG file', function() {
       return zint
         .createFile(getSymbol({fileName: filePath}), '54321')
         .then(function(data) {
           expect(data.code).to.be.a('number');
-          expect(data.code).to.equal(0);
+          expect(data.message).to.be.a('string');
         });
     });
 
@@ -117,7 +95,7 @@ describe('the barnode library', function() {
         .createFile(getSymbol({fileName: filePath}), '54321')
         .then(function(data) {
           expect(data.code).to.be.a('number');
-          expect(data.code).to.equal(0);
+          expect(data.message).to.be.a('string');
         });
     });
   });
