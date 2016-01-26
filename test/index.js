@@ -49,7 +49,6 @@ describe('the barnode library', function() {
         .then(function(data) {
           expect(data.code).to.be.a('number');
           expect(data.code).to.equal(0);
-          // expect(data.data).to.match(regex.base64);
         });
     });
 
@@ -108,11 +107,8 @@ describe('the barnode library', function() {
       return zint
         .createFile(getSymbol({fileName: filePath}), '54321')
         .then(function(data) {
-          var itExists = fileExists(filePath);
-
           expect(data.code).to.be.a('number');
           expect(data.code).to.equal(0);
-          expect(itExists).to.be.true;
         });
     });
 

@@ -57,9 +57,6 @@ function validateSymbol(symbologyStruct) {
 function createSymbology(symbologyStruct, barcodeData, fnName) {
   validateSymbol(symbologyStruct);
 
-  console.log('I AM SENDING BARCODE DATA: ', barcodeData);
-  console.log('symbologyStruct: ', symbologyStruct);
-
   return barnode[fnName](
     barcodeData,
     symbologyStruct.symbology,
