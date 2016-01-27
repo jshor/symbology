@@ -1,7 +1,8 @@
 # symbology
 
-[![Coverage Status](https://coveralls.io/repos/github/jshor/symbology/badge.svg?branch=master)](https://coveralls.io/github/jshor/symbology?branch=master) [![Build Status](https://travis-ci.org/jshor/symbology.svg?branch=master)](https://travis-ci.org/jshor/symbology) [![npm version](https://badge.fury.io/js/symbology.svg)](https://badge.fury.io/js/symbology)
+[![Coverage Status](https://coveralls.io/repos/github/jshor/symbology/badge.svg?branch=master)](https://coveralls.io/github/jshor/symbology?branch=master) [![Build Status](https://travis-ci.org/jshor/symbology.svg?branch=master)](https://travis-ci.org/jshor/symbology) [![npm version](https://badge.fury.io/js/symbology.svg)](https://badge.fury.io/js/symbology) [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
 
+[![dependency Status](https://david-dm.org/jshor/symbology/dev-status.png)](https://david-dm.org/jshor/symbology#info=dependencies) [![devDependency Status](https://david-dm.org/jshor/symbology/dev-status.png)](https://david-dm.org/jshor/symbology#info=devDependencies)
 
 ## Introduction
 
