@@ -27,14 +27,14 @@ var zint = require('../node-zint');
 ### Struct
 
 Prepare a zint-struct json object with your desired settings (see [docs]() for more info):
-
-    var zintSymbol = {
-      symbology: zint.BARCODE_CODE128,
-      foregroundColor: 'fff000',
-      backgroundColor: '000000',
-      fileName: '/my/directory/barcode.png'
-    };
-
+```
+var zintSymbol = {
+  symbology: zint.BARCODE_CODE128,
+  foregroundColor: 'fff000',
+  backgroundColor: '000000',
+  fileName: '/my/directory/barcode.png'
+};
+```
 ### Available functions
 
 Each function returns a promise that completes with an object containing the exit code and message of the function (see [error handling]() for more info).

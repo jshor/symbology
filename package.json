@@ -3,8 +3,8 @@
   "version": "0.1.4",
   "description": "Generate 50+ different types of 1D or 2D barcodes and stream using base64 png or svg.",
   "main": "./index.js",
-  "author" : "Josh Shor <jshor>",
-  "repository":  {
+  "author": "Josh Shor <jshor>",
+  "repository": {
     "type": "git",
     "url": "git://github.com/jshor/node-zint.git"
   },
@@ -20,7 +20,9 @@
     "node-pre-gyp": "0.x",
     "pngjs": "^2.2.0",
     "pngjs-image": "^0.11.6",
-    "segfault-handler": "^1.0.0"
+    "segfault-handler": "^1.0.0",
+    "sinon": "^1.17.3",
+    "sinon-chai": "^2.8.0"
   },
   "devDependencies": {
     "chai": "^3.4.1",
@@ -29,12 +31,13 @@
     "mocha": "^2.3.4",
     "mocha-lcov-reporter": "^1.0.0",
     "node-gyp": "^3.2.1",
-    "aws-sdk": "~2.0.0-rc.15",
     "aws-sdk": "2.0.12"
   },
-  "bundledDependencies":["node-pre-gyp"],
+  "bundledDependencies": [
+    "node-pre-gyp"
+  ],
   "scripts": {
-    "install" : "node-pre-gyp install --fallback-to-build",
+    "install": "node-pre-gyp install --fallback-to-build",
     "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*",
     "test": "./node_modules/mocha/bin/mocha ./test/*",
     "prepublish": "npm ls"
