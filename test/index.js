@@ -10,7 +10,7 @@ var binary = require('node-pre-gyp');
 var path = require('path');
 var binding_path = binary.find(path.resolve(path.join(__dirname,'../package.json')));
 var barnode = require(binding_path);
-var barnodeStub = require('./barnodeStub');
+var createStream = require('./createStreamStub');
 
 function getSymbol(obj) {
   obj = obj || {};
@@ -82,16 +82,29 @@ describe('the barnode library', function() {
     });
   });
 
-  sinon.stub(barnode, 'createStream', barnodeStub.createStream);
+  sinon.stub(barnode, 'createStream', createStream);
 
   describe('the createStream function for png data', function() {
     it('should return an object with status code and base64 png data', function() {
       return zint
-        .createStream(getSymbol(), '12345', 'png')
+        .createStream(getSymbol(), '12345')
         .then(function(data) {
           expect(data.code).to.be.a('number');
           expect(data.message).to.be.a('string');
           expect(data.data).to.match(regex.base64);
+        });
+    });
+
+    it('should not stream base64 png data if input is invalid', function() {
+      return zint
+        .createStream(getSymbol({symbology: -1}), '12345')
+        .then(function(data) {
+          expect(data.code).to.be.a('number');
+          expect(data.code).to.not.equal(0);
+          expect(data.message).to.not.be.null;
+          expect(data.message).to.have.length.at.least(1);
+          expect(data.message).to.be.a('string');
+          expect(data.data).to.be.undefined;
         });
     });
   });

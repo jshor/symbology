@@ -1,6 +1,6 @@
 # node-zint
 
-[![Coverage Status](https://coveralls.io/repos/github/jshor/node-zint/badge.svg?branch=master)](https://coveralls.io/github/jshor/node-zint?branch=master) [![Build Status](https://travis-ci.org/jshor/node-zint.svg?branch=master)](https://travis-ci.org/jshor/node-zint)
+[![Coverage Status](https://coveralls.io/repos/github/jshor/node-zint/badge.svg?branch=master)](https://coveralls.io/github/jshor/node-zint?branch=master) [![Build Status](https://travis-ci.org/jshor/node-zint.svg?branch=master)](https://travis-ci.org/jshor/node-zint) [![npm version](https://badge.fury.io/js/barnode.svg)](https://badge.fury.io/js/barnode)
 
 # ATTENTION: This module is still in development. It is not yet ready for public use.
 

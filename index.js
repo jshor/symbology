@@ -57,10 +57,6 @@ function validateSymbol(symbologyStruct) {
 function createSymbology(symbologyStruct, barcodeData, fnName) {
   validateSymbol(symbologyStruct);
 
-  console.log('Symbology Struct: ', symbologyStruct);
-  console.log('barcodeData: ', barcodeData);
-  console.log('fnName: ', fnName);
-
   return barnode[fnName](
     barcodeData,
     symbologyStruct.symbology,
@@ -131,18 +127,21 @@ function pngRender(bitmap, width, height) {
 }
 
 /**
- * Creates a stream of a PNG, SVG or EPS.
+ * Creates a base64 bitmap of a sybology.
  * If PNG, returns the stream is returned in base64 format.
  * 
  * @param  {ZintSymbol} symbol zint_symbol struct
  * @param  {String}     type   'png', 'svg', or 'eps'
  * @return {Promise<Object>}   object with resulting props (see docs)
  */
-exp.createStream = function(symbol, barcodeData, type) {
-  symbol.fileName = 'out.' + type;
+exp.createStream = function(symbol, barcodeData) {
+  // note: unfortunately, Zint only knows to stream pngs and, further,
+  // will only do so if a filename is specified with a png extension
+  // it will NOT actually create out.png in the file system
+  symbol.fileName = 'out.png';
   var res = createSymbology(symbol, barcodeData, 'createStream');
 
-  if(res.code <= 2 && res.encodedData && type === 'png') {
+  if(res.code <= 2) {
     var pngData = pngRender(res.encodedData, res.width, res.height);
 
     return blobToBase64Png(pngData)
