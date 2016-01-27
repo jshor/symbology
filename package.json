@@ -14,7 +14,7 @@
     "module_path": "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
     "remote_path": "./{module_name}/v{version}/{configuration}/",
     "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
-    "host": "https://symbology.s3-us-west-1.amazonaws.com"
+    "host": "https://symbologyjs.s3-us-west-1.amazonaws.com"
   },
   "dependencies": {
     "nan": "2.x",
