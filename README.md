@@ -19,13 +19,14 @@ Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.
 - [4. Available options (struct)](#4-available-options-struct)
 - [5. Error handling](#5-error-handling)
 - [6. Symbology types](#6-symbology-types)
-    - [6.1. Building](#61-building)
-    - [6.2. Testing](#62-testing)
-    - [6.3. Packaging](#63-packaging)
-    - [6.4. Bugs](#64-bugs)
-    - [6.5. Changelog](#65-changelog)
-- [7. Credits](#7-credits)
-- [8. License](#8-license)
+- [7. Developemtn](#7-development)
+    - [7.1. Building](#71-building)
+    - [7.2. Testing](#72-testing)
+    - [7.3. Packaging](#73-packaging)
+    - [7.4. Bugs](#74-bugs)
+    - [7.5. Changelog](#75-changelog)
+- [8. Credits](#8-credits)
+- [9. License](#9-license)
 
 ## 1. Introduction
 
@@ -49,7 +50,7 @@ var symbology = require('symbology');
 
 ### 3.2. Struct
 
-Prepare a Symbol json object with your desired settings (see [Symbology Struct]() for more info):
+Prepare a Symbol json object with your desired settings (see [4. Available options (struct)](#4-available-options-struct) for more info):
 ```
 var Symbol = {
   symbology: symbology.BARCODE_CODE128,
@@ -60,7 +61,7 @@ var Symbol = {
 ```
 ### 3.3. Available functions
 
-Each function returns a promise that completes with an object containing the exit code and message of the function (see [Error Handling]() for more info).
+Each function returns a promise that completes with an object containing the exit code and message of the function (see [5. Error handling](#5-error-handling) for more info).
 
 ----------
 
@@ -80,7 +81,7 @@ Writes a base64 string to the output object in a property `data`.
 
 ```
 symbology
-  .createStream(Symbol, '12345', 'png')
+  .createStream(Symbol, '12345')
   .then(function(data) {
     console.log('Result: ', data);
   }, function(err) { 
@@ -130,7 +131,7 @@ Result: {
 }
 ```
 
-## 4. [Available options (struct)](#options)
+## 4. Available options (struct)
 
 A Symbol is a regular JavaScript object with the following available properties:
 
@@ -157,9 +158,9 @@ Below are the possible status codes:
 
 There are 53 different available symbology types. For an exhaustive list, please see the [Symbology Enum ]().
 
-## Development (outdated info)
+## 7. Development
 
-### 6.1. Building
+### 7.1. Building
 
 To compile the latest, ensure you have [node-pre-gyp](https://github.com/mapbox/node-pre-gyp) installed. Then run:
 
@@ -167,30 +168,30 @@ To compile the latest, ensure you have [node-pre-gyp](https://github.com/mapbox/
 npm run build
 ```
 
-### 6.2. Testing
+### 7.2. Testing
 
 ```
 npm test
 ```
 
-### 6.3. Packaging
+### 7.3. Packaging
 
 ```
 npm run package-binary
 ```
 
-### 6.4. Bugs
+### 7.4. Bugs
 
-Replace report all bugs [here]().
+Replace report all bugs [here](https://github.com/jshor/symbology/issues).
 
-### 6.5. Changelog
+### 7.5. Changelog
 
-Available [here]().
+Available [here](https://github.com/jshor/symbology/blob/master/CHANGELOG.md).
 
-## 7. Credits
+## 8. Credits
 
 This library is a JS/C++ wrapper module for the terrific C/C++ library [Zint](https://zint.github.io/), (C) [Robin Stuart](https://github.com/g3rrk). Module by [Josh Shor](https://github.com/jshor). 
 
-## 8. License
+## 9. License
 
 MIT.
