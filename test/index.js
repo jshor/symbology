@@ -2,7 +2,7 @@ var chai = require('chai');
 var sinon = require('sinon');
 var mocha = require('mocha');
 var fs = require('fs');
-var zint = require('../');
+var symbology = require('../');
 var regex = require('./regex');
 var expect = chai.expect;
 var stub = sinon.stub();
@@ -36,7 +36,7 @@ describe('the barnode library', function() {
     var filePath = 'testfile.png';
 
     it('should return a status code and a message', function() {
-      return zint
+      return symbology
         .createFile(getSymbol({fileName: filePath}), '54321')
         .then(function(data) {
           expect(data.code).to.be.a('number');
@@ -45,7 +45,7 @@ describe('the barnode library', function() {
     });
 
     it('should return a message and a nonzero status code when invalid', function() {
-      return zint
+      return symbology
         .createFile(getSymbol({
             symbology: 500,
             fileName: filePath
@@ -64,7 +64,7 @@ describe('the barnode library', function() {
     var filePath = 'testfile.svg';
 
     it('should return a zero status code and render an SVG file', function() {
-      return zint
+      return symbology
         .createFile(getSymbol({fileName: filePath}), '54321', 'svg')
         .then(function(data) {
           expect(data.code).to.be.a('number');
@@ -73,7 +73,7 @@ describe('the barnode library', function() {
     });
 
     it('should render an SVG file with valid XML data', function() {
-      return zint
+      return symbology
         .createFile(getSymbol({fileName: filePath}), '54321', 'svg')
         .then(function(data) {
           expect(data.code).to.be.a('number');
@@ -86,7 +86,7 @@ describe('the barnode library', function() {
 
   describe('the createStream function for png data', function() {
     it('should return an object with status code and base64 png data', function() {
-      return zint
+      return symbology
         .createStream(getSymbol(), '12345')
         .then(function(data) {
           expect(data.code).to.be.a('number');
@@ -96,7 +96,7 @@ describe('the barnode library', function() {
     });
 
     it('should not stream base64 png data if input is invalid', function() {
-      return zint
+      return symbology
         .createStream(getSymbol({symbology: -1}), '12345')
         .then(function(data) {
           expect(data.code).to.be.a('number');

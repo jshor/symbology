@@ -8,9 +8,9 @@ var fs = require('fs');
 var PNGImage = require('pngjs-image');
 
 /**
- * zintSymbol struct, populated with default values
+ * Symbol struct, populated with default values
  */
-var zintSymbol = {
+var defaultSymbol = {
   symbology: 20,
   height: 50,
   whitespaceWidth: 0,
@@ -28,30 +28,30 @@ var zintSymbol = {
 };
 
 /**
- * Merges zintSymbol struct with user-defined symbologyStruct
+ * Merges Symbol struct with user-defined symbologyStruct
  * properties. Ensures properties sent are valid.
  * 
- * @param  {ZintSymbol} obj ZintSymbol struct
- * @return {ZintSymbol} obj ZintSymbol struct
+ * @param  {Symbol} obj Symbol struct
+ * @return {Symbol} obj Symbol struct
  */
 function validateSymbol(symbologyStruct) {
-  var keys = Object.keys(zintSymbol);
+  var keys = Object.keys(defaultSymbol);
 
   for(var i=0; i<keys.length; i++) {
     if(!symbologyStruct[keys[i]]) {
-      symbologyStruct[keys[i]] = zintSymbol[keys[i]];
+      symbologyStruct[keys[i]] = defaultSymbol[keys[i]];
     }
   }
 }
 
 /**
- * Calls the given function name from the zint library, validates
+ * Calls the given function name from the c++ library wrapper, validates
  * the struct values and passes the arguments sent in symbologyStruct
  * in the correct order.
  * 
- * @param  {ZintSymbol} symbologyStruct
+ * @param  {Symbol} symbologyStruct
  * @param  {String}     barcodeData
- * @param  {String}     fnName          name of fn to call from zint lib
+ * @param  {String}     fnName          name of fn to call from c++ lib
  * @return {Struct}                     result of called function
  */
 function createSymbology(symbologyStruct, barcodeData, fnName) {
@@ -130,8 +130,8 @@ function pngRender(bitmap, width, height) {
  * Creates a base64 bitmap of a sybology.
  * If PNG, returns the stream is returned in base64 format.
  * 
- * @param  {ZintSymbol} symbol zint_symbol struct
- * @param  {String}     type   'png', 'svg', or 'eps'
+ * @param  {Symbol} symbol Symbol struct
+ * @param  {String} type   'png', 'svg', or 'eps'
  * @return {Promise<Object>}   object with resulting props (see docs)
  */
 exp.createStream = function(symbol, barcodeData) {
@@ -163,10 +163,10 @@ exp.createStream = function(symbol, barcodeData) {
 /**
  * Creates a stream of a PNG, SVG or EPS file in the specified fileName path.
  * 
- * @param  {ZintSymbol} symbol zint_symbol struct
- * @param  {String}     filePath
- * @param  {String}     type   'png', 'svg', or 'eps'
- * @return {Promise<Object>}   object with resulting props (see docs)
+ * @param  {Symbol} symbol symbol struct
+ * @param  {String} filePath
+ * @param  {String} type   'png', 'svg', or 'eps'
+ * @return {Promise<Object>} object with resulting props (see docs)
  */
 exp.createFile = function(symbol, barcodeData) {
   var res = createSymbology(symbol, barcodeData, 'createFile');

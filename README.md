@@ -1,6 +1,6 @@
-# node-zint
+# symbology
 
-[![Coverage Status](https://coveralls.io/repos/github/jshor/node-zint/badge.svg?branch=master)](https://coveralls.io/github/jshor/node-zint?branch=master) [![Build Status](https://travis-ci.org/jshor/node-zint.svg?branch=master)](https://travis-ci.org/jshor/node-zint) [![npm version](https://badge.fury.io/js/barnode.svg)](https://badge.fury.io/js/barnode)
+[![Coverage Status](https://coveralls.io/repos/github/jshor/symbology/badge.svg?branch=master)](https://coveralls.io/github/jshor/symbology?branch=master) [![Build Status](https://travis-ci.org/jshor/symbology.svg?branch=master)](https://travis-ci.org/jshor/symbology) [![npm version](https://badge.fury.io/js/barnode.svg)](https://badge.fury.io/js/barnode)
 
 # ATTENTION: This module is still in development. It is not yet ready for public use.
 
@@ -11,25 +11,25 @@ This Node.js module will allow you to generate over 50+ different types of 1D or
 
 ## Installation
 
-node-zint can be [downloaded directly]() or installed via [npm]().
+symbology can be [downloaded directly]() or installed via [npm]().
 
 ```
-npm install node-zint --save
+npm install symbology --save
 ```
 ## Usage
 
 ### Import the module
 
 ```
-var zint = require('../node-zint');
+var symbology = require('../symbology');
 ```
 
 ### Struct
 
-Prepare a zint-struct json object with your desired settings (see [docs]() for more info):
+Prepare a Symbol json object with your desired settings (see [docs]() for more info):
 ```
-var zintSymbol = {
-  symbology: zint.BARCODE_CODE128,
+var Symbol = {
+  symbology: symbology.BARCODE_CODE128,
   foregroundColor: 'fff000',
   backgroundColor: '000000',
   fileName: '/my/directory/barcode.png'
@@ -41,21 +41,21 @@ Each function returns a promise that completes with an object containing the exi
 
 ----------
 
-`createStream(zintStruct, data, type)`
+`createStream(Symbol, data, type)`
 
 Writes a stream in to the output object in a property `data`.
 
 | Parameter    | Type     | Values                       |
 |--------------|----------|------------------------------|
-| `zintStruct` | `Struct` | Struct of symbology settings |
+| `Symbol`     | `Struct` | Struct of symbology settings |
 | `data`       | `String` | Desired data to encode       |
 | `type`       | `String` | `png`, `svg` or `eps`        |
 
 
 ### Example:
 ```
-zint
-  .createStream(zintSymbol, '12345', 'png')
+symbology
+  .createStream(Symbol, '12345', 'png')
   .then(function(data) {
     console.log('Result: ', data);
   }, function(err) { 
@@ -72,21 +72,21 @@ zint
 ```
 ----------
 
-`createFile(zintStruct, data)`
+`createFile(Symbol, data)`
 
 Writes a stream in to the output object in a property `data`.
 
 | Parameter    | Type     | Values                       |
 |--------------|----------|------------------------------|
-| `zintStruct` | `Struct` | Struct of symbology settings |
+| `Symbol`     | `Struct` | Struct of symbology settings |
 | `data`       | `String` | Desired data to encode       |
 
 
 ### Example:
 
 ```
-zint
-  .createFile(zintSymbol, '12345')
+symbology
+  .createFile(Symbol, '12345')
   .then(function(data) {
     console.log('Result: ', data);
   }, function(err) { 
@@ -105,7 +105,7 @@ zint
 
 ## Available settings (struct)
 
-A zint struct is a regular JavaScript object with the following available properties:
+A Symbol is a regular JavaScript object with the following available properties:
 
 TODO: make a table for this...
 

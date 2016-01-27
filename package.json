@@ -1,9 +1,9 @@
 {
-  "name": "barnode",
-  "version": "0.1.4",
-  "description": "Generate 50+ different types of 1D or 2D barcodes and stream using base64 png or svg.",
+  "name": "symbology",
+  "version": "1.0.1",
+  "description": "Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.",
   "main": "./index.js",
-  "author": "Josh Shor <jshor>",
+  "author": "Josh Shor <https://github.com/jshor>",
   "repository": {
     "type": "git",
     "url": "git://github.com/jshor/node-zint.git"
@@ -13,14 +13,13 @@
     "module_path": "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
     "remote_path": "./{module_name}/v{version}/{configuration}/",
     "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
-    "host": "https://barnode.s3-us-west-1.amazonaws.com"
+    "host": "https://symbology.s3-us-west-1.amazonaws.com"
   },
   "dependencies": {
     "nan": "2.x",
     "node-pre-gyp": "0.x",
     "pngjs": "^2.2.0",
     "pngjs-image": "^0.11.6",
-    "segfault-handler": "^1.0.0",
     "sinon": "^1.17.3",
     "sinon-chai": "^2.8.0"
   },
