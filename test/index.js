@@ -15,7 +15,7 @@ var createStream = require('./createStreamStub');
 function getSymbol(obj) {
   obj = obj || {};
   return {
-    symbology: obj.symbology || 20,
+    symbology: obj.symbology || symbology.BARCODE_CODE128,
     foregroundColor: obj.foregroundColor || 'fff000',
     backgroundColor: obj.backgroundColor || '000000',
     fileName: obj.fileName || 'out.png',
@@ -47,7 +47,7 @@ describe('the barnode library', function() {
     it('should return a message and a nonzero status code when invalid', function() {
       return symbology
         .createFile(getSymbol({
-            symbology: 500,
+            symbology: -1,
             fileName: filePath
           }), '12345')
           .then(noop, function(data) {
