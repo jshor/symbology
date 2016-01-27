@@ -53,7 +53,7 @@ var symbology = require('symbology');
 Prepare a Symbol json object with your desired settings (see [4. Available options (struct)](#4-available-options-struct) for more info):
 ```
 var Symbol = {
-  symbology: symbology.BARCODE_CODE128,
+  symbology: symbology.Barcode.CODE128,
   foregroundColor: 'fff000',
   backgroundColor: '000000',
   fileName: '/my/directory/barcode.png'
@@ -156,7 +156,7 @@ Below are the possible status codes:
 
 ## 6. Symbology types
 
-There are 53 different available symbology types. For an exhaustive list, please see the [Symbology Enum ]().
+There are 53 different available symbology types. For an exhaustive list, please see the [Barcode Types list](https://github.com/jshor/symbology/wiki/Barcode-types).
 
 ## 7. Development
 

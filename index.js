@@ -2,10 +2,15 @@ var binary = require('node-pre-gyp');
 var path = require('path');
 var binding_path = binary.find(path.resolve(path.join(__dirname,'./package.json')));
 var barnode = require(binding_path);
-
-var exp = require('./enums');
 var fs = require('fs');
 var PNGImage = require('pngjs-image');
+
+/* enumerated types in exports */
+var exp = {
+  Barcode: require('./enums/barcode'),
+  ErrorCode: require('./enums/errorCode'),
+  Options: require('./enums/options')
+};
 
 /**
  * Symbol struct, populated with default values
