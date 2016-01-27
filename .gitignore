@@ -22,6 +22,8 @@ build
 *.swo
 .directory
 *.png
+*.eps
+*.svg
 npm-debug.log
 node_modules
 .coveralls.yml
