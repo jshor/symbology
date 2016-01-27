@@ -40,6 +40,9 @@
     "install": "node-pre-gyp install --fallback-to-build",
     "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*",
     "test": "./node_modules/mocha/bin/mocha ./test/*",
-    "prepublish": "npm ls"
+    "prepublish": "npm ls",
+    "build": "./node_modules/.bin/node-pre-gyp build",
+    "package-binary": "./node_modules/.bin/node-pre-gyp build package",
+    "publish-binary": "./node_modules/.bin/node-pre-gyp publish"
   }
 }

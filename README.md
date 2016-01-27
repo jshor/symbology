@@ -1,16 +1,37 @@
 # Symbology.js
 
-v1.0.2
+Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.
 
 [![Coverage Status](https://coveralls.io/repos/github/jshor/symbology/badge.svg?branch=master)](https://coveralls.io/github/jshor/symbology?branch=master) [![Build Status](https://travis-ci.org/jshor/symbology.svg?branch=master)](https://travis-ci.org/jshor/symbology) [![npm version](https://badge.fury.io/js/symbology.svg)](https://badge.fury.io/js/symbology) [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
 
 [![dependency Status](https://david-dm.org/jshor/symbology/dev-status.png)](https://david-dm.org/jshor/symbology#info=dependencies) [![devDependency Status](https://david-dm.org/jshor/symbology/dev-status.png)](https://david-dm.org/jshor/symbology#info=devDependencies)
 
-## 1. Introduction
+## 0. Contents
+
+- [1. Introduction](#introduction)
+- [2. Installation](#installation)
+- [3. Usage](#usage)
+    - [3.1. Import the module](#importing)
+    - [3.2. Struct](#struct)
+    - [3.3. Available functions](#functions)
+      - [3.3.1. Render a base64 png](#createStream)
+      - [3.3.2. Render a file](#createFile)
+- [4. Available options (struct)](#options)
+- [5. Error handling](#errors)
+- [6. Symbology types](#types)
+    - [6.1. Building](#building)
+    - [6.2. Testing](#testing)
+    - [6.3. Packaging](#packaging)
+    - [6.4. Bugs](#bugs)
+    - [6.5. Changelog](#changelog)
+- [7. Credits](#credits)
+- [8. License](#license)
+
+## 1. [Introduction](#introduction)
 
 This Node.js module will allow you to generate over 50+ different types of 1D or 2D symbologies, including barcodes for books, grocery, shipping carriers, healthcare, and international codes. It can save a png, svg, or eps image, or render a base64 png bitmap.
 
-## 2. Installation
+## 2. [Installation](#installation)
 
 symbology can be [downloaded directly](https://github.com/jshor/symbology/archive/1.0.3.zip) or installed via [npm](https://www.npmjs.com/package/symbology).
 
@@ -18,15 +39,15 @@ symbology can be [downloaded directly](https://github.com/jshor/symbology/archiv
 npm install symbology --save
 ```
 
-## 3. Usage
+## 3. [Usage](#usage)
 
-### 3.1. Import the module
+### 3.1. [Import the module](#importing)
 
 ```
 var symbology = require('symbology');
 ```
 
-### 3.2. Struct
+### 3.2. [Struct](#struct)
 
 Prepare a Symbol json object with your desired settings (see [Symbology Struct]() for more info):
 ```
@@ -37,13 +58,13 @@ var Symbol = {
   fileName: '/my/directory/barcode.png'
 };
 ```
-### 3.3. Available functions
+### 3.3. [Available functions](#functions)
 
 Each function returns a promise that completes with an object containing the exit code and message of the function (see [Error Handling]() for more info).
 
 ----------
 
-### 3.3.1. createStream:
+### 3.3.1. [Render a base64 png](#createStream):
 
 `createStream(Symbol, data, type)`
 
@@ -76,7 +97,7 @@ Result: {
 ```
 ----------
 
-### 3.3.2. createFile:
+### 3.3.2. [Render a file](#createFile):
 
 `createFile(Symbol, data)`
 
@@ -109,13 +130,13 @@ Result: {
 }
 ```
 
-## 4. Available options (struct)
+## 4. [Available options (struct)](#options)
 
 A Symbol is a regular JavaScript object with the following available properties:
 
 TODO: make a table for this...
 
-## 5. Error handling
+## 5. [Error handling](#errors)
 
 Each function returns an object having property `code`, which is the status code of the function, and `message`, which contains an error/warning message (if any).
 
@@ -132,40 +153,44 @@ Below are the possible status codes:
 | 10            | ZERROR_FILE_ACCESS      | Cannot write to the given path.                                     |
 | 11            | ZERROR_MEMORY           | Corrupt or insufficient memory.                                     |
 
-## 6. Symbology types
+## 6. [Symbology types](#types)
 
 There are 53 different available symbology types. For an exhaustive list, please see the [Symbology Enum ]().
 
 ## Development (outdated info)
 
-### 6.1. Compilation
+### 6.1. [Building](#building)
 
-To compile the latest, ensure you have [node-gyp]() installed. Then run:
+To compile the latest, ensure you have [node-pre-gyp](https://github.com/mapbox/node-pre-gyp) installed. Then run:
 
 ```
-node-gyp build
+npm run build
 ```
 
-### 6.2. Testing
-
-For running tests,
+### 6.2. [Testing](#testing)
 
 ```
 npm test
 ```
 
-### 6.3. Bugs
+### 6.3. [Packaging](#packaging)
+
+```
+npm run package-binary
+```
+
+### 6.4. [Bugs](#bugs)
 
 Replace report all bugs [here]().
 
-### 6.4. Changelog
+### 6.5. [Changelog](#changelog)
 
 Available [here]().
 
-### 6.5. Credits
+## 7. [Credits](#credits)
 
 This library is a JS/C++ wrapper module for the terrific C/C++ library [Zint](https://zint.github.io/), (C) [Robin Stuart](https://github.com/g3rrk). Module by [Josh Shor](https://github.com/jshor). 
 
-## 7. License
+## 8. [License](#license)
 
 MIT.
