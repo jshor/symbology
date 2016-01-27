@@ -19,7 +19,7 @@ Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.
 - [4. Available options (struct)](#4-available-options-struct)
 - [5. Error handling](#5-error-handling)
 - [6. Symbology types](#6-symbology-types)
-- [7. Developemtn](#7-development)
+- [7. Development](#7-development)
     - [7.1. Building](#71-building)
     - [7.2. Testing](#72-testing)
     - [7.3. Packaging](#73-packaging)
