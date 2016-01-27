@@ -1,0 +1,8 @@
+module.exports = {
+  BARCODE_NO_ASCII: 1,
+  BARCODE_BIND: 2,
+  BARCODE_BOX: 4,
+  BARCODE_STDOUT: 8,
+  READER_INIT: 16,
+  SMALL_TEXT: 32
+};

@@ -15,7 +15,7 @@ var createStream = require('./createStreamStub');
 function getSymbol(obj) {
   obj = obj || {};
   return {
-    symbology: obj.symbology || symbology.BARCODE_CODE128,
+    symbology: obj.symbology || symbology.Barcode.CODE128,
     foregroundColor: obj.foregroundColor || 'fff000',
     backgroundColor: obj.backgroundColor || '000000',
     fileName: obj.fileName || 'out.png',
