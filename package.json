@@ -6,7 +6,7 @@
   "author": "Josh Shor <https://github.com/jshor>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/jshor/node-zint.git"
+    "url": "git://github.com/jshor/symbology.git"
   },
   "binary": {
     "module_name": "node_addon_example",
