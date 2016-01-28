@@ -8,3 +8,5 @@ npm-debug.log
 .npmignore
 .gitignore
 .travis.yml
+coverage
+build
