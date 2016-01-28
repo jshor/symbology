@@ -133,7 +133,7 @@ maxi_text_process(int mode, uint8_t source[], int length)
 		return ZERROR_TOO_LONG;
 	}
 
-	for (i = 0; i < nitems(set); i++) {
+	for (i = 0; i < (int)nitems(set); i++) {
 		set[i] = -1;
 		character[i] = 0;
 	}
@@ -297,7 +297,7 @@ maxi_text_process(int mode, uint8_t source[], int length)
 		}
 	}
 
-	for (i = length; i < nitems(set); i++) {
+	for (i = length; i < (int)nitems(set); i++) {
 		/* Add the padding */
 		if (set[length - 1] == 2)
 			set[i] = 2;
@@ -308,7 +308,7 @@ maxi_text_process(int mode, uint8_t source[], int length)
 
 	/* Find candidates for number compression */
 	int count;
-	for (count = 0, i = (mode == 2 || mode == 3) ? 0 : 9; i < nitems(set) - 1; i++) {
+	for (count = 0, i = (mode == 2 || mode == 3) ? 0 : 9; i < (int)nitems(set) - 1; i++) {
 		if (set[i] == 1 && character[i] >= 48 && character[i] <= 57) {
 			/* Character is a number */
 			count++;
@@ -332,7 +332,7 @@ maxi_text_process(int mode, uint8_t source[], int length)
 
 	/* Add shift and latch characters */
 	int current_set;
-	for (current_set = 1, i = 0; i < nitems(set);) {
+	for (current_set = 1, i = 0; i < (int)nitems(set);) {
 		if (set[i] != current_set) {
 			switch (set[i]) {
 				case 1:
@@ -408,7 +408,7 @@ maxi_text_process(int mode, uint8_t source[], int length)
 	}
 
 	/* Number compression has not been forgotten! - It's handled below */
-	for (i = 0; i < nitems(set);) {
+	for (i = 0; i < (int)nitems(set);) {
 		if (set[i] == 6) {
 			/* Number compression */
 			char substring[11];

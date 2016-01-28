@@ -679,14 +679,14 @@ int ean_128(struct zint_symbol *symbol, uint8_t source[], int length)
 
 	do {
 		list[1][indexliste] = mode;
-		while ((list[1][indexliste] == mode) && (indexchaine < strlen(reduced))) {
+		while ((list[1][indexliste] == mode) && (indexchaine < (int)strlen(reduced))) {
 			list[0][indexliste]++;
 			indexchaine++;
 			mode = parunmodd(reduced[indexchaine]);
 			if(reduced[indexchaine] == '[') { mode = ABORC; }
 		}
 		indexliste++;
-	} while (indexchaine < strlen(reduced));
+	} while (indexchaine < (int)strlen(reduced));
 
 	dxsmooth(&indexliste);
 
@@ -761,7 +761,7 @@ int ean_128(struct zint_symbol *symbol, uint8_t source[], int length)
 	   being too long */
 	last_set = ' ';
 	glyph_count = 0.0;
-	for (i = 0; i < strlen(reduced); i++) {
+	for (i = 0; i < (int)strlen(reduced); i++) {
 		if((set[i] == 'a') || (set[i] == 'b')) {
 			glyph_count = glyph_count + 1.0;
 		}
@@ -859,7 +859,7 @@ int ean_128(struct zint_symbol *symbol, uint8_t source[], int length)
 			bar_characters++;
 			read++;
 		}
-	} while (read < strlen(reduced));
+	} while (read < (int)strlen(reduced));
 
 	/* "...note that the linkage flag is an extra code set character between
 	   the last data character and the Symbol Check Character"

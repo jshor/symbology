@@ -37,11 +37,12 @@ const char *MSITable[10] = {"12121212", "12121221", "12122112", "12122121", "122
 int plessey(struct zint_symbol *symbol, uint8_t source[], int length)
 { /* Not MSI/Plessey but the older Plessey standard */
 
-	unsigned int i, check;
+	unsigned int check;
 	uint8_t *checkptr;
 	const char grid[9] = {1,1,1,1,0,1,0,0,1};
 	char dest[1024]; /* 8 + 65 * 8 + 8 * 2 + 9 + 1 ~ 1024 */
 	int error_number;
+	int i;
 
 	error_number = 0;
 
@@ -100,7 +101,7 @@ int plessey(struct zint_symbol *symbol, uint8_t source[], int length)
 int msi_plessey(struct zint_symbol *symbol, uint8_t source[], int length)
 { /* Plain MSI Plessey - does not calculate any check character */
 
-	unsigned int i;
+	int i;
 	char dest[512]; /* 2 + 55 * 8 + 3 + 1 ~ 512 */
 
 	if(length > 55) {
@@ -128,7 +129,8 @@ int msi_plessey_mod10(struct zint_symbol *symbol, uint8_t source[], int length)
 { /* MSI Plessey with Modulo 10 check digit - algorithm from Barcode Island
 	http://www.barcodeisland.com/ */
 
-	unsigned long i, wright, dau, pedwar, pump, n;
+	unsigned long wright, dau, pedwar, pump, n;
+	int i;
 	char un[200], tri[32];
 	int error_number, h;
 	char dest[1000];
@@ -237,7 +239,7 @@ int msi_plessey_mod1010(struct zint_symbol *symbol, uint8_t source[], const unsi
 
 	pedwar = 0;
 	h = strlen(tri);
-	for(i = 0; i < h; i++)
+	for(i = 0; (int)i < h; i++)
 	{
 		pedwar += ctoi(tri[i]);
 	}
@@ -271,7 +273,7 @@ int msi_plessey_mod1010(struct zint_symbol *symbol, uint8_t source[], const unsi
 
 	pedwar = 0;
 	h = strlen(tri);
-	for(i = 0; i < h; i++)
+	for(i = 0; (int)i < h; i++)
 	{
 		pedwar += ctoi(tri[i]);
 	}
@@ -328,7 +330,7 @@ int msi_plessey_mod11(struct zint_symbol *symbol, uint8_t source[], const unsign
 	strcpy(dest, "21");
 
 	/* draw data section */
-	for(i = 0; i < src_len; i++)
+	for(i = 0; i < (int)src_len; i++)
 	{
 		lookup(NEON, MSITable, source[i], dest);
 	}
@@ -374,9 +376,9 @@ int msi_plessey_mod1110(struct zint_symbol *symbol, uint8_t source[], const unsi
 	/* Verified against http://www.bokai.com/BarcodeJSP/applet/BarcodeSampleApplet.htm */
 	/* Weighted using the IBM system */
 
-	unsigned long i, weight, x, check, wright, dau, pedwar, pump, h;
+	unsigned long weight, x, check, wright, dau, pedwar, pump, h;
 	char un[16], tri[16];
-	int error_number;
+	int error_number, i;
 	char dest[1000];
 	uint8_t temp[32];
 	unsigned int temp_len;
@@ -392,7 +394,7 @@ int msi_plessey_mod1110(struct zint_symbol *symbol, uint8_t source[], const unsi
 	strcpy(dest, "21");
 
 	/* draw data section */
-	for(i = 0; i < src_len; i++)
+	for(i = 0; i < (int)src_len; i++)
 	{
 		lookup(NEON, MSITable, source[i], dest);
 	}
@@ -425,7 +427,7 @@ int msi_plessey_mod1110(struct zint_symbol *symbol, uint8_t source[], const unsi
 	/* caluculate second (mod 10) check digit */
 	wright = 0;
 	i = !(temp_len & 1);
-	for(; i < temp_len; i += 2)
+	for(; i < (int)temp_len; i += 2)
 	{
 		un[wright++] = temp[i];
 	}
@@ -438,13 +440,13 @@ int msi_plessey_mod1110(struct zint_symbol *symbol, uint8_t source[], const unsi
 
 	pedwar = 0;
 	h = strlen(tri);
-	for(i = 0; i < h; i++)
+	for(i = 0; i < (int)h; i++)
 	{
 		pedwar += ctoi(tri[i]);
 	}
 
 	i = temp_len & 1;
-	for(; i < temp_len; i+=2)
+	for(; i < (int)temp_len; i+=2)
 	{
 		pedwar += ctoi(temp[i]);
 	}

@@ -767,7 +767,7 @@ int c1_encode(struct zint_symbol *symbol, uint8_t source[], unsigned int target[
 			}
 
 			if(strlen(decimal_binary) >= 24) {
-				int i = 0, target1 = 0, target2 = 0, target3 = 0;
+				int target1 = 0, target2 = 0, target3 = 0;
 				char temp_binary[40];
 
 				/* Binary buffer is full - transfer to target */
@@ -802,7 +802,7 @@ int c1_encode(struct zint_symbol *symbol, uint8_t source[], unsigned int target[
 				strcpy(temp_binary, "");
 				if(strlen(decimal_binary) > 24) {
 					int i;
-					for(i = 0; i <= (strlen(decimal_binary) - 24); i++) {
+					for(i = 0; i <= (int)(strlen(decimal_binary) - 24); i++) {
 						temp_binary[i] = decimal_binary[i + 24];
 					}
 					strcpy(decimal_binary, temp_binary);

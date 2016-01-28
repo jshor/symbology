@@ -802,7 +802,7 @@ void numbprocess(int *chainemc, int *mclength, char chaine[], int start, int len
 			while(strlen(chainemod) != 0) {
 				nombre *= 10;
 				nombre += ctoi(chainemod[0]);
-				for(loop = 0; loop < strlen(chainemod); loop++) {
+				for(loop = 0; loop < (int)strlen(chainemod); loop++) {
 					chainemod[loop] = chainemod[loop + 1];
 				}
 				if (nombre < diviseur) {
@@ -1051,10 +1051,10 @@ int pdf417(struct zint_symbol *symbol, uint8_t chaine[], int length)
 		}
 
 		strcpy(pattern, "");
-		for(loop = 0; loop < strlen(codebarre); loop++) {
+		for(loop = 0; loop < (int)strlen(codebarre); loop++) {
 			lookup(BRSET, PDFttf, codebarre[loop], pattern);
 		}
-		for(loop = 0; loop < strlen(pattern); loop++) {
+		for(loop = 0; loop < (int)strlen(pattern); loop++) {
 			if(pattern[loop] == '1') { set_module(symbol, i, loop); }
 		}
 		if(symbol->height == 0) {
@@ -1415,7 +1415,7 @@ int micro_pdf417(struct zint_symbol *symbol, uint8_t chaine[], int length)
 		writer = 0;
 		flip = 1;
 		strcpy(pattern, "");
-		for(loop = 0; loop < strlen(codebarre); loop++) {
+		for(loop = 0; loop < (int)strlen(codebarre); loop++) {
 			if((codebarre[loop] >= '0') && (codebarre[loop] <= '9')) {
 				for(k = 0; k < ctoi(codebarre[loop]); k++) {
 					if(flip == 0) {
@@ -1439,7 +1439,7 @@ int micro_pdf417(struct zint_symbol *symbol, uint8_t chaine[], int length)
 		symbol->width = writer;
 
 		/* so now pattern[] holds the string of '1's and '0's. - copy this to the symbol */
-		for(loop = 0; loop < strlen(pattern); loop++) {
+		for(loop = 0; loop < (int)strlen(pattern); loop++) {
 			if(pattern[loop] == '1') { set_module(symbol, i, loop); }
 		}
 		symbol->row_height[i] = 2;

@@ -275,7 +275,7 @@ int cc_a(struct zint_symbol *symbol, char source[], int cc_width)
 		writer = 0;
 		flip = 1;
 		strcpy(pattern, "");
-		for(loop = 0; loop < strlen(codebarre); loop++) {
+		for(loop = 0; loop < (int)strlen(codebarre); loop++) {
 			if((codebarre[loop] >= '0') && (codebarre[loop] <= '9')) {
 				for(k = 0; k < ctoi(codebarre[loop]); k++) {
 					if(flip == 0) {
@@ -299,7 +299,7 @@ int cc_a(struct zint_symbol *symbol, char source[], int cc_width)
 		symbol->width = writer;
 
 		/* so now pattern[] holds the string of '1's and '0's. - copy this to the symbol */
-		for(loop = 0; loop < strlen(pattern); loop++) {
+		for(loop = 0; loop < (int)strlen(pattern); loop++) {
 			if(pattern[loop] == '1') { set_module(symbol, i, loop); }
 		}
 		symbol->row_height[i] = 2;
@@ -503,7 +503,7 @@ int cc_b(struct zint_symbol *symbol, char source[], int cc_width)
 		writer = 0;
 		flip = 1;
 		strcpy(pattern, "");
-		for(loop = 0; loop < strlen(codebarre); loop++) {
+		for(loop = 0; loop < (int)strlen(codebarre); loop++) {
 			if((codebarre[loop] >= '0') && (codebarre[loop] <= '9')) {
 				for(k = 0; k < ctoi(codebarre[loop]); k++) {
 					if(flip == 0) {
@@ -527,7 +527,7 @@ int cc_b(struct zint_symbol *symbol, char source[], int cc_width)
 		symbol->width = writer;
 
 		/* so now pattern[] holds the string of '1's and '0's. - copy this to the symbol */
-		for(loop = 0; loop < strlen(pattern); loop++) {
+		for(loop = 0; loop < (int)strlen(pattern); loop++) {
 			if(pattern[loop] == '1') { set_module(symbol, i, loop); }
 		}
 		symbol->row_height[i] = 2;
@@ -680,10 +680,10 @@ int cc_c(struct zint_symbol *symbol, char source[], int cc_width, int ecc_level)
 		concat(codebarre, "-");
 
 		strcpy(pattern, "");
-		for(loop = 0; loop < strlen(codebarre); loop++) {
+		for(loop = 0; loop < (int)strlen(codebarre); loop++) {
 			lookup(BRSET, PDFttf, codebarre[loop], pattern);
 		}
-		for(loop = 0; loop < strlen(pattern); loop++) {
+		for(loop = 0; loop < (int)strlen(pattern); loop++) {
 			if(pattern[loop] == '1') { set_module(symbol, i, loop); }
 		}
 		symbol->row_height[i] = 3;
@@ -797,7 +797,7 @@ int cc_binary_string(struct zint_symbol *symbol, const char source[], char binar
 		do {
 			ninety[i] = source[i + 2];
 			i++;
-		} while ((strlen(source) > i + 2) && ('[' != source[i + 2]));
+		} while (((int)strlen(source) > i + 2) && ('[' != source[i + 2]));
 		ninety[i] = '\0';
 
 		/* Find out if the AI 90 data is alphabetic or numeric or both */
@@ -806,7 +806,7 @@ int cc_binary_string(struct zint_symbol *symbol, const char source[], char binar
 		alphanum = 0;
 		numeric = 0;
 
-		for(i = 0; i < strlen(ninety); i++) {
+		for(i = 0; i < (int)strlen(ninety); i++) {
 
 			if ((ninety[i] >= 'A') && (ninety[i] <= 'Z')) {
 				/* Character is alphabetic */
@@ -1081,7 +1081,7 @@ int cc_binary_string(struct zint_symbol *symbol, const char source[], char binar
 		j++;
 	}
 
-	for(i = read_posn; i < strlen(source); i++) {
+	for(i = read_posn; i < (int)strlen(source); i++) {
 		general_field[j] = source[i];
 		j++;
 	}
@@ -1090,7 +1090,7 @@ int cc_binary_string(struct zint_symbol *symbol, const char source[], char binar
 	if(strlen(general_field) != 0) { alpha_pad = 0; }
 
 	latch = 0;
-	for(i = 0; i < strlen(general_field); i++) {
+	for(i = 0; i < (int)strlen(general_field); i++) {
 		/* Table 13 - ISO/IEC 646 encodation */
 		if((general_field[i] < ' ') || (general_field[i] > 'z')) {
 			general_field_type[i] = INVALID_CHAR; latch = 1;
@@ -1156,13 +1156,13 @@ int cc_binary_string(struct zint_symbol *symbol, const char source[], char binar
 		return ZERROR_INVALID_DATA;
 	}
 
-	for(i = 0; i < strlen(general_field); i++) {
+	for(i = 0; i < (int)strlen(general_field); i++) {
 		if((general_field_type[i] == ISOIEC) && (general_field[i + 1] == '[')) {
 			general_field_type[i + 1] = ISOIEC;
 		}
 	}
 
-	for(i = 0; i < strlen(general_field); i++) {
+	for(i = 0; i < (int)strlen(general_field); i++) {
 		if((general_field_type[i] == ALPHA_OR_ISO) && (general_field[i + 1] == '[')) {
 			general_field_type[i + 1] = ALPHA_OR_ISO;
 		}
@@ -1342,7 +1342,7 @@ int cc_binary_string(struct zint_symbol *symbol, const char source[], char binar
 				i++;
 				break;
 		}
-	} while (i + latch < strlen(general_field));
+	} while (i + latch < (int)strlen(general_field));
 
 	binary_length = strlen(binary_string);
 	if(cc_mode == 1) {

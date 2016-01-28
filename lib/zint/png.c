@@ -685,7 +685,7 @@ void to_latin1(uint8_t source[], uint8_t preprocessed[])
 				i += 2;
 			}
 		}
-	} while (i < input_length);
+	} while (i < (int)input_length);
 	preprocessed[j] = '\0';
 
 	return;

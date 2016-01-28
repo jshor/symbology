@@ -59,7 +59,7 @@ int gs1_verify(struct zint_symbol *symbol, uint8_t source[], const unsigned int 
 	int error_latch;
 
 	/* Detect extended ASCII characters */
-	for(i = 0; i < src_len; i++) {
+	for(i = 0; i < (int)src_len; i++) {
 		if(source[i] >=128) {
 			strcpy(symbol->errtxt, "Extended ASCII characters are not supported by GS1");
 			return ZERROR_INVALID_DATA;
@@ -83,7 +83,7 @@ int gs1_verify(struct zint_symbol *symbol, uint8_t source[], const unsigned int 
 	min_ai_length = 5;
 	j = 0;
 	ai_latch = 0;
-	for(i = 0; i < src_len; i++) {
+	for(i = 0; i < (int)src_len; i++) {
 		ai_length += j;
 		if(((j == 1) && (source[i] != ']')) && ((source[i] < '0') || (source[i] > '9'))) { ai_latch = 1; }
 		if(source[i] == '[') { bracket_level++; j = 1; }
@@ -129,7 +129,7 @@ int gs1_verify(struct zint_symbol *symbol, uint8_t source[], const unsigned int 
 	}
 
 	ai_count = 0;
-	for(i = 1; i < src_len; i++) {
+	for(i = 1; i < (int)src_len; i++) {
 		if(source[i - 1] == '[') {
 			ai_location[ai_count] = i;
 			j = 0;
@@ -252,7 +252,7 @@ int gs1_verify(struct zint_symbol *symbol, uint8_t source[], const unsigned int 
 	j = 0;
 	last_ai = 0;
 	ai_latch = 1;
-	for(i = 0; i < src_len; i++) {
+	for(i = 0; i < (int)src_len; i++) {
 		if((source[i] != '[') && (source[i] != ']')) {
 			reduced[j++] = source[i];
 		}

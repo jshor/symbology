@@ -129,8 +129,8 @@ int post_plot(struct zint_symbol *symbol, uint8_t source[], int length)
 int planet(struct zint_symbol *symbol, uint8_t source[], char dest[], int length)
 {
 	/* Handles the PLANET  system used for item tracking in the US */
-	unsigned int i, sum, check_digit;
-	int error_number;
+	unsigned int sum, check_digit;
+	int error_number, i;
 
 	error_number = 0;
 
@@ -276,8 +276,7 @@ int fim(struct zint_symbol *symbol, uint8_t source[], int length)
 char rm4scc(char source[], uint8_t dest[], int length)
 {
 	/* Handles the 4 State barcodes used in the UK by Royal Mail */
-	unsigned int i;
-	int top, bottom, row, column, check_digit;
+	int top, bottom, row, column, check_digit, i;
 	char values[3], set_copy[] = KRSET;
 
 	top = 0;
@@ -360,8 +359,7 @@ int kix_code(struct zint_symbol *symbol, uint8_t source[], int length)
 	/* The same as RM4SCC but without check digit */
 	/* Specification at http://www.tntpost.nl/zakelijk/klantenservice/downloads/kIX_code/download.aspx */
 	char height_pattern[50], localstr[20];
-	unsigned int loopey;
-	int writer, i, h;
+	int writer, i, h, loopey;
 	int error_number; /* zeroes; */
 	strcpy(height_pattern, "");
 
