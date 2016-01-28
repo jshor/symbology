@@ -1,6 +1,7 @@
 node_modules
 lib/binding
 build
+lib
 test
 *.tgz
 npm-debug.log

@@ -10,12 +10,12 @@ lib-cov
 pids
 logs
 results
-lib/binding
 coverage
 *.tgz
 npm-debug.log
 node_modules
 build
+lib
 *~
 *.[ao]
 *.swp
