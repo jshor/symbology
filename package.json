@@ -10,7 +10,7 @@
     "url": "git://github.com/jshor/symbology.git"
   },
   "binary": {
-    "module_name": "node_addon_example",
+    "module_name": "symbology",
     "module_path": "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
     "remote_path": "./{module_name}/v{version}/{configuration}/",
     "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
