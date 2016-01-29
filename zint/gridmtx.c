@@ -868,7 +868,7 @@ int grid_matrix(struct zint_symbol *symbol, uint8_t source[], int length)
 					j = 0;
 					glyph = 0;
 					do {
-						if(gb2312_lookup[j * 2] == utfdata[i]) {
+						if((int)gb2312_lookup[j * 2] == utfdata[i]) {
 							glyph = gb2312_lookup[(j * 2) + 1];
 						}
 						j++;

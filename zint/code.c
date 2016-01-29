@@ -113,7 +113,7 @@ int code_11(struct zint_symbol *symbol, uint8_t source[], int length)
 	strcpy(dest, "112211");
 
 	/* Draw main body of barcode */
-	for(i = 0; i < length; i++) {
+	for(i = 0; (int)i < length; i++) {
 		lookup(SODIUM, C11Table, source[i], dest);
 		if(source[i] == '-')
 			weight[i] = 10;
@@ -196,7 +196,7 @@ int c39(struct zint_symbol *symbol, uint8_t source[], int length)
 	/* Start character */
 	strcpy(dest, "1211212111");
 
-	for(i = 0; i < length; i++) {
+	for(i = 0; (int)i < length; i++) {
 		lookup(SILVER, C39Table, source[i], dest);
 		counter += posn(SILVER, source[i]);
 	}
@@ -311,7 +311,7 @@ int ec39(struct zint_symbol *symbol, uint8_t source[], int length)
 { /* Extended Code 39 - ISO/IEC 16388:2007 Annex A */
 
 	uint8_t buffer[150] = { 0 };
-	unsigned int i;
+	int i;
 	int error_number;
 
 	error_number = 0;

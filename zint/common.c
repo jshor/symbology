@@ -57,7 +57,7 @@ void uconcat(uint8_t dest[], const uint8_t source[])
 	unsigned int i, j;
 
 	j = ustrlen(dest);
-	for(i = 0; i <= ustrlen(source); i++) {
+	for(i = 0; (int)i <= ustrlen(source); i++) {
 		dest[i + j] = source[i]; }
 }
 
@@ -94,7 +94,8 @@ int is_sane(char test_string[], uint8_t source[], int length)
 { /* Verifies that a string only uses valid characters */
 	unsigned int latch;
 	unsigned int lt = strlen(test_string);
-	unsigned int i, j;
+	unsigned int j;
+	int i;
 
 	for(i = 0; i < length; i++) {
 		latch = FALSE;

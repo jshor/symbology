@@ -213,7 +213,7 @@ int code16k(struct zint_symbol *symbol, uint8_t source[], int length)
 	bar_characters = 0;
 
 	/* Detect extended ASCII characters */
-	for(i = 0; i <  input_length; i++) {
+	for(i = 0; (int)i < input_length; i++) {
 		if(source[i] >=128) {
 			fset[i] = 'f';
 		}
@@ -221,13 +221,13 @@ int code16k(struct zint_symbol *symbol, uint8_t source[], int length)
 	fset[i] = '\0';
 
 	/* Decide when to latch to extended mode */
-	for(i = 0; i < input_length; i++) {
+	for(i = 0; (int)i < input_length; i++) {
 		j = 0;
 		if(fset[i] == 'f') {
 			do {
 				j++;
 			} while(fset[i + j] == 'f');
-			if((j >= 5) || ((j >= 3) && ((i + j) == (input_length - 1)))) {
+			if((j >= 5) || ((j >= 3) && ((int)(i + j) == (input_length - 1)))) {
 				for(k = 0; k <= j; k++) {
 					fset[i + k] = 'F';
 				}
@@ -237,11 +237,11 @@ int code16k(struct zint_symbol *symbol, uint8_t source[], int length)
 
 	/* Decide if it is worth reverting to 646 encodation for a few characters */
 	if(input_length > 1) {
-		for(i = 1; i < input_length; i++) {
+		for(i = 1; (int)i < input_length; i++) {
 			if((fset[i - 1] == 'F') && (fset[i] == ' ')) {
 				/* Detected a change from 8859-1 to 646 - count how long for */
-				for(j = 0; (fset[i + j] == ' ') && ((i + j) < input_length); j++);
-				if((j < 5) || ((j < 3) && ((i + j) == (input_length - 1)))) {
+				for(j = 0; (fset[i + j] == ' ') && ((int)(i + j) < input_length); j++);
+				if((j < 5) || ((j < 3) && ((int)(i + j) == (input_length - 1)))) {
 					/* Change to shifting back rather than latching back */
 					for(k = 0; k < j; k++) {
 						fset[i + k] = 'n';
@@ -276,8 +276,8 @@ int code16k(struct zint_symbol *symbol, uint8_t source[], int length)
 
 	/* Put set data into set[] */
 	read = 0;
-	for(i = 0; i < indexliste; i++) {
-		for(j = 0; j < list[0][i]; j++) {
+	for(i = 0; (int)i < indexliste; i++) {
+		for(j = 0; (int)j < list[0][i]; j++) {
 			switch(list[1][i]) {
 				case SHIFTA: set[read] = 'a'; break;
 				case LATCHA: set[read] = 'A'; break;
@@ -349,7 +349,7 @@ int code16k(struct zint_symbol *symbol, uint8_t source[], int length)
 	/* Make sure the data will fit in the symbol */
 	last_set = ' ';
 	glyph_count = 0.0;
-	for(i = 0; i < input_length; i++) {
+	for(i = 0; (int)i < input_length; i++) {
 		if((set[i] == 'a') || (set[i] == 'b')) {
 			glyph_count = glyph_count + 1.0;
 		}
@@ -568,7 +568,7 @@ int code16k(struct zint_symbol *symbol, uint8_t source[], int length)
 			read++;
 		}
 		/* printf("tp9 read=%d surrent set=%c\n", read, set[read]); */
-	} while (read < ustrlen(source));
+	} while ((int)read < ustrlen(source));
 	//int i;
 	pads_needed = 5 - ((bar_characters + 2) % 5);
 	if(pads_needed == 5) {
@@ -577,7 +577,7 @@ int code16k(struct zint_symbol *symbol, uint8_t source[], int length)
 	if((bar_characters + pads_needed) < 8) {
 		pads_needed += 8 - (bar_characters + pads_needed);
 	}
-	for(i = 0; i < pads_needed; i++) {
+	for(i = 0; (int)i < pads_needed; i++) {
 		values[bar_characters] = 106;
 		bar_characters++;
 	}

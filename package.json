@@ -1,6 +1,6 @@
 {
   "name": "symbology",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.",
   "main": "./index.js",
   "author": "Josh Shor <https://github.com/jshor>",
@@ -10,7 +10,7 @@
     "url": "git://github.com/jshor/symbology.git"
   },
   "binary": {
-    "module_name": "node_addon_example",
+    "module_name": "symbology",
     "module_path": "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
     "remote_path": "./{module_name}/v{version}/{configuration}/",
     "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",

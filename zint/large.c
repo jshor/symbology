@@ -165,7 +165,7 @@ void binary_load(int16_t reg[], char data[], const unsigned int src_len)
 		reg[i] = 0;
 	}
 
-	for(read = 0; read < src_len; read++) {
+	for(read = 0; read < (int)src_len; read++) {
 
 		for(i = 0; i < 112; i++) {
 			temp[i] = reg[i];

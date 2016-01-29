@@ -981,7 +981,7 @@ int qr_code(struct zint_symbol *symbol, uint8_t source[], int length)
 					int j = 0;
 					glyph = 0;
 					do {
-						if(sjis_lookup[j * 2] == utfdata[i]) {
+						if((int)sjis_lookup[j * 2] == utfdata[i]) {
 							glyph = sjis_lookup[(j * 2) + 1];
 						}
 						j++;
@@ -1966,7 +1966,7 @@ int microqr(struct zint_symbol *symbol, uint8_t source[], int length)
 					int j = 0;
 					glyph = 0;
 					do {
-						if(sjis_lookup[j * 2] == utfdata[i]) {
+						if((int)sjis_lookup[j * 2] == utfdata[i]) {
 							glyph = sjis_lookup[(j * 2) + 1];
 						}
 						j++;

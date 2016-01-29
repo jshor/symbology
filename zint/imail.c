@@ -366,7 +366,7 @@ int imail(struct zint_symbol *symbol, uint8_t source[], int length)
 		accum[i] = 0;
 	}
 
-	for(read = 0; read < strlen(zip); read++) {
+	for(read = 0; read < (int)strlen(zip); read++) {
 
 		for(i = 0; i < 112; i++) {
 			x_reg[i] = accum[i];
@@ -411,7 +411,7 @@ int imail(struct zint_symbol *symbol, uint8_t source[], int length)
 		accum[i] = 0;
 	}
 
-	for(read = 0; read < strlen(zip_adder); read++) {
+	for(read = 0; read < (int)strlen(zip_adder); read++) {
 
 		for(i = 0; i < 112; i++) {
 			y_reg[i] = accum[i];
@@ -478,7 +478,7 @@ int imail(struct zint_symbol *symbol, uint8_t source[], int length)
 
 	/* and then the rest */
 
-	for(read = 2; read < strlen(tracker); read++) {
+	for(read = 2; read < (int)strlen(tracker); read++) {
 
 		for(i = 0; i < 112; i++) {
 			y_reg[i] = accum[i];
@@ -664,7 +664,7 @@ int imail(struct zint_symbol *symbol, uint8_t source[], int length)
 
 	/* Translate 4-state data pattern to symbol */
 	read = 0;
-	for(i = 0; i < strlen(data_pattern); i++)
+	for(i = 0; i < (int)strlen(data_pattern); i++)
 	{
 		if((data_pattern[i] == '1') || (data_pattern[i] == '0'))
 		{
