@@ -1,4 +1,4 @@
-# Symbology.js
+# ![Symbology.js](https://raw.githubusercontent.com/jshor/symbology/master/logo.png) Symbology.js
 
 ### v1.0.5
 
