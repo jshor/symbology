@@ -1,7 +1,8 @@
 {
   "name": "symbology",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.",
+  "keywords": "barcode, symbology, EAN, UPC, QR code, Code 39, Code 128, CodaBar, DataBar, Datamatrix, PDF417, Aztec",
   "main": "./index.js",
   "author": "Josh Shor <https://github.com/jshor>",
   "license": "MIT",

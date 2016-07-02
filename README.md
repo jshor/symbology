@@ -1,6 +1,6 @@
 # ![Symbology.js](https://raw.githubusercontent.com/jshor/symbology/master/symbologyjs-logo.png) Symbology.js
 
-### v1.0.5
+### v1.0.6
 
 Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.
 
@@ -35,8 +35,6 @@ Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.
 This Node.js module will allow you to generate over 50+ different types of 1D or 2D symbologies, including barcodes for books, grocery, shipping carriers, healthcare, and international codes. It can save a png, svg, or eps image, or render a base64 png bitmap.
 
 ## 2. Installation
-
-symbology can be [downloaded directly](https://github.com/jshor/symbology/archive/1.0.3.zip) or installed via [npm](https://www.npmjs.com/package/symbology).
 
 ```
 npm install symbology --save
@@ -86,16 +84,16 @@ symbology
   .createStream(Symbol, '12345')
   .then(function(data) {
     console.log('Result: ', data);
-  }, function(err) { 
-    console.log('Error: ', err); 
+  }, function(err) {
+    console.log('Error: ', err);
   });
 ```
 Returns:
 ```
-Result: { 
+Result: {
   message: '',
   code: 0,
-  data: 'data:image/png;base64,iVBOR [...] g==' 
+  data: 'data:image/png;base64,iVBOR [...] g=='
 }
 ```
 ----------
@@ -118,15 +116,15 @@ symbology
   .createFile(Symbol, '12345')
   .then(function(data) {
     console.log('Result: ', data);
-  }, function(err) { 
-    console.log('Error: ', err); 
+  }, function(err) {
+    console.log('Error: ', err);
   });
 ```
 
 This creates a file in the specified `fileName` and will log:
 
 ```
-Result: { 
+Result: {
   message: '',
   code: 0,
   fileName: 'barcode.png'
@@ -207,7 +205,7 @@ Available [here](https://github.com/jshor/symbology/blob/master/CHANGELOG.md).
 
 ## 8. Credits
 
-This library is a JS/C++ wrapper module for the terrific C/C++ library [Zint](https://zint.github.io/), (C) [Robin Stuart](https://github.com/g3rrk). Module by [Josh Shor](https://github.com/jshor). 
+This library is a JS/C++ wrapper module for the terrific C/C++ library [Zint](https://zint.github.io/), (C) [Robin Stuart](https://github.com/g3rrk). Module by [Josh Shor](https://github.com/jshor).
 
 ## 9. License
 
