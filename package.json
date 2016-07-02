@@ -37,6 +37,15 @@
   "bundledDependencies": [
     "node-pre-gyp"
   ],
+  "keywords": [
+    "barcode",
+    "datamatrix",
+    "code128",
+    "qr",
+    "postal",
+    "1d barcode",
+    "2d barcode"
+  ],
   "scripts": {
     "install": "node-pre-gyp install --fallback-to-build",
     "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*",
