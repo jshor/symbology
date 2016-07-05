@@ -13,7 +13,7 @@ Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.
 - [1. Introduction](#1-introduction)
 - [2. Installation](#2-installation)
 - [3. Usage](#3-usage)
-    - [3.1. Import the module](#31-importing)
+    - [3.1. Import the module](#31-import-the-module)
     - [3.2. Struct](#32-struct)
     - [3.3. Available functions](#33-available-functions)
       - [3.3.1. Render a base64 png](#331-render-a-base64-png)
@@ -44,14 +44,14 @@ npm install symbology --save
 
 ### 3.1. Import the module
 
-```
+```javascript
 var symbology = require('symbology');
 ```
 
 ### 3.2. Struct
 
 Prepare a Symbol json object with your desired settings (see [4. Available options (struct)](#4-available-options-struct) for more info):
-```
+```javascript
 var Symbol = {
   symbology: symbology.Barcode.CODE128,
   foregroundColor: 'fff000',
@@ -79,7 +79,7 @@ Writes a base64 string to the output object in a property `data`.
 
 #### Example
 
-```
+```javascript
 symbology
   .createStream(Symbol, '12345')
   .then(function(data) {
@@ -89,7 +89,7 @@ symbology
   });
 ```
 Returns:
-```
+```javascript
 Result: {
   message: '',
   code: 0,
@@ -111,7 +111,7 @@ Writes a stream in to the output object in a property `data`.
 
 #### Example
 
-```
+```javascript
 symbology
   .createFile(Symbol, '12345')
   .then(function(data) {
@@ -123,7 +123,7 @@ symbology
 
 This creates a file in the specified `fileName` and will log:
 
-```
+```javascript
 Result: {
   message: '',
   code: 0,
@@ -197,7 +197,7 @@ npm run package-binary
 
 ### 7.4. Bugs
 
-Replace report all bugs [here](https://github.com/jshor/symbology/issues).
+Please report any bugs [here](https://github.com/jshor/symbology/issues).
 
 ### 7.5. Changelog
 
