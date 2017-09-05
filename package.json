@@ -1,8 +1,16 @@
 {
   "name": "symbology",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.",
-  "keywords": "barcode, symbology, EAN, UPC, QR code, Code 39, Code 128, CodaBar, DataBar, Datamatrix, PDF417, Aztec",
+  "keywords": [
+    "barcode",
+    "datamatrix",
+    "code128",
+    "qr",
+    "postal",
+    "1d barcode",
+    "2d barcode"
+  ],
   "main": "./index.js",
   "author": "Josh Shor <https://github.com/jshor>",
   "license": "MIT",
@@ -19,35 +27,27 @@
   },
   "dependencies": {
     "nan": "2.x",
-    "node-pre-gyp": "0.x",
     "pngjs": "^2.2.0",
-    "pngjs-image": "^0.11.6",
-    "sinon": "^1.17.3",
-    "sinon-chai": "^2.8.0"
+    "pngjs-image": "^0.11.6"
   },
   "devDependencies": {
-    "chai": "^3.4.1",
+    "aws-sdk": "^2.108.0",
+    "chai": "^3.5.0",
     "coveralls": "^2.11.6",
     "istanbul": "^0.4.2",
-    "mocha": "^2.3.4",
+    "mocha": "^2.5.3",
     "mocha-lcov-reporter": "^1.0.0",
     "node-gyp": "^3.2.1",
-    "aws-sdk": "2.0.12"
+    "node-pre-gyp": "0.x",
+    "pngjs": "^2.3.1",
+    "sinon": "^1.17.7",
+    "sinon-chai": "^2.13.0"
   },
   "bundledDependencies": [
     "node-pre-gyp"
   ],
-  "keywords": [
-    "barcode",
-    "datamatrix",
-    "code128",
-    "qr",
-    "postal",
-    "1d barcode",
-    "2d barcode"
-  ],
   "scripts": {
-    "install": "node-pre-gyp install --fallback-to-build",
+    "install": "./node_modules/.bin/node-pre-gyp install --fallback-to-build",
     "test-travis": "./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -R spec ./test/*",
     "test": "./node_modules/mocha/bin/mocha ./test/*",
     "prepublish": "npm ls",
