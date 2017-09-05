@@ -1,3 +1,9 @@
+v1.0.8
+
+- updates tests to latest sinon reqs
+- updates dependencies
+- updates docs with yarn info
+
 v1.0.7
 
 - updates dependencies

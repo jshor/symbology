@@ -1,6 +1,6 @@
 {
   "name": "symbology",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.",
   "keywords": [
     "barcode",
