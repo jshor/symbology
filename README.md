@@ -38,6 +38,13 @@ This Node.js module will allow you to generate over 50+ different types of 1D or
 ## 2. Installation
 
 ```
+yarn add symbology
+```
+
+or:
+
+
+```
 npm install symbology --save
 ```
 
@@ -181,7 +188,7 @@ There are 53 different available symbology types. For an exhaustive list, please
 ### 7.1. Building
 
 ```
-npm run build
+yarn build
 ```
 
 #### 7.1.1. Prerequisites
@@ -191,13 +198,13 @@ npm run build
 ### 7.2. Testing
 
 ```
-npm test
+yarn test
 ```
 
 ### 7.3. Packaging
 
 ```
-npm run package-binary
+yarn package-binary
 ```
 
 ### 7.4. Bugs
