@@ -5,7 +5,6 @@ var fs = require('fs');
 var symbology = require('../');
 var regex = require('./regex');
 var expect = chai.expect;
-var stub = sinon.stub();
 var binary = require('node-pre-gyp');
 var path = require('path');
 var binding_path = binary.find(path.resolve(path.join(__dirname,'../package.json')));
@@ -31,6 +30,14 @@ function getSymbol(obj) {
 var noop = function() {};
 
 describe('the barnode library', function() {
+
+  beforeEach(function() {
+    sandbox = sinon.sandbox.create();
+  });
+
+  afterEach(function() {
+    sandbox.restore();
+  });
 
   describe('the createFile function to create PNG files', function() {
     var filePath = 'testfile.png';
@@ -82,9 +89,12 @@ describe('the barnode library', function() {
     });
   });
 
-  sinon.stub(barnode, 'createStream', createStream);
 
   describe('the createStream function for png data', function() {
+    beforeEach(function() {
+      sandbox.stub(barnode, 'createStream').callsFake(createStream);
+    });
+
     it('should return an object with status code and base64 png data', function() {
       return symbology
         .createStream(getSymbol(), '12345')
