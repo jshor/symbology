@@ -1,3 +1,9 @@
+v1.0.7
+
+- updates dependencies
+- adds note about libpng prereq for building/installing
+- updates fallback binary
+
 v1.0.6
 
 - adds keywords to package.json
