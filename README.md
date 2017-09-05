@@ -1,6 +1,6 @@
 # ![Symbology.js](https://raw.githubusercontent.com/jshor/symbology/master/symbologyjs-logo.png) Symbology.js
 
-### v1.0.7
+### v1.0.8
 
 Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.
 
@@ -36,6 +36,13 @@ Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.
 This Node.js module will allow you to generate over 50+ different types of 1D or 2D symbologies, including barcodes for books, grocery, shipping carriers, healthcare, and international codes. It can save a png, svg, or eps image, or render a base64 png bitmap.
 
 ## 2. Installation
+
+```
+yarn add symbology
+```
+
+or:
+
 
 ```
 npm install symbology --save
@@ -181,7 +188,7 @@ There are 53 different available symbology types. For an exhaustive list, please
 ### 7.1. Building
 
 ```
-npm run build
+yarn build
 ```
 
 #### 7.1.1. Prerequisites
@@ -191,13 +198,13 @@ npm run build
 ### 7.2. Testing
 
 ```
-npm test
+yarn test
 ```
 
 ### 7.3. Packaging
 
 ```
-npm run package-binary
+yarn package-binary
 ```
 
 ### 7.4. Bugs
