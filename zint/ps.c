@@ -27,6 +27,10 @@
 
 #define SSET	"0123456789ABCDEF"
 
+int pipe(int fd[2]);
+int close(int fildes);
+ssize_t read(int fildes, void *buf, size_t nbytes);
+
 /* This file has expanded quite a bit since version 1.5 in order to accomodate
    the formatting rules for EAN and UPC symbols as set out in EN 797:1995 - the
    down side of this support is that the code is now vertually unreadable! */
@@ -46,6 +50,7 @@ int ps_plot(struct zint_symbol *symbol)
 	float scaler = symbol->scale;
 	float default_text_posn;
 	int plot_text = 1;
+	int p[2];
 	const char *locale = NULL;
 
 	row_height=0;
@@ -56,10 +61,12 @@ int ps_plot(struct zint_symbol *symbol)
 	addon_text_posn = 0.0;
 
 	if((symbol->output_options & BARCODE_STDOUT) != 0) {
-		feps = stdout;
+		pipe(p);
+		feps = fdopen(p[1], "w");
 	} else {
 		feps = fopen(symbol->outfile, "w");
 	}
+
 	if(feps == NULL) {
 		strcpy(symbol->errtxt, "Could not open output file");
 		return ZERROR_FILE_ACCESS;
@@ -184,11 +191,11 @@ int ps_plot(struct zint_symbol *symbol)
 
 	/* Start writing the header */
 	fprintf(feps, "%%!PS-Adobe-3.0 EPSF-3.0\n");
-	fprintf(feps, "%%%%Creator: Node-Zint \n");
+	fprintf(feps, "%%%%Creator: Symbology.js");
 	if(ustrlen(symbol->text) != 0) {
 		fprintf(feps, "%%%%Title: %s\n",symbol->text);
 	} else {
-		fprintf(feps, "%%%%Title: Node-Zint Generated Symbol\n");
+		fprintf(feps, "%%%%Title: Symbology.js Generated Symbol\n");
 	}
 	fprintf(feps, "%%%%Pages: 0\n");
 	if(symbol->symbology != BARCODE_MAXICODE) {
@@ -751,10 +758,15 @@ int ps_plot(struct zint_symbol *symbol)
 	}
 	fprintf(feps, "\nshowpage\n");
 
+	fclose(feps);
+
 	if(symbol->output_options & BARCODE_STDOUT) {
-		fflush(feps);
-	} else {
-		fclose(feps);
+		char buff[10000]; 
+    
+		close(p[1]);
+		read(p[0], buff, 10000);
+
+		strcpy(symbol->rendered_data, buff);
 	}
 
 	if (locale)

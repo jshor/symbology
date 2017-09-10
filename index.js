@@ -132,18 +132,20 @@ function pngRender(bitmap, width, height) {
 }
 
 /**
- * Creates a base64 bitmap of a sybology.
- * If PNG, returns the stream is returned in base64 format.
+ * Renders a png, svg, or eps barcode.
+ * If PNG, it returns the stream as a base64 string.
  * 
- * @param  {Symbol} symbol Symbol struct
- * @param  {String} type   'png', 'svg', or 'eps'
- * @return {Promise<Object>}   object with resulting props (see docs)
+ * @note The file will be created in memory and then passed to the returned object.
+ *
+ * @param {Symbol} symbol - Symbol struct
+ * @param {String} barcodeData - data to encode
+ * @param {String} type - 'png', 'svg', or 'eps' (default: 'png')
+ * @returns {Promise<Object>} object with resulting props (see docs)
  */
-exp.createStream = function(symbol, barcodeData) {
-  // note: unfortunately, Zint only knows to stream pngs and, further,
-  // will only do so if a filename is specified with a png extension
-  // it will NOT actually create out.png in the file system
-  symbol.fileName = 'out.png';
+exp.createStream = function(symbol, barcodeData, fileType) {
+  symbol.fileName = 'out.' + (fileType || 'png');
+  symbol.outputOptions = 8;
+
   var res = createSymbology(symbol, barcodeData, 'createStream');
 
   if(res.code <= 2) {
@@ -168,10 +170,11 @@ exp.createStream = function(symbol, barcodeData) {
 /**
  * Creates a stream of a PNG, SVG or EPS file in the specified fileName path.
  * 
- * @param  {Symbol} symbol symbol struct
- * @param  {String} filePath
- * @param  {String} type   'png', 'svg', or 'eps'
- * @return {Promise<Object>} object with resulting props (see docs)
+ * @note: Zint will render the file type based on the extension of the given file path.
+ *
+ * @param {Symbol} symbol - symbol struct
+ * @param {String} barcodeData - data to encode
+ * @returns {Promise<Object>} object with resulting props (see docs)
  */
 exp.createFile = function(symbol, barcodeData) {
   var res = createSymbology(symbol, barcodeData, 'createFile');

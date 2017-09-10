@@ -84,6 +84,8 @@ struct zint_symbol {
 	uint8_t encoded_data[ZINT_ROWS_MAX][ZINT_COLS_MAX];
 	int row_height[ZINT_ROWS_MAX]; /* Largest symbol is 177x177 QR Code */
 	char *bitmap;
+#define FILE_BUFFER_MAX  10000
+  char rendered_data[FILE_BUFFER_MAX];
 	int bitmap_width;
 	int bitmap_height;
 	struct zint_render *rendered;

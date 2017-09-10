@@ -77,9 +77,12 @@ Each function returns a promise that completes with an object containing the exi
 
 ### 3.3.1. Render a base64 png:
 
-`createStream(Symbol, data, type)`
+`createStream(Symbol, data)`
 
-Writes a base64 string to the output object in a property `data`.
+Writes a base64 string to the output object in a property `data`. Returns a `Promise`.
+
+**Note**: The file type of the barcode to render is based on the extension `fileName` setting.
+For example, to render an svg, the `fileName` must be of the format: `<myfile>.svg`.
 
 | Parameter    | Type     | Values                       |
 |--------------|----------|------------------------------|
@@ -110,14 +113,15 @@ Result: {
 
 ### 3.3.2. Render a file:
 
-`createFile(Symbol, data)`
+`createFile(Symbol, data, type)`
 
-Writes a stream in to the output object in a property `data`.
+Writes a stream in to the output object in a property `data`. Returns a `Promise`.
 
-| Parameter    | Type     | Values                       |
-|--------------|----------|------------------------------|
-| `Symbol`     | `Struct` | Struct of symbology settings |
-| `data`       | `String` | Desired data to encode       |
+| Parameter    | Type     | Values                       | Default |
+|--------------|----------|------------------------------|---------|
+| `Symbol`     | `Struct` | Struct of symbology settings |         |
+| `data`       | `String` | Desired data to encode       |         |
+| `type`       | `String` | `png`, `svg`, `eps`          | `png`   |
 
 #### Example
 
@@ -145,20 +149,20 @@ Result: {
 
 A Symbol is a regular JavaScript object with the following available properties:
 
-| Enumerated type | Type               | Meaning                                                                              | Required? | Default value |
-|-----------------|--------------------|--------------------------------------------------------------------------------------|-----------|---------------|
-| symbology       | Symbology enum     | The enumerated type of the symbology (see [Enumerated Barcode Types] for more info). | **Yes**   |               |
-| height          | Number             | The height of the image. If specified, this will maintain the aspect ratio.          | No        | 50            |
-| whitespaceWidth | Number             | Width of whitespace, for barcodes which have this option.                            | No        | 0             |
-| borderWidth     | Number             | Width of border.                                                                     | No        | 0             |
-| outputOptions   | Number             | Symbology-specific output option.                                                    | No        | `NULL`        |
-| foregroundColor | Hexadecimal number | Barcode foreground color.                                                            | No        | #FFFFFF       |
-| backgroundColor | Hexadecimal number | Barcode background color.                                                            | No        | #000000       |
-| fileName        | String             | Full path to the file to render.                                                     | **Yes***  |               |
-| scale           | Number             | Scale of the barcode image. Applies only to PNG.                                     | No        | 1.0           |
-| option1         | Number             | Symbology-type-specific option value.                                                | No        | `NULL`        |
-| option2         | Number             | Symbology-type-specific option value.                                                | No        | `NULL`        |
-| option3         | Number             | Symbology-type-specific option value.                                                | No        | `NULL`        |
+| Enumerated type | Type               | Meaning                                                                                                         | Required? | Default value |
+|-----------------|--------------------|-----------------------------------------------------------------------------------------------------------------|-----------|---------------|
+| symbology       | Symbology enum     | The enumerated type of the symbology (see [Enumerated Barcode Types](#enumerated-barcode-types) for more info). | **Yes**   |               |
+| height          | Number             | The height of the image. If specified, this will maintain the aspect ratio.                                     | No        | 50            |
+| whitespaceWidth | Number             | Width of whitespace, for barcodes which have this option.                                                       | No        | 0             |
+| borderWidth     | Number             | Width of border.                                                                                                | No        | 0             |
+| outputOptions   | Number             | Symbology-specific output option.                                                                               | No        | `NULL`        |
+| foregroundColor | Hexadecimal number | Barcode foreground color.                                                                                       | No        | #FFFFFF       |
+| backgroundColor | Hexadecimal number | Barcode background color.                                                                                       | No        | #000000       |
+| fileName        | String             | Full path to the file to render.                                                                                | **Yes***  |               |
+| scale           | Number             | Scale of the barcode image. Applies only to PNG.                                                                | No        | 1.0           |
+| option1         | Number             | Symbology-type-specific option value.                                                                           | No        | `NULL`        |
+| option2         | Number             | Symbology-type-specific option value.                                                                           | No        | `NULL`        |
+| option3         | Number             | Symbology-type-specific option value.                                                                           | No        | `NULL`        |
 
 \* required only if using `createFile`.
 
