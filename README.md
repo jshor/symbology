@@ -16,7 +16,7 @@ Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.
     - [3.1. Import the module](#31-import-the-module)
     - [3.2. Struct](#32-struct)
     - [3.3. Available functions](#33-available-functions)
-      - [3.3.1. Render a base64 png](#331-render-a-base64-png)
+      - [3.3.1. Stream a barcode](#331-stream-a-barcode)
       - [3.3.2. Render a file](#332-render-a-file)
 - [4. Available options (struct)](#4-available-options-struct)
 - [5. Error handling](#5-error-handling)
@@ -75,19 +75,19 @@ Each function returns a promise that completes with an object containing the exi
 
 ----------
 
-### 3.3.1. Render a base64 png:
+### 3.3.1. Stream a barcode:
 
 `createStream(Symbol, data)`
 
-Writes a base64 string to the output object in a property `data`. Returns a `Promise`.
+Writes the file string to the output object in a property `data`. Returns a `Promise`.
 
-**Note**: The file type of the barcode to render is based on the extension `fileName` setting.
-For example, to render an svg, the `fileName` must be of the format: `<myfile>.svg`.
+**Note**: For png, it will render `data` as a base64 string.
 
-| Parameter    | Type     | Values                       |
-|--------------|----------|------------------------------|
-| `Symbol`     | `Struct` | Struct of symbology settings |
-| `data`       | `String` | Desired data to encode       |
+| Parameter    | Type     | Values                       | Default |
+|--------------|----------|------------------------------|---------|
+| `Symbol`     | `Struct` | Struct of symbology settings |         |
+| `data`       | `String` | Desired data to encode       |         |
+| `type`       | `String` | `png`, `svg`, `eps`          | `png`   |
 
 
 #### Example
@@ -115,13 +115,15 @@ Result: {
 
 `createFile(Symbol, data, type)`
 
-Writes a stream in to the output object in a property `data`. Returns a `Promise`.
+Creates a file with the requested barcode. Returns a `Promise`.
 
-| Parameter    | Type     | Values                       | Default |
-|--------------|----------|------------------------------|---------|
-| `Symbol`     | `Struct` | Struct of symbology settings |         |
-| `data`       | `String` | Desired data to encode       |         |
-| `type`       | `String` | `png`, `svg`, `eps`          | `png`   |
+**Note**: The file type of the barcode to render is based on the extension `fileName` setting.
+For example, to render an svg, the `fileName` must be of the format: `<myfile>.svg`.
+
+| Parameter    | Type     | Values                       |
+|--------------|----------|------------------------------|
+| `Symbol`     | `Struct` | Struct of symbology settings |
+| `data`       | `String` | Desired data to encode       |
 
 #### Example
 
