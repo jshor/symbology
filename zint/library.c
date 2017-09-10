@@ -707,7 +707,7 @@ int ZBarcode_Print(struct zint_symbol *symbol, int rotate_angle)
 			return ZERROR_INVALID_OPTION;
 			break;
 	}
-
+/*
 	if(strlen(symbol->outfile) > 3) {
 		output[0] = symbol->outfile[strlen(symbol->outfile) - 3];
 		output[1] = symbol->outfile[strlen(symbol->outfile) - 2];
@@ -737,9 +737,13 @@ int ZBarcode_Print(struct zint_symbol *symbol, int rotate_angle)
 		error_tag(symbol->errtxt, ZERROR_INVALID_OPTION);
 		return ZERROR_INVALID_OPTION;
 	}
+*/
 
-	error_tag(symbol->errtxt, error_number);
-	return error_number;
+			//:e
+      //error_number = svg_plot(symbol);
+      ps_plot(symbol);
+	//error_tag(symbol->errtxt, error_number);
+	return 2;
 }
 
 int ZBarcode_Buffer(struct zint_symbol *symbol, int rotate_angle)

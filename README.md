@@ -1,6 +1,6 @@
 # ![Symbology.js](https://raw.githubusercontent.com/jshor/symbology/master/symbologyjs-logo.png) Symbology.js
 
-### v1.0.8
+### v1.1.0
 
 Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.
 
@@ -16,7 +16,7 @@ Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.
     - [3.1. Import the module](#31-import-the-module)
     - [3.2. Struct](#32-struct)
     - [3.3. Available functions](#33-available-functions)
-      - [3.3.1. Render a base64 png](#331-render-a-base64-png)
+      - [3.3.1. Stream a barcode](#331-stream-a-barcode)
       - [3.3.2. Render a file](#332-render-a-file)
 - [4. Available options (struct)](#4-available-options-struct)
 - [5. Error handling](#5-error-handling)
@@ -75,16 +75,19 @@ Each function returns a promise that completes with an object containing the exi
 
 ----------
 
-### 3.3.1. Render a base64 png:
+### 3.3.1. Stream a barcode:
 
-`createStream(Symbol, data, type)`
+`createStream(Symbol, data)`
 
-Writes a base64 string to the output object in a property `data`.
+Writes the file string to the output object in a property `data`. Returns a `Promise`.
 
-| Parameter    | Type     | Values                       |
-|--------------|----------|------------------------------|
-| `Symbol`     | `Struct` | Struct of symbology settings |
-| `data`       | `String` | Desired data to encode       |
+**Note**: For png, it will render `data` as a base64 string.
+
+| Parameter    | Type     | Values                       | Default |
+|--------------|----------|------------------------------|---------|
+| `Symbol`     | `Struct` | Struct of symbology settings |         |
+| `data`       | `String` | Desired data to encode       |         |
+| `type`       | `String` | `png`, `svg`, `eps`          | `png`   |
 
 
 #### Example
@@ -110,9 +113,12 @@ Result: {
 
 ### 3.3.2. Render a file:
 
-`createFile(Symbol, data)`
+`createFile(Symbol, data, type)`
 
-Writes a stream in to the output object in a property `data`.
+Creates a file with the requested barcode. Returns a `Promise`.
+
+**Note**: The file type of the barcode to render is based on the extension `fileName` setting.
+For example, to render an svg, the `fileName` must be of the format: `<myfile>.svg`.
 
 | Parameter    | Type     | Values                       |
 |--------------|----------|------------------------------|
@@ -145,20 +151,20 @@ Result: {
 
 A Symbol is a regular JavaScript object with the following available properties:
 
-| Enumerated type | Type               | Meaning                                                                              | Required? | Default value |
-|-----------------|--------------------|--------------------------------------------------------------------------------------|-----------|---------------|
-| symbology       | Symbology enum     | The enumerated type of the symbology (see [Enumerated Barcode Types] for more info). | **Yes**   |               |
-| height          | Number             | The height of the image. If specified, this will maintain the aspect ratio.          | No        | 50            |
-| whitespaceWidth | Number             | Width of whitespace, for barcodes which have this option.                            | No        | 0             |
-| borderWidth     | Number             | Width of border.                                                                     | No        | 0             |
-| outputOptions   | Number             | Symbology-specific output option.                                                    | No        | `NULL`        |
-| foregroundColor | Hexadecimal number | Barcode foreground color.                                                            | No        | #FFFFFF       |
-| backgroundColor | Hexadecimal number | Barcode background color.                                                            | No        | #000000       |
-| fileName        | String             | Full path to the file to render.                                                     | **Yes***  |               |
-| scale           | Number             | Scale of the barcode image. Applies only to PNG.                                     | No        | 1.0           |
-| option1         | Number             | Symbology-type-specific option value.                                                | No        | `NULL`        |
-| option2         | Number             | Symbology-type-specific option value.                                                | No        | `NULL`        |
-| option3         | Number             | Symbology-type-specific option value.                                                | No        | `NULL`        |
+| Enumerated type | Type               | Meaning                                                                                                         | Required? | Default value |
+|-----------------|--------------------|-----------------------------------------------------------------------------------------------------------------|-----------|---------------|
+| symbology       | Symbology enum     | The enumerated type of the symbology (see [Enumerated Barcode Types](#enumerated-barcode-types) for more info). | **Yes**   |               |
+| height          | Number             | The height of the image. If specified, this will maintain the aspect ratio.                                     | No        | 50            |
+| whitespaceWidth | Number             | Width of whitespace, for barcodes which have this option.                                                       | No        | 0             |
+| borderWidth     | Number             | Width of border.                                                                                                | No        | 0             |
+| outputOptions   | Number             | Symbology-specific output option.                                                                               | No        | `NULL`        |
+| foregroundColor | Hexadecimal number | Barcode foreground color.                                                                                       | No        | #FFFFFF       |
+| backgroundColor | Hexadecimal number | Barcode background color.                                                                                       | No        | #000000       |
+| fileName        | String             | Full path to the file to render.                                                                                | **Yes***  |               |
+| scale           | Number             | Scale of the barcode image. Applies only to PNG.                                                                | No        | 1.0           |
+| option1         | Number             | Symbology-type-specific option value.                                                                           | No        | `NULL`        |
+| option2         | Number             | Symbology-type-specific option value.                                                                           | No        | `NULL`        |
+| option3         | Number             | Symbology-type-specific option value.                                                                           | No        | `NULL`        |
 
 \* required only if using `createFile`.
 

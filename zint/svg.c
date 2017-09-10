@@ -27,11 +27,15 @@
 
 #define SSET	"0123456789ABCDEF"
 
+int pipe(int fd[2]);
+int close(int fildes);
+ssize_t read(int fildes, void *buf, size_t nbytes);
+
 int svg_plot(struct zint_symbol *symbol)
 {
 	int i, block_width, latch, r, this_row;
 	float textpos, large_bar_height, preset_height, row_height, row_posn = 0.0;
-	FILE *fsvg;
+	FILE *fsvg = 0;
 	int error_number = 0;
 	int textoffset, xoffset, yoffset, textdone, main_width;
 	char textpart[10], addon[6];
@@ -40,6 +44,7 @@ int svg_plot(struct zint_symbol *symbol)
 	float scaler = symbol->scale;
 	float default_text_posn;
 	int plot_text = 1;
+	int p[2];
 	const char *locale = NULL;
 
 	row_height=0;
@@ -50,10 +55,12 @@ int svg_plot(struct zint_symbol *symbol)
 	addon_text_posn = 0.0;
 
 	if((symbol->output_options & BARCODE_STDOUT) != 0) {
-		fsvg = stdout;
+		pipe(p);
+		fsvg = fdopen(p[1], "w");
 	} else {
 		fsvg = fopen(symbol->outfile, "w");
 	}
+
 	if(fsvg == NULL) {
 		strcpy(symbol->errtxt, "Could not open output file");
 		return ZERROR_FILE_ACCESS;
@@ -81,6 +88,7 @@ int svg_plot(struct zint_symbol *symbol)
 		strcpy(symbol->errtxt, "Malformed background colour target");
 		return ZERROR_INVALID_OPTION;
 	}
+
 	locale = setlocale(LC_ALL, "C");
 
 	if (symbol->height == 0) {
@@ -176,7 +184,7 @@ int svg_plot(struct zint_symbol *symbol)
 	if(ustrlen(symbol->text) != 0) {
 		fprintf(fsvg, "   <desc>%s\n", symbol->text);
 	} else {
-		fprintf(fsvg, "   <desc>Zint Generated Symbol\n");
+		fprintf(fsvg, "   <desc>Symbology.js Generated Symbol\n");
 	}
 	fprintf(fsvg, "   </desc>\n");
 	fprintf(fsvg, "\n   <g id=\"barcode\" fill=\"#%s\">\n", symbol->fgcolour);
@@ -589,10 +597,15 @@ int svg_plot(struct zint_symbol *symbol)
 	fprintf(fsvg, "   </g>\n");
 	fprintf(fsvg, "</svg>\n");
 
+	fclose(fsvg);
+
 	if(symbol->output_options & BARCODE_STDOUT) {
-		fflush(fsvg);
-	} else {
-		fclose(fsvg);
+		char buff[10000]; 
+    
+		close(p[1]);
+		read(p[0], buff, 10000);
+
+		strcpy(symbol->rendered_data, buff);
 	}
 
 	if (locale)
