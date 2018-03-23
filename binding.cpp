@@ -18,53 +18,12 @@ namespace barnode {
   using v8::Value;
 
   /**
-   * Conversion from v8::Value to unsigned char*
+   * Copy v8 string to external buffer
    */
-  unsigned char* argToUnsignedChr(Value *arg) {
+  void copyArgStr(Value *arg, char* buffer, size_t maxchars) {
     v8::String::Utf8Value str(arg->ToString());
-    char* chrArr = *str;
-
-    unsigned char* unsignedChrArr = (unsigned char*) chrArr;
-
-    return unsignedChrArr;
-  }
-
-  /**
-   * Conversion from v8::Value to char*
-   */
-  char* argToChr(Value *arg) {
-    v8::String::Utf8Value str(arg->ToString());
-    char* chrArr = *str;
-
-    return chrArr;
-  }
-
-  /**
-   * Conversion from v8::Value to char*,
-   * then copies char* to outArr.
-   */
-  void argToChrArr(Value *arg, char* outArr) {
-    char* chrArr = argToChr(arg);
-
-    for(int i=0; i<(int)sizeof(outArr); i++) {
-      if(i < (int)sizeof(chrArr)) {
-        outArr[i] = chrArr[i];
-      }
-    }
-  }
-
-  /**
-   * Conversion from v8::Value to uint8_t*,
-   * then copies to uint8_t* to outArr.
-   */
-  void argToUint8Arr(Value *arg, uint8_t* outArr) {
-    unsigned char* chrArr = argToUnsignedChr(arg);
-
-    for(int i=0; i<(int)sizeof(outArr); i++) {
-      if(i < (int)sizeof(chrArr)) {
-        outArr[i] = chrArr[i];
-      }
-    }
+    strncpy(buffer, *str, maxchars - 1);
+    buffer[maxchars - 1] = '\0';
   }
 
   /**
@@ -183,14 +142,14 @@ namespace barnode {
     }
 
     // colors
-    argToChrArr(*args[6], symbol->fgcolour);
-    argToChrArr(*args[7], symbol->bgcolour);
+    copyArgStr(*args[6], (char*)&symbol->fgcolour[0], sizeof(symbol->fgcolour));
+    copyArgStr(*args[7], (char*)&symbol->bgcolour[0], sizeof(symbol->bgcolour));
     
     // file name to render
-    strcpy(symbol->outfile, argToChr(*args[8]));
+    copyArgStr(*args[8], (char*)&symbol->outfile[0], sizeof(symbol->outfile));
 
     // text to display
-    argToUint8Arr(*args[13], symbol->text);
+    copyArgStr(*args[13], (char*)&symbol->text[0], sizeof(symbol->text));
 
     return symbol;
   }
@@ -205,7 +164,8 @@ namespace barnode {
     Isolate* isolate = args.GetIsolate();
     Local<Object> obj;
     
-    obj = createFileHandle(isolate, symbol, argToUnsignedChr(*args[0]), argToChr(*args[0]));
+    v8::String::Utf8Value data(args[0]->ToString());
+    obj = createFileHandle(isolate, symbol, (unsigned char*)*data, (char*)*data);
     ZBarcode_Delete(symbol);
     args.GetReturnValue().Set(obj);
   }
@@ -220,7 +180,8 @@ namespace barnode {
     Isolate* isolate = args.GetIsolate();
     Local<Object> obj;
 
-    obj = createStreamHandle(isolate, symbol, argToUnsignedChr(*args[0]), argToChr(*args[0]));
+    v8::String::Utf8Value data(args[0]->ToString());
+    obj = createStreamHandle(isolate, symbol, (unsigned char*)*data, (char*)*data);
     ZBarcode_Delete(symbol);
     args.GetReturnValue().Set(obj);
   }
