@@ -21,9 +21,11 @@ namespace barnode {
    * Copy v8 string to external buffer
    */
   void copyArgStr(Value *arg, char* buffer, size_t maxchars) {
+    memset(buffer, 0, maxchars);
     v8::String::Utf8Value str(arg->ToString());
-    strncpy(buffer, *str, maxchars - 1);
-    buffer[maxchars - 1] = '\0';
+    if (*str) {
+      strncpy(buffer, *str, maxchars - 1);
+    }
   }
 
   /**
