@@ -1,7 +1,7 @@
 var binary = require('node-pre-gyp');
 var path = require('path');
-var binding_path = binary.find(path.resolve(path.join(__dirname,'./package.json')));
-var barnode = require(binding_path);
+var binding_path = binary.find(path.resolve(path.join(__dirname,'../package.json')));
+var symbology = require(binding_path);
 var fs = require('fs');
 var PNGImage = require('pngjs-image');
 
@@ -9,7 +9,8 @@ var PNGImage = require('pngjs-image');
 var exp = {
   Barcode: require('./enums/barcode'),
   ErrorCode: require('./enums/errorCode'),
-  Options: require('./enums/options')
+  Options: require('./enums/options'),
+  Output: require('./enums/output')
 };
 
 /**
@@ -62,7 +63,7 @@ function validateSymbol(symbologyStruct) {
 function createSymbology(symbologyStruct, barcodeData, fnName) {
   validateSymbol(symbologyStruct);
 
-  return barnode[fnName](
+  return symbology[fnName](
     barcodeData,
     symbologyStruct.symbology,
     symbologyStruct.height,
@@ -139,31 +140,40 @@ function pngRender(bitmap, width, height) {
  *
  * @param {Symbol} symbol - Symbol struct
  * @param {String} barcodeData - data to encode
- * @param {String} type - 'png', 'svg', or 'eps' (default: 'png')
+ * @param {String} outputType - 'png', 'svg', or 'eps' (default: 'png')
  * @returns {Promise<Object>} object with resulting props (see docs)
  */
-exp.createStream = function(symbol, barcodeData, fileType) {
-  symbol.fileName = 'out.' + (fileType || 'png');
-  symbol.outputOptions = 8;
+exp.createStream = function(symbol, barcodeData, outputType) {
+  outputType = outputType || exp.Output.PNG
+  symbol.fileName = 'out.' + outputType
+  symbol.outputOptions = 8; // force buffer to write to rendered_data
 
   var res = createSymbology(symbol, barcodeData, 'createStream');
 
   if(res.code <= 2) {
-    var pngData = pngRender(res.encodedData, res.width, res.height);
+    if (outputType === exp.Output.PNG) {
+      var pngData = pngRender(res.encodedData, res.width, res.height);
 
-    return blobToBase64Png(pngData)
-      .then(function(base64Data) {
-        return {
-          data: base64Data,
-          width: res.width,
-          height: res.height,
-          message: res.message,
-          code: res.code
-        };
-      });
+      return blobToBase64Png(pngData)
+        .then(function(base64Data) {
+          return {
+            data: base64Data,
+            width: res.width,
+            height: res.height,
+            message: res.message,
+            code: res.code
+          };
+        });
+    }
+    return Promise.resolve({
+      data: res.encodedData,
+      message: res.message,
+      code: res.code
+    });
   }
-  return new Promise(function(resolve) {
-    resolve(res);
+  return Promise.reject({
+    message: res.message,
+    code: res.code
   });
 };
 

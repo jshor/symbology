@@ -1,3 +1,11 @@
+v1.2.0
+
+- Reorganizes project to have separate source directory.
+- Fixes missing `outputType` parameter in `createStream()`.
+- Adds `Output` enum.
+- Updates documentation.
+- Fixes #5 and #9.
+
 v1.0.8
 
 - updates tests to latest sinon reqs
