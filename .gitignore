@@ -15,11 +15,12 @@ coverage
 npm-debug.log
 node_modules
 build
-lib
+/lib
 *~
 *.[ao]
 *.swp
 *.swo
+*.DS_Store
 .directory
 *.png
 !symbologyjs-logo.png

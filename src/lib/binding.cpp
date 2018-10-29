@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <string.h>
 
-namespace barnode {
+namespace symbology {
 
   using v8::FunctionCallbackInfo;
   using v8::Isolate;
@@ -193,6 +193,5 @@ namespace barnode {
     NODE_SET_METHOD(exports, "createStream", createStream);
   }
 
-  NODE_MODULE(barnode, Init);
+  NODE_MODULE(symbology, Init);
 }
-

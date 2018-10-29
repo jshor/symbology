@@ -1,6 +1,6 @@
 # ![Symbology.js](https://raw.githubusercontent.com/jshor/symbology/master/symbologyjs-logo.png) Symbology.js
 
-### v1.1.0
+### v1.2.0
 
 Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.
 
@@ -77,24 +77,31 @@ Each function returns a promise that completes with an object containing the exi
 
 ### 3.3.1. Stream a barcode:
 
-`createStream(Symbol, data)`
+`createStream(Symbol, data, outputType)`
 
 Writes the file string to the output object in a property `data`. Returns a `Promise`.
 
 **Note**: For png, it will render `data` as a base64 string.
 
-| Parameter    | Type     | Values                       | Default |
-|--------------|----------|------------------------------|---------|
-| `Symbol`     | `Struct` | Struct of symbology settings |         |
-| `data`       | `String` | Desired data to encode       |         |
-| `type`       | `String` | `png`, `svg`, `eps`          | `png`   |
+| Parameter    | Type     | Values                       | Default    |
+|--------------|----------|------------------------------|------------|
+| `Symbol`     | `Struct` | Struct of symbology settings |            |
+| `data`       | `String` | Desired data to encode       |            |
+| `outputType` | `String` | Output type                  | `PNG`      |
 
+#### Output Types
+
+| Enum   | Description                          |
+|--------|--------------------------------------|
+| `EPS`  | Adobe encapsulated postscript vector |
+| `SVG`  | Scalable vector graphics             |
+| `PNG`  | Portable network graphics            |
 
 #### Example
 
 ```javascript
 symbology
-  .createStream(Symbol, '12345')
+  .createStream(Symbol, '12345', symbology.Output.PNG)
   .then(function(data) {
     console.log('Result: ', data);
   }, function(err) {
@@ -158,8 +165,8 @@ A Symbol is a regular JavaScript object with the following available properties:
 | whitespaceWidth | Number             | Width of whitespace, for barcodes which have this option.                                                       | No        | 0             |
 | borderWidth     | Number             | Width of border.                                                                                                | No        | 0             |
 | outputOptions   | Number             | Symbology-specific output option.                                                                               | No        | `NULL`        |
-| foregroundColor | Hexadecimal number | Barcode foreground color.                                                                                       | No        | #FFFFFF       |
-| backgroundColor | Hexadecimal number | Barcode background color.                                                                                       | No        | #000000       |
+| foregroundColor | Hexadecimal number | Barcode foreground color.                                                                                       | No        |  FFFFFF       |
+| backgroundColor | Hexadecimal number | Barcode background color.                                                                                       | No        |  000000       |
 | fileName        | String             | Full path to the file to render.                                                                                | **Yes***  |               |
 | scale           | Number             | Scale of the barcode image. Applies only to PNG.                                                                | No        | 1.0           |
 | option1         | Number             | Symbology-type-specific option value.                                                                           | No        | `NULL`        |

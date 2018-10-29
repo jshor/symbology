@@ -456,6 +456,10 @@ int png_to_file(struct zint_symbol *symbol, int image_height, int image_width, c
 		}
 	}
 
+  /**
+   * Commented out since we want to force a BMP pixel plot for Symbology.js
+   */
+  /*
 	if(image_type == PNG_DATA) {
 #ifndef NO_PNG
 		error_number = png_pixel_plot(symbol, scale_height, scale_width, scaled_pixelbuf, rotate_angle);
@@ -463,8 +467,9 @@ int png_to_file(struct zint_symbol *symbol, int image_height, int image_width, c
 		return ZERROR_INVALID_OPTION;
 #endif
 	} else {
-		error_number = bmp_pixel_plot(symbol, scale_height, scale_width, scaled_pixelbuf, rotate_angle);
-	}
+  */
+	  error_number = bmp_pixel_plot(symbol, scale_height, scale_width, scaled_pixelbuf, rotate_angle);
+	/* } */
 
 	free(scaled_pixelbuf);
 
