@@ -1,3 +1,8 @@
+v1.2.2
+
+- adds option to show/hide human-readable text
+- adds targeted build names back to CI
+
 v1.2.1
 
 - fixes travis config

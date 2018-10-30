@@ -154,24 +154,25 @@ Result: {
 
 ## 4. Available options (struct)
 
-A Symbol is a regular JavaScript object with the following available properties:
+A `Symbol` is a regular JavaScript object with the following available properties:
 
-| Enumerated type | Type               | Meaning                                                                                                         | Required? | Default value |
-|-----------------|--------------------|-----------------------------------------------------------------------------------------------------------------|-----------|---------------|
-| symbology       | Symbology enum     | The enumerated type of the symbology (see [Enumerated Barcode Types](#enumerated-barcode-types) for more info). | **Yes**   |               |
-| height          | Number             | The height of the image. If specified, this will maintain the aspect ratio.                                     | No        | 50            |
-| whitespaceWidth | Number             | Width of whitespace, for barcodes which have this option.                                                       | No        | 0             |
-| borderWidth     | Number             | Width of border.                                                                                                | No        | 0             |
-| outputOptions   | Number             | Symbology-specific output option.                                                                               | No        | `NULL`        |
-| foregroundColor | Hexadecimal number | Barcode foreground color.                                                                                       | No        |  FFFFFF       |
-| backgroundColor | Hexadecimal number | Barcode background color.                                                                                       | No        |  000000       |
-| fileName        | String             | Full path to the file to render.                                                                                | **Yes***  |               |
-| scale           | Number             | Scale of the barcode image. Applies only to PNG.                                                                | No        | 1.0           |
-| option1         | Number             | Symbology-type-specific option value.                                                                           | No        | `NULL`        |
-| option2         | Number             | Symbology-type-specific option value.                                                                           | No        | `NULL`        |
-| option3         | Number             | Symbology-type-specific option value.                                                                           | No        | `NULL`        |
+| Enumerated type       | Type               | Meaning                                                                                                         | Required? | Default value |
+|-----------------------|--------------------|-----------------------------------------------------------------------------------------------------------------|-----------|---------------|
+| symbology             | Symbology enum     | The enumerated type of the symbology (see [Enumerated Barcode Types](#enumerated-barcode-types) for more info). | **Yes**   |               |
+| height                | Number             | The height of the image. If specified, this will maintain the aspect ratio.                                     | No        | 50            |
+| whitespaceWidth       | Number             | Width of whitespace, for barcodes which have this option.                                                       | No        | 0             |
+| borderWidth           | Number             | Width of border.                                                                                                | No        | 0             |
+| outputOptions         | Number             | Symbology-specific output option.                                                                               | No        | `NULL`        |
+| foregroundColor       | Hexadecimal number | Barcode foreground color.                                                                                       | No        |  FFFFFF       |
+| backgroundColor       | Hexadecimal number | Barcode background color.                                                                                       | No        |  000000       |
+| fileName              | String             | Full path to the file to render.                                                                                | **Yes**   |               |
+| scale                 | Number             | Scale of the barcode image. Applies only to PNG.                                                                | No        | 1.0           |
+| option1               | Number             | Symbology-type-specific option value.                                                                           | No        | `NULL`        |
+| option2               | Number             | Symbology-type-specific option value.                                                                           | No        | `NULL`        |
+| option3               | Number             | Symbology-type-specific option value.                                                                           | No        | `NULL`        |
+| showHumanReadableText | Boolean            | Show or hide the symbology data as human-readable text (if applicable).                                         | No        | `true`        |
 
-\* required only if using `createFile`.
+\* required only if using `createFile()`.
 
 ## 5. Error handling
 

@@ -150,8 +150,11 @@ namespace symbology {
     // file name to render
     copyArgStr(*args[8], (char*)&symbol->outfile[0], sizeof(symbol->outfile));
 
+    // show/hide human-readable text
+    symbol->show_hrt = argToInt(*args[13]);
+    
     // text to display
-    copyArgStr(*args[13], (char*)&symbol->text[0], sizeof(symbol->text));
+    copyArgStr(*args[14], (char*)&symbol->text[0], sizeof(symbol->text));
 
     return symbol;
   }
