@@ -35,7 +35,7 @@ install:
 # ensure source install works
 - npm install --build-from-source --clang=1
 # test our module
-- npm run test-travis
+- npm run test
 
 before_script:
 # if publishing, do it

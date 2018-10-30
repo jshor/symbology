@@ -1,6 +1,6 @@
 {
   "name": "symbology",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.",
   "keywords": [
     "barcode",
@@ -20,9 +20,9 @@
   },
   "binary": {
     "module_name": "symbology",
-    "module_path": "./lib/binding/{configuration}/",
+    "module_path": "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
     "remote_path": "./{module_name}/v{version}/{configuration}/",
-    "package_name": "{module_name}-v{version}.tar.gz",
+    "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
     "host": "https://symbologyjs.s3-us-west-2.amazonaws.com"
   },
   "dependencies": {
@@ -48,8 +48,7 @@
   "scripts": {
     "start": "node ./foo.js",
     "install": "node-pre-gyp install --fallback-to-build",
-    "test-travis": "./node_modules/istanbul/lib/cli.js cover _mocha -- -R spec ./src/**/*.test.js",
-    "test": "mocha ./test/*",
+    "test": "./node_modules/istanbul/lib/cli.js cover _mocha -- -R spec ./src/**/*.test.js",
     "prepublish": "npm ls",
     "build": "node-pre-gyp build",
     "package-binary": "node-pre-gyp build package",
