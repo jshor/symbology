@@ -1,6 +1,4 @@
-# ![Symbology.js](https://raw.githubusercontent.com/jshor/symbology/master/symbologyjs-logo.png) Symbology.js
-
-### v1.2.0
+# Symbology.js
 
 Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.
 

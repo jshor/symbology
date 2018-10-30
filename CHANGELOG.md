@@ -1,3 +1,8 @@
+v1.2.1
+
+- fixes travis config
+- updates S3 region host
+
 v1.2.0
 
 - Reorganizes project to have separate source directory.
