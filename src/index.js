@@ -146,7 +146,10 @@ function pngRender(bitmap, width, height) {
 exp.createStream = function(symbol, barcodeData, outputType) {
   outputType = outputType || exp.Output.PNG
   symbol.fileName = 'out.' + outputType
-  symbol.outputOptions = 8; // force buffer to write to rendered_data
+
+  if (outputType !== exp.Output.PNG) {
+    symbol.outputOptions = 8; // force buffer to write to rendered_data
+  }
 
   var res = createSymbology(symbol, barcodeData, 'createStream');
 

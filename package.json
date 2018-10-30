@@ -46,7 +46,7 @@
     "node-pre-gyp"
   ],
   "scripts": {
-    "start": "node ./foo.js",
+    "start": "node ./index.js",
     "install": "node-pre-gyp install --fallback-to-build",
     "test": "./node_modules/istanbul/lib/cli.js cover _mocha -- -R spec ./src/**/*.test.js",
     "prepublish": "npm ls",
