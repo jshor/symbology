@@ -144,8 +144,8 @@ namespace symbology {
     }
 
     // colors
-    copyArgStr(*args[6], (char*)&symbol->fgcolour[0], sizeof(symbol->fgcolour));
-    copyArgStr(*args[7], (char*)&symbol->bgcolour[0], sizeof(symbol->bgcolour));
+    copyArgStr(*args[6], (char*)&symbol->bgcolour[0], sizeof(symbol->bgcolour));
+    copyArgStr(*args[7], (char*)&symbol->fgcolour[0], sizeof(symbol->fgcolour));
     
     // file name to render
     copyArgStr(*args[8], (char*)&symbol->outfile[0], sizeof(symbol->outfile));
