@@ -29,7 +29,7 @@ var defaultSymbol = {
   option1: -1,
   option2: -1,
   option3: -1,
-  showHumanReadableText: 1 // show human-readable text
+  showHumanReadableText: true // show human-readable text
   // input_mode: BINARY_MODE,
 };
 
@@ -43,8 +43,8 @@ var defaultSymbol = {
 function validateSymbol(symbologyStruct) {
   var keys = Object.keys(defaultSymbol);
 
-  for(var i=0; i<keys.length; i++) {
-    if(!symbologyStruct[keys[i]]) {
+  for (var i=0; i<keys.length; i++) {
+    if (!symbologyStruct.hasOwnProperty(keys[i])) {
       symbologyStruct[keys[i]] = defaultSymbol[keys[i]];
     }
   }

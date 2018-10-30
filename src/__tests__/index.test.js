@@ -22,7 +22,7 @@ function getSymbol(obj) {
     option1: obj.option1 || -1,
     option2: obj.option2 || -1,
     option3: obj.option3 || -1,
-    showHumanReadableText: obj.showHumanReadableText || 0
+    showHumanReadableText: obj.showHumanReadableText || 1
     // input_mode: BINARY_MODE,
   };
 }
