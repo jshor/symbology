@@ -1,6 +1,6 @@
 {
   "name": "symbology",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.",
   "keywords": [
     "barcode",
@@ -11,7 +11,7 @@
     "1d barcode",
     "2d barcode"
   ],
-  "main": "./index.js",
+  "main": "./src/index.js",
   "author": "Josh Shor <https://github.com/jshor>",
   "license": "MIT",
   "repository": {
@@ -46,6 +46,7 @@
     "node-pre-gyp"
   ],
   "scripts": {
+    "start": "node ./index.js",
     "install": "node-pre-gyp install --fallback-to-build",
     "test": "./node_modules/istanbul/lib/cli.js cover _mocha -- -R spec ./src/**/*.test.js",
     "prepublish": "npm ls",

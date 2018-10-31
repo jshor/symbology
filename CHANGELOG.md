@@ -1,3 +1,7 @@
+v1.2.3
+
+- eliminates libpng dependency
+
 v1.2.2
 
 - adds option to show/hide human-readable text

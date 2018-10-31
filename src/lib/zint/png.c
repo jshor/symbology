@@ -456,14 +456,6 @@ int png_to_file(struct zint_symbol *symbol, int image_height, int image_width, c
 		}
 	}
 
-	if(image_type == PNG_DATA) {
-#ifndef NO_PNG
-		error_number = png_pixel_plot(symbol, scale_height, scale_width, scaled_pixelbuf, rotate_angle);
-#else
-		return ZERROR_INVALID_OPTION;
-#endif
-	}
-
   /**
    * force BMP pixel plot for Symbology.js
    */
