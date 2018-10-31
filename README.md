@@ -21,7 +21,6 @@ Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.
 - [6. Symbology types](#6-symbology-types)
 - [7. Development](#7-development)
     - [7.1. Building](#71-building)
-        - [7.1.1. Prerequisites](#711-prerequisites)
     - [7.2. Testing](#72-testing)
     - [7.3. Packaging](#73-packaging)
     - [7.4. Bugs](#74-bugs)
@@ -202,10 +201,6 @@ There are 53 different available symbology types. For an exhaustive list, please
 ```
 yarn build
 ```
-
-#### 7.1.1. Prerequisites
-
-[libpng](http://www.libpng.org/pub/png/libpng.html) is a required for building this module. If you receive an error that png.h was not found, it is because libpng is not installed locally.
 
 ### 7.2. Testing
 
