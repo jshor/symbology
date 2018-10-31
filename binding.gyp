@@ -37,7 +37,6 @@
         "src/lib/zint/upcean.c",
         "src/lib/binding.cpp"
       ],
-      "libraries": ["-lpng"],
       "include_dirs": [
         "<!(node -e \"require('nan')\")"
       ]
