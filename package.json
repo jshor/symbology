@@ -1,6 +1,6 @@
 {
   "name": "symbology",
-  "version": "1.2.3",
+  "version": "1.2.5",
   "description": "Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.",
   "keywords": [
     "barcode",
@@ -20,10 +20,10 @@
   },
   "binary": {
     "module_name": "symbology",
-    "module_path": "./lib/binding/{configuration}/{node_abi}-{platform}-{arch}/",
-    "remote_path": "./{module_name}/v{version}/{configuration}/",
-    "package_name": "{module_name}-v{version}-{node_abi}-{platform}-{arch}.tar.gz",
-    "host": "https://symbologyjs.s3-us-west-2.amazonaws.com"
+    "module_path": "./lib/binding/bin/",
+    "remote_path": "./builds/{platform}/v{version}/",
+    "package_name": "{module_name}.tar.gz",
+    "host": "https://symbologyjs.s3-us-east-1.amazonaws.com"
   },
   "dependencies": {
     "nan": "2.x",
@@ -47,11 +47,11 @@
   ],
   "scripts": {
     "start": "node ./index.js",
-    "install": "node-pre-gyp install --fallback-to-build",
+    "install": "node-pre-gyp install --fallback-to-build --target_platform=win32 --target_arch=x64",
     "test": "./node_modules/istanbul/lib/cli.js cover _mocha -- -R spec ./src/**/*.test.js",
     "prepublish": "npm ls",
-    "build": "node-pre-gyp build",
-    "package-binary": "node-pre-gyp build package",
-    "publish-binary": "node-pre-gyp publish"
+    "build": "node-pre-gyp build --target_platform=win32 --target_arch=x64",
+    "package-binary": "node-pre-gyp build package --target_platform=win32 --target_arch=x64",
+    "publish-binary": "node-pre-gyp publish --target_platform=win32 --target_arch=x64"
   }
 }

@@ -23,7 +23,10 @@ before_install:
 # put local node-pre-gyp on PATH
 - export PATH=./node_modules/.bin/:$PATH
 # put global node-gyp on PATH
-- npm install node-gyp -g
+os:
+- linux
+- osx- npm install node-gyp -g
+
 # figure out if we should publish
 - PUBLISH_BINARY=false
 # if we are building a tag then publish
@@ -49,7 +52,7 @@ script:
 - INSTALL_RESULT=0
 - if [[ $PUBLISH_BINARY == true ]]; then INSTALL_RESULT=$(npm install --fallback-to-build=false > /dev/null)$? || true; fi;
 # if install returned non zero (errored) then we first unpublish and then call false so travis will bail at this line
-- if [[ $INSTALL_RESULT != 0 ]]; then echo "returned $INSTALL_RESULT";node-pre-gyp unpublish;false; fi
+# - if [[ $INSTALL_RESULT != 0 ]]; then echo "returned $INSTALL_RESULT";node-pre-gyp unpublish;false; fi
 # If success then we arrive here so lets clean up
 - node-pre-gyp clean
 

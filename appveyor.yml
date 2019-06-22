@@ -1,4 +1,4 @@
-image: Visual Studio 2013
+image: MinGW
 install:
   - yarn
   - yarn build
