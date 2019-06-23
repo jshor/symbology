@@ -627,7 +627,7 @@ int ean_128(struct zint_symbol *symbol, uint8_t source[], int length)
 	float glyph_count;
 	char dest[1000];
 	int separator_row, linkage_flag, c_count, i, j;
-        char reduced[length + 1];
+        char *reduced = malloc(length + 1);
 	error_number = 0;
 	strcpy(dest, "");
 	linkage_flag = 0;

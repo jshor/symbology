@@ -176,7 +176,7 @@ int interleaved_two_of_five(struct zint_symbol *symbol, uint8_t source[], int le
 
 	int error_number, i, j;
 	char bars[7], spaces[7], mixed[14], dest[1000];
-	uint8_t temp[length + 2];
+	uint8_t *temp = malloc(length + 2);
 
 	error_number = 0;
 

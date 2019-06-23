@@ -163,7 +163,7 @@ void qr_binary(int datastream[], int version, int target_binlen, char mode[], in
 	int current_binlen, current_bytes;
 	int toggle, percent;
 
-	char binary[est_binlen + 12];
+	char *binary = malloc(est_binlen + 12);
 	strcpy(binary, "");
 
 	if(gs1) {
@@ -439,10 +439,10 @@ void add_ecc(int fullstream[], int datastream[], int version, int data_cw, int b
 	int i, j, length_this_block, posn, debug = 0;
 
 
-	uint8_t data_block[short_data_block_length + 2];
-	uint8_t ecc_block[ecc_block_length + 2];
-	int interleaved_data[data_cw + 2];
-	int interleaved_ecc[ecc_cw + 2];
+	uint8_t *data_block = malloc(short_data_block_length + 2);
+	uint8_t *ecc_block = malloc(ecc_block_length + 2);
+	int *interleaved_data = malloc(data_cw + 2);
+	int *interleaved_ecc = malloc(ecc_cw + 2);
 
 	posn = 0;
 
@@ -702,7 +702,7 @@ int evaluate(uint8_t *grid, int size, int pattern)
 	int dark_mods;
 	int percentage, k;
 
-	char local[size * size];
+	char *local = malloc(size * size);
 
 	for(x = 0; x < size; x++) {
 		for(y = 0; y < size; y++) {
@@ -827,8 +827,8 @@ int apply_bitmask(uint8_t *grid, int size)
 	int best_val, best_pattern;
 	int bit;
 
-	uint8_t mask[size * size];
-	uint8_t eval[size * size];
+	uint8_t *mask = malloc(size * size);
+	uint8_t *eval = malloc(size * size);
 
 	/* Perform data masking */
 	for(x = 0; x < size; x++) {
@@ -957,9 +957,9 @@ int qr_code(struct zint_symbol *symbol, uint8_t source[], int length)
 	int ecc_level, autosize, version, max_cw, target_binlen, blocks, size;
 	int bitmask, gs1;
 
-	int utfdata[length + 1];
-	int jisdata[length + 1];
-	char mode[length + 1];
+	int *utfdata = malloc(length + 1);
+	int *jisdata = malloc(length + 1);
+	char *mode = malloc(length + 1);
 
 	gs1 = (symbol->input_mode == GS1_MODE);
 
@@ -1063,15 +1063,15 @@ int qr_code(struct zint_symbol *symbol, uint8_t source[], int length)
 		case LEVEL_H: target_binlen = qr_data_codewords_H[version - 1]; blocks = qr_blocks_H[version - 1]; break;
 	}
 
-	int datastream[target_binlen + 1];
+	int *datastream = malloc(target_binlen + 1);
 	int j;
-	int fullstream[qr_total_codewords[version - 1] + 1];
+	int *fullstream = malloc(qr_total_codewords[version - 1] + 1);
 
 	qr_binary(datastream, version, target_binlen, mode, jisdata, length, gs1, est_binlen);
 	add_ecc(fullstream, datastream, version, target_binlen, blocks);
 
 	size = qr_sizes[version - 1];
-	uint8_t grid[size * size];
+	uint8_t *grid = malloc(size * size);
 
 	for (i = 0; i < size; i++) {
 		for(j = 0; j < size; j++) {
@@ -1851,8 +1851,8 @@ int micro_apply_bitmask(uint8_t *grid, int size)
 	int best_val, best_pattern;
 	int bit;
 
-	uint8_t mask[size * size];
-	uint8_t eval[size * size];
+	uint8_t *mask = malloc(size * size);
+	uint8_t *eval = malloc(size * size);
 
 	/* Perform data masking */
 	for(x = 0; x < size; x++) {
@@ -2105,7 +2105,7 @@ int microqr(struct zint_symbol *symbol, uint8_t source[], int length)
 	}
 
 	size = micro_qr_sizes[version];
-	uint8_t grid[size * size];
+	uint8_t *grid = malloc(size * size);
 
 	for (i = 0; i < size; i++) {
 		for (j = 0; j < size; j++) {

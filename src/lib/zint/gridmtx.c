@@ -789,8 +789,8 @@ void place_layer_id(char* grid, int size, int layers, int modules, int ecc_level
 
 	int i, j, layer, start, stop;
 
-	int layerid[layers + 1];
-	int id[modules * modules];
+	int *layerid = malloc(layers + 1);
+	int *id = malloc(modules * modules);
 
 	/* Calculate Layer IDs */
 	for(i = 0; i <= layers; i++) {
@@ -843,8 +843,8 @@ int grid_matrix(struct zint_symbol *symbol, uint8_t source[], int length)
 	int data_cw, input_latch = 0;
 	int word[1460], data_max, reader = 0;
 
-	int utfdata[length + 1];
-	int gbdata[length + 1];
+	int *utfdata = malloc(length + 1);
+	int *gbdata = malloc(length + 1);
 
 	for(i = 0; i < 1460; i++) {
 		word[i] = 0;
@@ -962,7 +962,7 @@ int grid_matrix(struct zint_symbol *symbol, uint8_t source[], int length)
 	size = 6 + (layers * 12);
 	modules = 1 + (layers * 2);
 
-	char grid[size * size];
+	char *grid = malloc(size * size);
 
 	for(x = 0; x < size; x++) {
 		for(y = 0; y < size; y++) {

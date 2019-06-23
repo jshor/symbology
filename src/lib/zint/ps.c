@@ -29,7 +29,7 @@
 
 int pipe(int fd[2]);
 int close(int fildes);
-ssize_t read(int fildes, void *buf, size_t nbytes);
+int read(int fildes, void *buf, unsigned nbytes);
 
 /* This file has expanded quite a bit since version 1.5 in order to accomodate
    the formatting rules for EAN and UPC symbols as set out in EN 797:1995 - the
@@ -61,7 +61,7 @@ int ps_plot(struct zint_symbol *symbol)
 	addon_text_posn = 0.0;
 
 	if((symbol->output_options & BARCODE_STDOUT) != 0) {
-		pipe(p);
+		// pipe(p);
 		feps = fdopen(p[1], "w");
 	} else {
 		feps = fopen(symbol->outfile, "w");

@@ -331,7 +331,7 @@ int cc_a(struct zint_symbol *symbol, char source[], int cc_width)
 int cc_b(struct zint_symbol *symbol, char source[], int cc_width)
 { /* CC-B 2D component */
 	int length, i, binloc;
-	uint8_t data_string[(strlen(source) / 8) + 3];
+	uint8_t *data_string = malloc((strlen(source) / 8) + 3);
 	int chainemc[180], mclength;
 	int k, j, longueur, mccorrection[50], offset;
 	int total, dummy[5];
@@ -558,7 +558,7 @@ int cc_b(struct zint_symbol *symbol, char source[], int cc_width)
 int cc_c(struct zint_symbol *symbol, char source[], int cc_width, int ecc_level)
 { /* CC-C 2D component - byte compressed PDF417 */
 	int length, i, binloc;
-        uint8_t data_string[(strlen(source) / 8) + 4];
+        uint8_t *data_string = malloc((strlen(source) / 8) + 4);
 	int chainemc[1000], mclength, k;
 	int offset, longueur, loop, total, j, mccorrection[520];
 	int c1, c2, c3, dummy[35];
@@ -701,7 +701,8 @@ int cc_binary_string(struct zint_symbol *symbol, const char source[], char binar
 	long int group_val;
 	int ai90_mode, latch, remainder, binary_length;
 	char date_str[4];
-	char general_field[strlen(source) + 1], general_field_type[strlen(source) + 1];
+	char *general_field = malloc(strlen(source) + 1);
+	char *general_field_type = malloc(strlen(source) + 1);
 	int target_bitsize;
 
 	encoding_method = 1;
@@ -783,7 +784,7 @@ int cc_binary_string(struct zint_symbol *symbol, const char source[], char binar
 
 	if (encoding_method == 3) {
 		/* Encodation Method field of "11" - AI 90 */
-                char ninety[strlen(source) + 1];
+                char *ninety = malloc(strlen(source) + 1);
                 char numeric_part[4];
 		int alpha, alphanum, numeric, test1, test2, test3, next_ai_posn;
 		int numeric_value, table3_letter, mask;
@@ -1719,8 +1720,8 @@ int composite(struct zint_symbol *symbol, uint8_t source[], int length)
 	unsigned int rs = length + 1;
 	unsigned int bs = 20 * rs;
 	unsigned int pri_len;
-	char reduced[rs];
-	char binary_string[bs];
+	char *reduced = malloc(rs);
+	char *binary_string = malloc(bs);
 	struct zint_symbol *linear;
 	int top_shift, bottom_shift;
 

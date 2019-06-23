@@ -500,7 +500,7 @@ int japan_post(struct zint_symbol *symbol, uint8_t source[], int length)
 	char check_char;
 	char inter[23];
 
-        char local_source[length + 1];
+        char *local_source = malloc(length + 1);
 
 	inter_posn = 0;
 	error_number = 0;

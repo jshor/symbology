@@ -29,7 +29,7 @@
 
 int pipe(int fd[2]);
 int close(int fildes);
-ssize_t read(int fildes, void *buf, size_t nbytes);
+int read(int fildes, void *buf, unsigned nbytes);
 
 int svg_plot(struct zint_symbol *symbol)
 {
@@ -55,7 +55,7 @@ int svg_plot(struct zint_symbol *symbol)
 	addon_text_posn = 0.0;
 
 	if((symbol->output_options & BARCODE_STDOUT) != 0) {
-		pipe(p);
+		// pipe(p);
 		fsvg = fdopen(p[1], "w");
 	} else {
 		fsvg = fopen(symbol->outfile, "w");

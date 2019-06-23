@@ -39,7 +39,14 @@
       ],
       "include_dirs": [
         "<!(node -e \"require('nan')\")"
-      ]
+      ],
+      "msvs_settings": {
+        "VCCLCompilerTool": {
+          "AdditionalOptions": [
+            "/w"
+          ]
+        }
+      }
     },
     {
       "target_name": "action_after_build",

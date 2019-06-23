@@ -56,8 +56,12 @@ int aztec_text_process(uint8_t source[], const unsigned int src_len, char binary
 {
 	int bytes, i, j, k;
 	int curtable, newtable, lasttable, chartype, maplength, blocks, debug;
-	int charmap[src_len * 2], typemap[src_len * 2];
-	int blockmap[2][src_len];
+	int *charmap = malloc(src_len * 2);
+	int *typemap = malloc(src_len * 2);
+	int *blockmap[2];
+	blockmap[0] = (int *)malloc(src_len);
+	blockmap[1] = (int *)malloc(src_len);
+
 	/* Lookup input string in encoding table */
 	maplength = 0;
 	debug = 0;
@@ -641,7 +645,7 @@ int aztec(struct zint_symbol *symbol, uint8_t source[], int length)
 	int debug = 0, reader = 0;
 	int comp_loop = 4;
 
-        uint8_t local_source[length + 1];
+        uint8_t *local_source = malloc(length + 1);
 
 	memset(binary_string,0,20000);
 	memset(adjusted_string,0,20000);
@@ -965,7 +969,9 @@ int aztec(struct zint_symbol *symbol, uint8_t source[], int length)
 		printf("    (%d data words, %d ecc words)\n", data_blocks, ecc_blocks);
 	}
 
-	unsigned int data_part[data_blocks + 3], ecc_part[ecc_blocks + 3];
+	unsigned int *data_part = malloc(data_blocks + 3);
+	unsigned int *ecc_part = malloc(ecc_blocks + 3);
+	
 	/* Copy across data into separate integers */
 	memset(data_part,0,(data_blocks + 2)*sizeof(int));
 	memset(ecc_part,0,(ecc_blocks + 2)*sizeof(int));

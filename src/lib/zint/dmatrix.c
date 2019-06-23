@@ -337,7 +337,7 @@ int dm200encode(struct zint_symbol *symbol, uint8_t source[], uint8_t target[], 
 	int x12_buffer[6], x12_p;
 	int edifact_buffer[8], edifact_p;
 	int debug = 0;
-        char binary[2 * inputlen];
+        char *binary = malloc(2 * inputlen);
 
 	sp = 0;
 	tp = 0;

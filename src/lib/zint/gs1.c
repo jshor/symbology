@@ -289,7 +289,7 @@ int gs1_verify(struct zint_symbol *symbol, uint8_t source[], const unsigned int 
 int ugs1_verify(struct zint_symbol *symbol, uint8_t source[], const unsigned int src_len, uint8_t reduced[])
 {
 	/* Only to keep the compiler happy */
-	char temp[src_len + 5];
+	char *temp = malloc(src_len + 5);
 	int error_number;
 
 	error_number = gs1_verify(symbol, source, src_len, temp);

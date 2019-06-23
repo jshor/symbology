@@ -1057,7 +1057,8 @@ int general_rules(char field[], char type[])
 int rss_binary_string(struct zint_symbol *symbol, char source[], char binary_string[])
 { /* Handles all data encodation from section 7.2.5 of ISO/IEC 24724 */
 	int encoding_method, i, mask, j, read_posn, latch, debug = 0, last_mode = ISOIEC;
-	char general_field[strlen(source)], general_field_type[strlen(source)];
+	char *general_field = malloc(strlen(source));
+	char *general_field_type = malloc(strlen(source));
 	int remainder, d1, d2, value;
 	char padstring[40];
 
@@ -1850,7 +1851,8 @@ int rssexpanded(struct zint_symbol *symbol, uint8_t source[], int src_len)
 	int row, elements_in_sub, special_case_row, left_to_right;
 	int codeblocks, sub_elements[235], stack_rows, current_row, current_block;
 	int separator_row;
-	char reduced[src_len], binary_string[7 * src_len];
+	char *reduced = malloc(src_len);
+	char *binary_string = malloc(7 * src_len);
 
 	separator_row = 0;
 	reader=0;

@@ -463,7 +463,7 @@ int reduced_charset(struct zint_symbol *symbol, uint8_t *source, int length)
 	/* These are the "norm" standards which only support Latin-1 at most */
 	int error_number = 0;
 
-	uint8_t preprocessed[length + 1];
+	uint8_t *preprocessed = malloc(length + 1);
 
 	if(symbol->symbology == BARCODE_CODE16K) {
 		symbol->whitespace_width = 16;
@@ -592,7 +592,7 @@ int ZBarcode_Encode(struct zint_symbol *symbol, uint8_t *source, int length)
 		strcpy(symbol->outfile, "out.png");
 	}
 
-        uint8_t local_source[length + 1];
+        uint8_t *local_source = malloc(length + 1);
 
 	/* First check the symbology field */
 	if(symbol->symbology < 1) { strcpy(symbol->errtxt, "Symbology out of range, using Code 128"); symbol->symbology = BARCODE_CODE128; error_number = ZWARN_INVALID_OPTION; }
@@ -728,12 +728,12 @@ int ZBarcode_Print(struct zint_symbol *symbol, int rotate_angle)
 		} else if(!(strcmp(output, "SVG"))) {
 			error_number = svg_plot(symbol);
 		} else {
-			strcpy(symbol->errtxt, "Unknown output format");
+			strcpy(symbol->errtxt, "Unknown output format / output not TXT, EPS, SVG");
 			error_tag(symbol->errtxt, ZERROR_INVALID_OPTION);
 			return ZERROR_INVALID_OPTION;
 		}
 	} else {
-		strcpy(symbol->errtxt, "Unknown output format");
+		strcpy(symbol->errtxt, "Unknown output format / not specified");
 		error_tag(symbol->errtxt, ZERROR_INVALID_OPTION);
 		return ZERROR_INVALID_OPTION;
 	}

@@ -20,6 +20,7 @@
 
 #ifndef ZINT_H
 #define ZINT_H
+#define NO_PNG
 
 #ifdef __cplusplus
 extern "C" {
