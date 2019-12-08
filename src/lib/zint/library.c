@@ -171,10 +171,6 @@ extern int channel_code(struct zint_symbol *symbol, uint8_t source[], int length
 extern int code_one(struct zint_symbol *symbol, uint8_t source[], int length); /* Code One */
 extern int grid_matrix(struct zint_symbol *symbol, uint8_t source[], int length); /* Grid Matrix */
 
-#ifndef NO_PNG
-extern int png_handle(struct zint_symbol *symbol, int rotate_angle);
-#endif
-
 extern int render_plot(struct zint_symbol *symbol, float width, float height);
 
 extern int bmp_handle(struct zint_symbol *symbol, int rotate_angle);
@@ -715,13 +711,10 @@ int ZBarcode_Print(struct zint_symbol *symbol, int rotate_angle)
 		output[3] = '\0';
 		to_upper((uint8_t*)output);
 
-#ifndef NO_PNG
 		if(!(strcmp(output, "PNG"))) {
 			if(symbol->scale < 1.0) { symbol->text[0] = '\0'; }
-			error_number = png_handle(symbol, rotate_angle);
-		} else
-#endif
-		if(!(strcmp(output, "TXT"))) {
+			error_number = bmp_handle(symbol, rotate_angle);
+		} else if(!(strcmp(output, "TXT"))) {
 			error_number = dump_plot(symbol);
 		} else if(!(strcmp(output, "EPS"))) {
 			error_number = ps_plot(symbol);

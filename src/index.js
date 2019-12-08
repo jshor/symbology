@@ -143,9 +143,9 @@ function pngRender(bitmap, width, height) {
  * @param {String} outputType - 'png', 'svg', or 'eps' (default: 'png')
  * @returns {Promise<Object>} object with resulting props (see docs)
  */
-exp.createStream = function(symbol, barcodeData, outputType) {
+function theCreateStram(symbol, barcodeData, outputType) {
   outputType = outputType || exp.Output.PNG
-  symbol.fileName = 'out.' + outputType
+  symbol.fileName = symbol.fileName || 'out.' + outputType
 
   if (outputType !== exp.Output.PNG) {
     symbol.outputOptions = 8; // force buffer to write to rendered_data
@@ -154,24 +154,16 @@ exp.createStream = function(symbol, barcodeData, outputType) {
   var res = createSymbology(symbol, barcodeData, 'createStream');
 
   if(res.code <= 2) {
-    if (outputType === exp.Output.PNG) {
-      var pngData = pngRender(res.encodedData, res.width, res.height);
-
-      return blobToBase64Png(pngData)
-        .then(function(base64Data) {
-          return {
-            data: base64Data,
-            width: res.width,
-            height: res.height,
-            message: res.message,
-            code: res.code
-          };
-        });
+    if (typeof res.encodedData === 'string') {
+      res.encodedData = res.encodedData.replace(/\r?\n?[^\r\n]*$/, '')
     }
+
     return Promise.resolve({
       data: res.encodedData,
       message: res.message,
-      code: res.code
+      code: res.code,
+      width: res.width,
+      height: res.height
     });
   }
   return Promise.reject({
@@ -179,6 +171,27 @@ exp.createStream = function(symbol, barcodeData, outputType) {
     code: res.code
   });
 };
+
+exp.createStream = function(symbol, barcodeData, outputType) {
+  return theCreateStram(symbol, barcodeData, outputType)
+    .then((res) => {
+      if (outputType === exp.Output.PNG) {
+        var pngData = pngRender(res.data, res.width, res.height);
+
+        return blobToBase64Png(pngData)
+          .then(function(base64Data) {
+            return {
+              data: base64Data,
+              width: res.width,
+              height: res.height,
+              message: res.message,
+              code: res.code
+            };
+          });
+      }
+      return res
+    })
+}
 
 /**
  * Creates a stream of a PNG, SVG or EPS file in the specified fileName path.
@@ -190,11 +203,36 @@ exp.createStream = function(symbol, barcodeData, outputType) {
  * @returns {Promise<Object>} object with resulting props (see docs)
  */
 exp.createFile = function(symbol, barcodeData) {
-  var res = createSymbology(symbol, barcodeData, 'createFile');
+  const outputType = exp.Output[symbol.fileName.split('.').pop().toUpperCase()] || exp.Output.PNG
 
-  return new Promise(function(resolve) {
-    resolve(res);
-  });
+  return theCreateStram(symbol, barcodeData, outputType)
+    .then((res) => {
+      console.log('did the do', outputType)
+      if (outputType === exp.Output.PNG) {
+        console.log('found png')
+        var image = pngRender(res.data, res.width, res.height);
+
+        return new Promise((resolve, reject) => {
+          image.writeImage(symbol.fileName, function(err) {
+            if (err) {
+              reject(err)
+            } else {
+              delete res.data
+
+              resolve(res)
+            }
+          });
+        });
+      }
+
+      console.log('WRITING: ', symbol.fileName)
+
+      fs.writeFileSync(symbol.fileName, res.data)
+
+      delete res.data
+
+      return res
+    })
 };
 
 module.exports = exp;

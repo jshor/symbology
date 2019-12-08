@@ -164,7 +164,7 @@ A `Symbol` is a regular JavaScript object with the following available propertie
 | outputOptions         | Number             | Symbology-specific output option.                                                                               | No        | `NULL`        |
 | foregroundColor       | Hexadecimal number | Barcode foreground color.                                                                                       | No        |  FFFFFF       |
 | backgroundColor       | Hexadecimal number | Barcode background color.                                                                                       | No        |  000000       |
-| fileName              | String             | Full path to the file to render.                                                                                | **Yes**   |               |
+| fileName              | String             | Full path to the file to render.                                                                                | **Yes***   |               |
 | scale                 | Number             | Scale of the barcode image. Applies only to PNG.                                                                | No        | 1.0           |
 | option1               | Number             | Symbology-type-specific option value.                                                                           | No        | `NULL`        |
 | option2               | Number             | Symbology-type-specific option value.                                                                           | No        | `NULL`        |

@@ -23,11 +23,11 @@
     "module_path": "./lib/binding/bin/",
     "remote_path": "./builds/v{version}/{platform}/{arch}/{node_abi}",
     "package_name": "{module_name}.tar.gz",
-    "host": "https://symbologyjs.s3-us-west-2.amazonaws.com"
+    "host": "https://symbology.dev.s3-us-west-2.amazonaws.com"
   },
   "dependencies": {
     "nan": "2.x",
-    "node-pre-gyp": "0.x",
+    "node-pre-gyp": "^0.14.0",
     "pngjs": "3.3.0",
     "pngjs-image": "^0.11.6"
   },
@@ -49,8 +49,8 @@
     "start": "node ./index.js",
     "install": "node-pre-gyp install --fallback-to-build",
     "test": "./node_modules/istanbul/lib/cli.js cover _mocha -- -R spec ./src/**/*.test.js",
-    "build": "node-pre-gyp build --target_arch=x64",
-    "package-binary": "node-pre-gyp build package --target_arch=x64",
+    "build": "node-pre-gyp rebuild --target_arch=x64",
+    "package-binary": "node-pre-gyp rebuild package --target_arch=x64",
     "publish-binary": "node-pre-gyp publish --target_arch=x64"
   }
 }

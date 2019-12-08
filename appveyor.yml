@@ -2,7 +2,9 @@ image: Visual Studio 2017
 
 install:
   - ps: Install-Product node 8 x64
-  - npm remove node-gyp
+  # - npm remove node-gyp
+  - yarn global add windows-build-tools
+  # - yarn test
   - yarn
   - yarn package-binary
   - yarn publish-binary

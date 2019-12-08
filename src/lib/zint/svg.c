@@ -55,7 +55,9 @@ int svg_plot(struct zint_symbol *symbol)
 	addon_text_posn = 0.0;
 
 	if((symbol->output_options & BARCODE_STDOUT) != 0) {
-		// pipe(p);
+		#ifndef _WIN32
+			pipe(p);
+		#endif
 		fsvg = fdopen(p[1], "w");
 	} else {
 		fsvg = fopen(symbol->outfile, "w");

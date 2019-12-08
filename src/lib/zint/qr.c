@@ -22,6 +22,7 @@
 #include <string.h>
 #include "common.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include "sjis.h"
 #include "qr.h"
 #include "reedsol.h"
@@ -437,7 +438,6 @@ void add_ecc(int fullstream[], int datastream[], int version, int data_cw, int b
 	int qty_short_blocks = blocks - qty_long_blocks;
 	int ecc_block_length = ecc_cw / blocks;
 	int i, j, length_this_block, posn, debug = 0;
-
 
 	uint8_t *data_block = malloc(short_data_block_length + 2);
 	uint8_t *ecc_block = malloc(ecc_block_length + 2);
