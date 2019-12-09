@@ -29,6 +29,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdint.h>
 #include "common.h"
 
 #define   GL_CONST  2.8346

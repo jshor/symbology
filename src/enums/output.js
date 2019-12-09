@@ -1,5 +1,5 @@
 module.exports = {
-  PNG: 'png',
+  PNG: 'bmp',
   SVG: 'svg',
   EPS: 'eps'
 }

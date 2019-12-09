@@ -2,6 +2,7 @@ var chai = require('chai');
 var sinon = require('sinon');
 var mocha = require('mocha');
 var fs = require('fs');
+var fixtures = require('./fixtures.json');
 var library = require('../');
 var regex = require('./helpers/regex');
 var createSymbology = require('./helpers/createSymbologyStub');
@@ -17,13 +18,7 @@ function getSymbol(obj) {
     symbology: obj.symbology || library.Barcode.CODE128,
     foregroundColor: obj.foregroundColor || 'fff000',
     backgroundColor: obj.backgroundColor || '000000',
-    fileName: obj.fileName || 'out.png',
-    scale: obj.scale || 1.0,
-    option1: obj.option1 || -1,
-    option2: obj.option2 || -1,
-    option3: obj.option3 || -1,
-    showHumanReadableText: obj.showHumanReadableText || 1
-    // input_mode: BINARY_MODE,
+    fileName: obj.fileName || 'out.bmp'
   };
 }
 
@@ -44,7 +39,7 @@ describe('the symbology library', function() {
     var filePath = 'testfile.png';
 
     beforeEach(function() {
-      sandbox.stub(symbology, 'createFile').callsFake(createSymbology);
+      sandbox.stub(symbology, 'createStream').callsFake(createSymbology);
     });
 
     it('should return a status code and a message', function() {
@@ -76,7 +71,7 @@ describe('the symbology library', function() {
     var filePath = 'testfile.svg';
 
     beforeEach(function() {
-      sandbox.stub(symbology, 'createFile').callsFake(createSymbology);
+      sandbox.stub(symbology, 'createStream').callsFake(createSymbology);
     });
 
     it('should return a zero status code and render an SVG file', function() {
@@ -109,23 +104,7 @@ describe('the symbology library', function() {
         .then(function(data) {
           expect(data.code).to.be.a('number');
           expect(data.message).to.be.a('string');
-//          expect(data.data).to.match(regex.svg);
-        });
-    });
-  });
-
-  describe('the createStream function when `outputType` is not specified', function() {
-    beforeEach(function() {
-      sandbox.stub(symbology, 'createStream').callsFake(createSymbology);
-    });
-
-    it('should return default to rendering a png', function () {
-      return library
-        .createStream(getSymbol(), '12345')
-        .then(function(data) {
-          expect(data.code).to.be.a('number');
-          expect(data.message).to.be.a('string');
-          expect(data.data).to.match(regex.base64);
+        //  expect(data.data).to.match(regex.svg);
         });
     });
   });
@@ -158,4 +137,30 @@ describe('the symbology library', function() {
         });
     });
   });
+
+  describe('rendering PNG images', function() {
+    it('should render a Code 128 PNG image', function() {
+      return library
+        .createStream(getSymbol({
+          symbology: library.Barcode.CODE128
+        }), '12345', library.Output.PNG)
+        .then(function(data) {
+          expect(data.code).to.be.a('number');
+          expect(data.message).to.be.a('string');
+          expect(data.data).to.equal(fixtures.code128Png);
+        });
+    });
+
+    it('should render a QRCode PNG image', function() {
+      return library
+        .createStream(getSymbol({
+          symbology: library.Barcode.QRCODE
+        }), '12345', library.Output.PNG)
+        .then(function(data) {
+          expect(data.code).to.be.a('number');
+          expect(data.message).to.be.a('string');
+          expect(data.data).to.equal(fixtures.qrPng);
+        });
+    });
+  })
 });

@@ -1,15 +1,27 @@
 image: Visual Studio 2017
 
 install:
-  - ps: Install-Product node $NODE_VERSION
-  # - npm remove node-gyp
+  - ps: Install-Product node $env:NODE_VERSION $env:platform
   - yarn global add windows-build-tools
-  # - yarn test
   - yarn
   - yarn package-binary
   - yarn publish-binary
 
+test_script:
+  # Output useful info for debugging.
+  - node --version
+  - npm --version
+  # run tests
+  - yarn test
+
+platform:
+  - x86
+  - x64
+
 environment:
   matrix:
-    - NODE_VERSION: '9 x64'
-    - NODE_VERSION: '13 x64'
+    - NODE_VERSION: '9'
+    - NODE_VERSION: '10'
+    - NODE_VERSION: '11'
+    - NODE_VERSION: '12'
+    - NODE_VERSION: '13'

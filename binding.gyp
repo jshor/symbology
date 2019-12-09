@@ -4,6 +4,11 @@
   "targets": [
     {
       "target_name": "<(module_name)",
+      "defines": ["NO_PNG"],
+      "cflags": ["-Wno-sign-compare"],
+      "xcode_settings": {
+        "OTHER_CFLAGS": ["-Wno-sign-compare"]
+      },
       "sources": [
         "src/lib/zint/2of5.c",
         "src/lib/zint/auspost.c",
@@ -35,6 +40,22 @@
         "src/lib/zint/svg.c",
         "src/lib/zint/telepen.c",
         "src/lib/zint/upcean.c",
+        "src/lib/zint/bmp.c",
+        "src/lib/zint/codablock.c",
+        "src/lib/zint/dotcode.c",
+        "src/lib/zint/eci.c",
+        "src/lib/zint/emf.c",
+        "src/lib/zint/gb2312.c",
+        "src/lib/zint/general_field.c",
+        "src/lib/zint/gif.c",
+        "src/lib/zint/hanxin.c",
+        "src/lib/zint/mailmark.c",
+        "src/lib/zint/pcx.c",
+        "src/lib/zint/raster.c",
+        "src/lib/zint/sjis.c",
+        "src/lib/zint/tif.c",
+        "src/lib/zint/ultra.c",
+        "src/lib/zint/vector.c",
         "src/lib/binding.cpp"
       ],
       "include_dirs": [
@@ -50,6 +71,7 @@
     },
     {
       "target_name": "action_after_build",
+      "cflags": ["-Wno-sign-compare"],
       "type": "none",
       "dependencies": [ "<(module_name)" ],
       "copies": [

@@ -2,26 +2,41 @@
 
 /*
     libzint - the open source barcode library
-    Copyright (C) 2009 Robin Stuart <robin@zint.org.uk>
+    Copyright (C) 2009-2017 Robin Stuart <rstuart114@gmail.com>
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License, or
-    (at your option) any later version.
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions
+    are met:
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+    1. Redistributions of source code must retain the above copyright
+       notice, this list of conditions and the following disclaimer.
+    2. Redistributions in binary form must reproduce the above copyright
+       notice, this list of conditions and the following disclaimer in the
+       documentation and/or other materials provided with the distribution.
+    3. Neither the name of the project nor the names of its contributors
+       may be used to endorse or promote products derived from this software
+       without specific prior written permission.
 
-    You should have received a copy of the GNU General Public License along
-    with this program; if not, write to the Free Software Foundation, Inc.,
-    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+    ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+    FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+    OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+    HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+    LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+    OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+    SUCH DAMAGE.
+ */
+/* vim: set ts=4 sw=4 et : */
 
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#ifdef _MSC_VER
+#include <malloc.h>
+#endif
 #include "common.h"
 #include "gs1.h"
 
@@ -29,276 +44,654 @@
    to be bulletproof, nor does it report very accurately what problem was found
    or where, but should prevent some of the more common encoding errors */
 
-void itostr(char ai_string[], int ai_value)
-{
-	int thou, hund, ten, unit;
-	char temp[2];
+void itostr(char ai_string[], int ai_value) {
+    int thou, hund, ten, unit;
+    char temp[2];
 
-	strcpy(ai_string, "(");
-	thou = ai_value / 1000;
-	hund = (ai_value - (1000 * thou)) / 100;
-	ten = (ai_value - ((1000 * thou) + (100 * hund))) / 10;
-	unit = ai_value - ((1000 * thou) + (100 * hund) + (10 * ten));
+    strcpy(ai_string, "(");
+    thou = ai_value / 1000;
+    hund = (ai_value - (1000 * thou)) / 100;
+    ten = (ai_value - ((1000 * thou) + (100 * hund))) / 10;
+    unit = ai_value - ((1000 * thou) + (100 * hund) + (10 * ten));
 
-	temp[1] = '\0';
-	if(ai_value >= 1000) { temp[0] = itoc(thou); concat(ai_string, temp); }
-	if(ai_value >= 100) { temp[0] = itoc(hund); concat(ai_string, temp); }
-	temp[0] = itoc(ten);
-	concat(ai_string, temp);
-	temp[0] = itoc(unit);
-	concat(ai_string, temp);
-	concat(ai_string, ")");
+    temp[1] = '\0';
+    if (ai_value >= 1000) {
+        temp[0] = itoc(thou);
+        strcat(ai_string, temp);
+    }
+    if (ai_value >= 100) {
+        temp[0] = itoc(hund);
+        strcat(ai_string, temp);
+    }
+    temp[0] = itoc(ten);
+    strcat(ai_string, temp);
+    temp[0] = itoc(unit);
+    strcat(ai_string, temp);
+    strcat(ai_string, ")");
 }
 
-int gs1_verify(struct zint_symbol *symbol, uint8_t source[], const unsigned int src_len, char reduced[])
-{
-	int i, j, last_ai, ai_latch;
-	char ai_string[6];
-	int bracket_level, max_bracket_level, ai_length, max_ai_length, min_ai_length;
-	int ai_value[100], ai_location[100], ai_count, data_location[100], data_length[100];
-	int error_latch;
+int gs1_verify(struct zint_symbol *symbol, const unsigned char source[], const size_t src_len, char reduced[]) {
+    int i, j, last_ai, ai_latch;
+    char ai_string[7]; /* 6 char max "(NNNN)" */
+    int bracket_level, max_bracket_level, ai_length, max_ai_length, min_ai_length;
+    int ai_count;
+    int error_latch;
+#ifdef _MSC_VER
+    int *ai_value;
+    int *ai_location;
+    int *data_location;
+    int *data_length;
+#endif
+    int ai_max = ustrchr_cnt(source, src_len, '[') + 1; /* Plus 1 so non-zero */
+#ifndef _MSC_VER
+    int ai_value[ai_max], ai_location[ai_max], data_location[ai_max], data_length[ai_max];
+#else
+    ai_value = (int*) _alloca(ai_max * sizeof(int));
+    ai_location = (int*) _alloca(ai_max * sizeof(int));
+    data_location = (int*) _alloca(ai_max * sizeof(int));
+    data_length = (int*) _alloca(ai_max * sizeof(int));
+#endif
 
-	/* Detect extended ASCII characters */
-	for(i = 0; i < (int)src_len; i++) {
-		if(source[i] >=128) {
-			strcpy(symbol->errtxt, "Extended ASCII characters are not supported by GS1");
-			return ZERROR_INVALID_DATA;
-		}
-		if(source[i] < 32) {
-			strcpy(symbol->errtxt, "Control characters are not supported by GS1");
-			return ZERROR_INVALID_DATA;
-		}
-	}
+    /* Detect extended ASCII characters */
+    for (i = 0; i < src_len; i++) {
+        if (source[i] >= 128) {
+            strcpy(symbol->errtxt, "250: Extended ASCII characters are not supported by GS1");
+            return ZINT_ERROR_INVALID_DATA;
+        }
+        if (source[i] == '\0') {
+            strcpy(symbol->errtxt, "262: NUL characters not permitted in GS1 mode");
+            return ZINT_ERROR_INVALID_DATA;
+        }
+        if (source[i] < 32) {
+            strcpy(symbol->errtxt, "251: Control characters are not supported by GS1");
+            return ZINT_ERROR_INVALID_DATA;
+        }
+    }
 
-	if(source[0] != '[') {
-		strcpy(symbol->errtxt, "Data does not start with an AI");
-		return ZERROR_INVALID_DATA;
-	}
+    if (source[0] != '[') {
+        strcpy(symbol->errtxt, "252: Data does not start with an AI");
+        return ZINT_ERROR_INVALID_DATA;
+    }
 
-	/* Check the position of the brackets */
-	bracket_level = 0;
-	max_bracket_level = 0;
-	ai_length = 0;
-	max_ai_length = 0;
-	min_ai_length = 5;
-	j = 0;
-	ai_latch = 0;
-	for(i = 0; i < (int)src_len; i++) {
-		ai_length += j;
-		if(((j == 1) && (source[i] != ']')) && ((source[i] < '0') || (source[i] > '9'))) { ai_latch = 1; }
-		if(source[i] == '[') { bracket_level++; j = 1; }
-		if(source[i] == ']') {
-			bracket_level--;
-			if(ai_length < min_ai_length) { min_ai_length = ai_length; }
-			j = 0;
-			ai_length = 0;
-		}
-		if(bracket_level > max_bracket_level) { max_bracket_level = bracket_level; }
-		if(ai_length > max_ai_length) { max_ai_length = ai_length; }
-	}
-	min_ai_length--;
+    /* Check the position of the brackets */
+    bracket_level = 0;
+    max_bracket_level = 0;
+    ai_length = 0;
+    max_ai_length = 0;
+    min_ai_length = 5;
+    j = 0;
+    ai_latch = 0;
+    for (i = 0; i < src_len; i++) {
+        ai_length += j;
+        if (((j == 1) && (source[i] != ']')) && ((source[i] < '0') || (source[i] > '9'))) {
+            ai_latch = 1;
+        }
+        if (source[i] == '[') {
+            bracket_level++;
+            j = 1;
+        }
+        if (source[i] == ']') {
+            bracket_level--;
+            if (ai_length < min_ai_length) {
+                min_ai_length = ai_length;
+            }
+            j = 0;
+            ai_length = 0;
+        }
+        if (bracket_level > max_bracket_level) {
+            max_bracket_level = bracket_level;
+        }
+        if (ai_length > max_ai_length) {
+            max_ai_length = ai_length;
+        }
+    }
+    min_ai_length--;
 
-	if(bracket_level != 0) {
-		/* Not all brackets are closed */
-		strcpy(symbol->errtxt, "Malformed AI in input data (brackets don\'t match)");
-		return ZERROR_INVALID_DATA;
-	}
+    if (bracket_level != 0) {
+        /* Not all brackets are closed */
+        strcpy(symbol->errtxt, "253: Malformed AI in input data (brackets don\'t match)");
+        return ZINT_ERROR_INVALID_DATA;
+    }
 
-	if(max_bracket_level > 1) {
-		/* Nested brackets */
-		strcpy(symbol->errtxt, "Found nested brackets in input data");
-		return ZERROR_INVALID_DATA;
-	}
+    if (max_bracket_level > 1) {
+        /* Nested brackets */
+        strcpy(symbol->errtxt, "254: Found nested brackets in input data");
+        return ZINT_ERROR_INVALID_DATA;
+    }
 
-	if(max_ai_length > 4) {
-		/* AI is too long */
-		strcpy(symbol->errtxt, "Invalid AI in input data (AI too long)");
-		return ZERROR_INVALID_DATA;
-	}
+    if (max_ai_length > 4) {
+        /* AI is too long */
+        strcpy(symbol->errtxt, "255: Invalid AI in input data (AI too long)");
+        return ZINT_ERROR_INVALID_DATA;
+    }
 
-	if(min_ai_length <= 1) {
-		/* AI is too short */
-		strcpy(symbol->errtxt, "Invalid AI in input data (AI too short)");
-		return ZERROR_INVALID_DATA;
-	}
+    if (min_ai_length <= 1) {
+        /* AI is too short */
+        strcpy(symbol->errtxt, "256: Invalid AI in input data (AI too short)");
+        return ZINT_ERROR_INVALID_DATA;
+    }
 
-	if(ai_latch == 1) {
-		/* Non-numeric data in AI */
-		strcpy(symbol->errtxt, "Invalid AI in input data (non-numeric characters in AI)");
-		return ZERROR_INVALID_DATA;
-	}
+    if (ai_latch == 1) {
+        /* Non-numeric data in AI */
+        strcpy(symbol->errtxt, "257: Invalid AI in input data (non-numeric characters in AI)");
+        return ZINT_ERROR_INVALID_DATA;
+    }
 
-	ai_count = 0;
-	for(i = 1; i < (int)src_len; i++) {
-		if(source[i - 1] == '[') {
-			ai_location[ai_count] = i;
-			j = 0;
-			do {
-				ai_string[j] = source[i + j];
-				j++;
-			} while (ai_string[j - 1] != ']');
-			ai_string[j - 1] = '\0';
-			ai_value[ai_count] = atoi(ai_string);
-			ai_count++;
-		}
-	}
+    ai_count = 0;
+    for (i = 1; i < src_len; i++) {
+        if (source[i - 1] == '[') {
+            ai_location[ai_count] = i;
+            j = 0;
+            do {
+                ai_string[j] = source[i + j];
+                j++;
+            } while (ai_string[j - 1] != ']');
+            ai_string[j - 1] = '\0';
+            ai_value[ai_count] = atoi(ai_string);
+            ai_count++;
+        }
+    }
 
-	for(i = 0; i < ai_count; i++) {
-		data_location[i] = ai_location[i] + 3;
-		if(ai_value[i] >= 100) { data_location[i]++; }
-		if(ai_value[i] >= 1000) { data_location[i]++; }
-		data_length[i] = 0;
-		do {
-			data_length[i]++;
-		} while ((source[data_location[i] + data_length[i] - 1] != '[') && (source[data_location[i] + data_length[i] - 1] != '\0'));
-		data_length[i]--;
-	}
+    for (i = 0; i < ai_count; i++) {
+        data_location[i] = ai_location[i] + 3;
+        if (ai_value[i] >= 100) {
+            data_location[i]++;
+        }
+        if (ai_value[i] >= 1000) {
+            data_location[i]++;
+        }
+        data_length[i] = 0;
+        do {
+            data_length[i]++;
+        } while ((source[data_location[i] + data_length[i] - 1] != '[') && (data_location[i] + data_length[i] <= src_len));
+        data_length[i]--;
+    }
 
-	for(i = 0; i < ai_count; i++) {
-		if(data_length[i] == 0) {
-			/* No data for given AI */
-			strcpy(symbol->errtxt, "Empty data field in input data");
-			return ZERROR_INVALID_DATA;
-		}
-	}
+    for (i = 0; i < ai_count; i++) {
+        if (data_length[i] == 0) {
+            /* No data for given AI */
+            strcpy(symbol->errtxt, "258: Empty data field in input data");
+            return ZINT_ERROR_INVALID_DATA;
+        }
+    }
+    
+    strcpy(ai_string, "");
+    
+    // Check for valid AI values and data lengths according to GS1 General
+    // Specification Release 19, January 2019
+    for (i = 0; i < ai_count; i++) {
+        
+        error_latch = 2;
+        switch (ai_value[i]) {
+            // Length 2 Fixed
+            case 20: // VARIANT
+                if (data_length[i] != 2) {
+                    error_latch = 1;
+                } else {
+                    error_latch = 0;
+                }
+                break;
+                
+            // Length 3 Fixed
+            case 422: // ORIGIN
+            case 424: // COUNTRY PROCESS
+            case 426: // COUNTRY FULL PROCESS
+                if (data_length[i] != 3) {
+                    error_latch = 1;
+                } else {
+                    error_latch = 0;
+                }
+                break;
+                
+            // Length 4 Fixed
+            case 7040: // UIC+EXT
+            case 8111: // POINTS
+                if (data_length[i] != 4) {
+                    error_latch = 1;
+                } else {
+                    error_latch = 0;
+                }
+                break;
+                
+            // Length 6 Fixed
+            case 11: // PROD DATE
+            case 12: // DUE DATE
+            case 13: // PACK DATE
+            case 15: // BEST BY
+            case 16: // SELL BY
+            case 17: // USE BY
+            case 7006: // FIRST FREEZE DATE
+            case 8005: // PRICE PER UNIT
+                if (data_length[i] != 6) {
+                    error_latch = 1;
+                } else {
+                    error_latch = 0;
+                }
+                break;
+                
+            // Length 10 Fixed
+            case 7003: // EXPIRY TIME
+                if (data_length[i] != 10) {
+                    error_latch = 1;
+                } else {
+                    error_latch = 0;
+                }
+                break;
+                
+            // Length 13 Fixed
+            case 410: // SHIP TO LOC
+            case 411: // BILL TO
+            case 412: // PURCHASE FROM
+            case 413: // SHIP FOR LOC
+            case 414: // LOC NO
+            case 415: // PAY TO
+            case 416: // PROD/SERV LOC
+            case 417: // PARTY GLN
+            case 7001: // NSN
+                if (data_length[i] != 13) {
+                    error_latch = 1;
+                } else {
+                    error_latch = 0;
+                }
+                break;
+                
+            // Length 14 Fixed
+            case 1: // GTIN
+            case 2: // CONTENT
+            case 8001: // DIMENSIONS
+                if (data_length[i] != 14) {
+                    error_latch = 1;
+                } else {
+                    error_latch = 0;
+                }
+                break;
+                
+            // Length 17 Fixed
+            case 402: // GSIN
+                if (data_length[i] != 17) {
+                    error_latch = 1;
+                } else {
+                    error_latch = 0;
+                }
+                break;
+                
+            // Length 18 Fixed
+            case 0: // SSCC
+            case 8006: // ITIP
+            case 8017: // GSRN PROVIDER
+            case 8018: // GSRN RECIPIENT
+            case 8026: // ITIP CONTENT
+                if (data_length[i] != 18) {
+                    error_latch = 1;
+                } else {
+                    error_latch = 0;
+                }
+                break;
+                
+            // Length 2 Max
+            case 7010: // PROD METHOD
+                if (data_length[i] > 2) {
+                    error_latch = 1;
+                } else {
+                    error_latch = 0;
+                }
+                break;
+                
+            // Length 3 Max
+            case 427: // ORIGIN SUBDIVISION
+            case 7008: // AQUATIC SPECIES
+                if (data_length[i] > 3) {
+                    error_latch = 1;
+                } else {
+                    error_latch = 0;
+                }
+                break;
+                
+            // Length 4 Max
+            case 7004: // ACTIVE POTENCY
+                if (data_length[i] > 4) {
+                    error_latch = 1;
+                } else {
+                    error_latch = 0;
+                }
+                break;
+                
+            // Length 6 Max
+            case 242: // MTO VARIANT
+                if (data_length[i] > 6) {
+                    error_latch = 1;
+                } else {
+                    error_latch = 0;
+                }
+                break;
+                
+            // Length 8 Max
+            case 30: // VAR COUNT
+            case 37: // COUNT
+                if (data_length[i] > 8) {
+                    error_latch = 1;
+                } else {
+                    error_latch = 0;
+                }
+                break;
+                
+            // Length 10 Max
+            case 7009: // FISHING GEAR TYPE
+            case 8019: // SRIN
+                if (data_length[i] > 10) {
+                    error_latch = 1;
+                } else {
+                    error_latch = 0;
+                }
+                break;
+                
+            // Length 12 Max
+            case 7005: // CATCH AREA
+            case 8011: // CPID SERIAL
+                if (data_length[i] > 12) {
+                    error_latch = 1;
+                } else {
+                    error_latch = 0;
+                }
+                break;
+                
+            // Length 20 Max
+            case 10: // BATCH/LOT
+            case 21: // SERIAL
+            case 22: // CPV
+            case 243: // PCN
+            case 254: // GLN EXTENSION COMPONENT
+            case 420: // SHIP TO POST
+            case 7020: // REFURB LOT
+            case 7021: // FUNC STAT
+            case 7022: // REV STAT
+            case 710: // NHRN PZN
+            case 711: // NHRN CIP
+            case 712: // NHRN CN
+            case 713: // NHRN DRN
+            case 714: // NHRN AIM
+            case 7240: // PROTOCOL
+            case 8002: // CMT NO
+            case 8012: // VERSION
+                if (data_length[i] > 20) {
+                    error_latch = 1;
+                } else {
+                    error_latch = 0;
+                }
+                break;
+                
+            // Length 25 Max
+            case 8020: // REF NO
+                if (data_length[i] > 25) {
+                    error_latch = 1;
+                } else {
+                    error_latch = 0;
+                }
+                break;
+                
+            // Length 28 Max
+            case 235: // TPX
+                if (data_length[i] > 28) {
+                    error_latch = 1;
+                } else {
+                    error_latch = 0;
+                }
+                break;
 
-	error_latch = 0;
-	strcpy(ai_string, "");
-	for(i = 0; i < ai_count; i++) {
-		switch (ai_value[i]) {
-			case 0: if(data_length[i] != 18) { error_latch = 1; } break;
-			case 1:
-			case 2:
-			case 3: if(data_length[i] != 14) { error_latch = 1; } break;
-			case 4: if(data_length[i] != 16) { error_latch = 1; } break;
-			case 11:
-			case 12:
-			case 13:
-			case 14:
-			case 15:
-			case 16:
-			case 17:
-			case 18:
-			case 19: if(data_length[i] != 6) { error_latch = 1; } break;
-			case 20: if(data_length[i] != 2) { error_latch = 1; } break;
-			case 23:
-			case 24:
-			case 25:
-			case 39:
-			case 40:
-			case 41:
-			case 42:
-			case 70:
-			case 80:
-			case 81: error_latch = 2; break;
-		}
-		if(
-			((ai_value[i] >= 100) && (ai_value[i] <= 179))
-			|| ((ai_value[i] >= 1000) && (ai_value[i] <= 1799))
-			|| ((ai_value[i] >= 200) && (ai_value[i] <= 229))
-			|| ((ai_value[i] >= 2000) && (ai_value[i] <= 2299))
-			|| ((ai_value[i] >= 300) && (ai_value[i] <= 309))
-			|| ((ai_value[i] >= 3000) && (ai_value[i] <= 3099))
-			|| ((ai_value[i] >= 31) && (ai_value[i] <= 36))
-			|| ((ai_value[i] >= 310) && (ai_value[i] <= 369))
-		) {
-			error_latch = 2;
-		}
-		if((ai_value[i] >= 3100) && (ai_value[i] <= 3699)) {
-			if(data_length[i] != 6) {
-				error_latch = 1;
-			}
-		}
-		if(
-			((ai_value[i] >= 370) && (ai_value[i] <= 379))
-			|| ((ai_value[i] >= 3700) && (ai_value[i] <= 3799))
-		) {
-			error_latch = 2;
-		}
-		if((ai_value[i] >= 410) && (ai_value[i] <= 415)) {
-			if(data_length[i] != 13) {
-				error_latch = 1;
-			}
-		}
-		if(
-			((ai_value[i] >= 4100) && (ai_value[i] <= 4199))
-			|| ((ai_value[i] >= 700) && (ai_value[i] <= 703))
-			|| ((ai_value[i] >= 800) && (ai_value[i] <= 810))
-			|| ((ai_value[i] >= 900) && (ai_value[i] <= 999))
-			|| ((ai_value[i] >= 9000) && (ai_value[i] <= 9999))
-		) {
-			error_latch = 2;
-		}
-		if((error_latch < 4) && (error_latch > 0)) {
-			/* error has just been detected: capture AI */
-			itostr(ai_string, ai_value[i]);
-			error_latch += 4;
-		}
-	}
+            // Length 30 Max
+            case 240: // ADDITIONAL ID
+            case 241: // CUST PART NO
+            case 250: // SECONDARY SERIAL
+            case 251: // REF TO SOURCE
+            case 400: // ORDER NUMBER
+            case 401: // GINC
+            case 403: // ROUTE
+            case 7002: // MEAT CUT
+            case 7023: // GIAI ASSEMBLY
+            case 8004: // GIAI
+            case 8010: // CPID
+            case 8013: // BUDI-DI
+            case 90: // INTERNAL
+                if (data_length[i] > 30) {
+                    error_latch = 1;
+                } else {
+                    error_latch = 0;
+                }
+                break;
+                
+            // Length 34 Max
+            case 8007: // IBAN
+                if (data_length[i] > 34) {
+                    error_latch = 1;
+                } else {
+                    error_latch = 0;
+                }
+                break;
+                
+            // Length 50 Max
+            case 8009: // OPTSEN
+                if (data_length[i] > 50) {
+                    error_latch = 1;
+                } else {
+                    error_latch = 0;
+                }
+                break;
+                
+            // Length 70 Max
+            case 8110: // Coupon code
+            case 8112: // Paperless coupon code
+            case 8200: // PRODUCT URL
+                if (data_length[i] > 70) {
+                    error_latch = 1;
+                } else {
+                    error_latch = 0;
+                }
+                break;
+                
+        }
+        
+        if (ai_value[i] == 253) { // GDTI
+            if ((data_length[i] < 14) || (data_length[i] > 30)) {
+                error_latch = 1;
+            } else {
+                error_latch = 0;
+            }
+        }
+        
+        if (ai_value[i] == 255) { // GCN
+            if ((data_length[i] < 14) || (data_length[i] > 25)) {
+                error_latch = 1;
+            } else {
+                error_latch = 0;
+            }
+        }
+        
+        if ((ai_value[i] >= 3100) && (ai_value[i] <= 3169)) {
+            if (data_length[i] != 6) {
+                error_latch = 1;
+            } else {
+                error_latch = 0;
+            }
+        }
+        
+        if ((ai_value[i] >= 3200) && (ai_value[i] <= 3379)) {
+            if (data_length[i] != 6) {
+                error_latch = 1;
+            } else {
+                error_latch = 0;
+            }
+        }
+        
+        if ((ai_value[i] >= 3400) && (ai_value[i] <= 3579)) {
+            if (data_length[i] != 6) {
+                error_latch = 1;
+            } else {
+                error_latch = 0;
+            }
+        }
+        
+        if ((ai_value[i] >= 3600) && (ai_value[i] <= 3699)) {
+            if (data_length[i] != 6) {
+                error_latch = 1;
+            } else {
+                error_latch = 0;
+            }
+        }
+        
+        if ((ai_value[i] >= 3900) && (ai_value[i] <= 3909)) { // AMOUNT
+            if (data_length[i] > 15) {
+                error_latch = 1;
+            } else {
+                error_latch = 0;
+            }
+        }
+        
+        if ((ai_value[i] >= 3910) && (ai_value[i] <= 3919)) { // AMOUNT
+            if ((data_length[i] < 4) || (data_length[i] > 18)) {
+                error_latch = 1;
+            } else {
+                error_latch = 0;
+            }
+        }
+        
+        if ((ai_value[i] >= 3920) && (ai_value[i] <= 3929)) { // PRICE
+            if (data_length[i] > 15) {
+                error_latch = 1;
+            } else {
+                error_latch = 0;
+            }
+        }
+        
+        if ((ai_value[i] >= 3930) && (ai_value[i] <= 3939)) { // PRICE
+            if ((data_length[i] < 4) || (data_length[i] > 18)) {
+                error_latch = 1;
+            } else {
+                error_latch = 0;
+            }
+        }
+        
+        if ((ai_value[i] >= 3940) && (ai_value[i] <= 3949)) { // PRCNT OFF
+            if (data_length[i] != 4) {
+                error_latch = 1;
+            } else {
+                error_latch = 0;
+            }
+        }
+        
+        if (ai_value[i] == 421) { // SHIP TO POST
+            if ((data_length[i] < 4) || (data_length[i] > 12)) {
+                error_latch = 1;
+            } else {
+                error_latch = 0;
+            }
+        }
+        
+        if ((ai_value[i] == 423) || (ai_value[i] == 425)) {
+            // COUNTRY INITIAL PROCESS || COUNTRY DISASSEMBLY
+            if ((data_length[i] < 4) || (data_length[i] > 15)) {
+                error_latch = 1;
+            } else {
+                error_latch = 0;
+            }
+        }
+        
+        if (ai_value[i] == 7007) { // HARVEST DATE
+            if ((data_length[i] != 6) && (data_length[i] != 12)) {
+                error_latch = 1;
+            } else {
+                error_latch = 0;
+            }
+        }
+        
+        if ((ai_value[i] >= 7030) && (ai_value[i] <= 7039)) { // PROCESSOR #
+            if ((data_length[i] < 4) || (data_length[i] > 30)) {
+                error_latch = 1;
+            } else {
+                error_latch = 0;
+            }
+        }
+        
+        if ((ai_value[i] >= 7230) && (ai_value[i] <= 7239)) { // CERT #
+            if ((data_length[i] < 3) || (data_length[i] > 30)) {
+                error_latch = 1;
+            } else {
+                error_latch = 0;
+            }
+        }
+        
+        if (ai_value[i] == 8003) { // GRAI
+            if ((data_length[i] < 15) || (data_length[i] > 30)) {
+                error_latch = 1;
+            } else {
+                error_latch = 0;
+            }
+        }
+        
+        if (ai_value[i] == 8008) { // PROD TIME
+            if ((data_length[i] != 8) && (data_length[i] != 10) && (data_length[i] != 12)) {
+                error_latch = 1;
+            } else {
+                error_latch = 0;
+            }
+        }
+        
+        if ((ai_value[i] >= 91) && (ai_value[i] <= 99)) { // INTERNAL
+            if (data_length[i] > 90) {
+                error_latch = 1;
+            } else {
+                error_latch = 0;
+            }
+        }
 
-	if(error_latch == 5) {
-		strcpy(symbol->errtxt, "Invalid data length for AI ");
-		concat(symbol->errtxt, ai_string);
-		return ZERROR_INVALID_DATA;
-	}
+        if (error_latch == 1) {
+            itostr(ai_string, ai_value[i]);
+            strcpy(symbol->errtxt, "259: Invalid data length for AI ");
+            strcat(symbol->errtxt, ai_string);
+            return ZINT_ERROR_INVALID_DATA;
+        }
 
-	if(error_latch == 6) {
-		strcpy(symbol->errtxt, "Invalid AI value ");
-		concat(symbol->errtxt, ai_string);
-		return ZERROR_INVALID_DATA;
-	}
+        if (error_latch == 2) {
+            itostr(ai_string, ai_value[i]);
+            strcpy(symbol->errtxt, "260: Invalid AI value ");
+            strcat(symbol->errtxt, ai_string);
+            return ZINT_ERROR_INVALID_DATA;
+        }
+    }
 
-	/* Resolve AI data - put resulting string in 'reduced' */
-	j = 0;
-	last_ai = 0;
-	ai_latch = 1;
-	for(i = 0; i < (int)src_len; i++) {
-		if((source[i] != '[') && (source[i] != ']')) {
-			reduced[j++] = source[i];
-		}
-		if(source[i] == '[') {
-			/* Start of an AI string */
-			if(ai_latch == 0) {
-				reduced[j++] = '[';
-			}
-			ai_string[0] = source[i + 1];
-			ai_string[1] = source[i + 2];
-			ai_string[2] = '\0';
-			last_ai = atoi(ai_string);
-			ai_latch = 0;
-			/* The following values from "GS-1 General Specification version 8.0 issue 2, May 2008"
-			figure 5.4.8.2.1 - 1 "Element Strings with Pre-Defined Length Using Application Identifiers" */
-			if(
-				((last_ai >= 0) && (last_ai <= 4))
-				|| ((last_ai >= 11) && (last_ai <= 20))
-				|| (last_ai == 23) /* legacy support - see 5.3.8.2.2 */
-				|| ((last_ai >= 31) && (last_ai <= 36))
-				|| (last_ai == 41)
-			) {
-				ai_latch = 1;
-			}
-		}
-		/* The ']' character is simply dropped from the input */
-	}
-	reduced[j] = '\0';
+    /* Resolve AI data - put resulting string in 'reduced' */
+    j = 0;
+    last_ai = 0;
+    ai_latch = 1;
+    for (i = 0; i < src_len; i++) {
+        if ((source[i] != '[') && (source[i] != ']')) {
+            reduced[j++] = source[i];
+        }
+        if (source[i] == '[') {
+            /* Start of an AI string */
+            if (ai_latch == 0) {
+                reduced[j++] = '[';
+            }
+            ai_string[0] = source[i + 1];
+            ai_string[1] = source[i + 2];
+            ai_string[2] = '\0';
+            last_ai = atoi(ai_string);
+            ai_latch = 0;
+            /* The following values from "GS-1 General Specification version 8.0 issue 2, May 2008"
+            figure 5.4.8.2.1 - 1 "Element Strings with Pre-Defined Length Using Application Identifiers" */
+            if (
+                    ((last_ai >= 0) && (last_ai <= 4))
+                    || ((last_ai >= 11) && (last_ai <= 20))
+                    || (last_ai == 23) /* legacy support - see 5.3.8.2.2 */
+                    || ((last_ai >= 31) && (last_ai <= 36))
+                    || (last_ai == 41)
+                    ) {
+                ai_latch = 1;
+            }
+        }
+        /* The ']' character is simply dropped from the input */
+    }
+    reduced[j] = '\0';
 
-	/* the character '[' in the reduced string refers to the FNC1 character */
-	return 0;
-}
-
-int ugs1_verify(struct zint_symbol *symbol, uint8_t source[], const unsigned int src_len, uint8_t reduced[])
-{
-	/* Only to keep the compiler happy */
-	char *temp = malloc(src_len + 5);
-	int error_number;
-
-	error_number = gs1_verify(symbol, source, src_len, temp);
-	if(error_number != 0) { return error_number; }
-
-	if (strlen(temp) < src_len + 5) {
-		ustrcpy(reduced, (uint8_t*)temp);
-		return 0;
-	}
-	strcpy(symbol->errtxt, "ugs1_verify overflow");
-	return ZERROR_INVALID_DATA;
+    /* the character '[' in the reduced string refers to the FNC1 character */
+    return 0;
 }

@@ -22,60 +22,55 @@ namespace symbology {
    * Returns a bitmap (of type V8 Array) of the image in memory.
    */
   Local<Object> getBitmap(Isolate* isolate, zint_symbol *symbol) {
+    v8::Local<v8::Context> context = isolate->GetCurrentContext();
+
     int matrix_size = symbol->bitmap_width * symbol->bitmap_height * 3;
     int i;
 
-    v8::Local<v8::Object> outArr = Object::New(isolate);
-    // Local<v8::Array> outArr = v8::Array::New(isolate, matrix_size);
+    Local<v8::Array> outArr = v8::Array::New(isolate, matrix_size);
 
     for (i = 0; i < matrix_size; i++) {
-      // outArr->Set(i, v8::Integer::NewFromUnsigned(isolate, symbol->bitmap[i]));
-      // Nan::Set(outArr, Nan::New<int>i, 1);
-      Nan::Set(outArr, 
-        Nan::New<String>(std::to_string(i)).ToLocalChecked(),
-        v8::Integer::New(isolate, symbol->bitmap[i]));
-      // outArr[i] = symbol->bitmap[i];
+      (void)outArr->Set(context, i, v8::Integer::NewFromUnsigned(isolate, symbol->bitmap[i]));
     }
     return outArr;
   }
 
   /**
-   * Renders symbology and returns an object with PNG bitmap data, EPS binary data, or SVG XML.
+   * Renders symbology and returns an object with PNG bitmap data, EPS, or SVG XML.
    */
   Local<Object> createStreamHandle(Isolate* isolate, zint_symbol *symbol, uint8_t *data, char *str) {
-    int status_code = ZBarcode_Encode_and_Print(symbol, data, 0, 0);
+    int status_code = ZBarcode_Encode_and_Buffer(symbol, data, 0, 0);
 
     v8::Local<v8::Object> obj = Object::New(isolate);
 
     if(status_code <= 2) {
+      // the barcode creation was successful; parse the result
       int fileNameLength = strlen(symbol->outfile);
 
       if(fileNameLength > 4) {
+        // check if the file at least is 4 chars long so we can parse the last three and check it as an extension
         const char *fileExt = &symbol->outfile[fileNameLength - 3];
         
-        if(strcmp("png", fileExt) == 0) {
-          // obj->Set(String::NewFromUtf8(isolate, "encodedData"), getBitmap(isolate, symbol));
+        if(strcmp("bmp", fileExt) == 0) {
+          // parse the buffer as a bitmap array and store it in `encodedData`
           Nan::Set(obj, Nan::New<String>("encodedData").ToLocalChecked(), getBitmap(isolate, symbol));
         }
 
         if(strcmp("svg", fileExt) == 0 || strcmp("eps", fileExt) == 0) {
+          // parse the result as a normal string and store it in `encodedData`
           // obj->Set(String::NewFromUtf8(isolate, "encodedData"), String::NewFromUtf8(isolate, symbol->rendered_data));
-          Nan::Set(obj, Nan::New<String>("encodedData").ToLocalChecked(), Nan::New<String>(symbol->rendered_data).ToLocalChecked());
+          // Nan::Set(obj, Nan::New<String>("encodedData").ToLocalChecked(), Nan::New<String>(symbol->encoded_data).ToLocalChecked());
         }
       }
 
+      // set the buffered bitmap dimensions
       Nan::Set(obj, Nan::New<String>("width").ToLocalChecked(), v8::Integer::New(isolate, symbol->bitmap_width));
       Nan::Set(obj, Nan::New<String>("height").ToLocalChecked(), v8::Integer::New(isolate, symbol->bitmap_height));
-        
-      // obj->Set(String::NewFromUtf8(isolate, "width"), v8::Integer::New(isolate, symbol->bitmap_width));
-      // obj->Set(String::NewFromUtf8(isolate, "height"), v8::Integer::New(isolate, symbol->bitmap_height));
     }
 
+    // set the informational params (message and status code)
     Nan::Set(obj, Nan::New<String>("message").ToLocalChecked(), Nan::New<String>(symbol->errtxt).ToLocalChecked());
     Nan::Set(obj, Nan::New<String>("code").ToLocalChecked(), v8::Integer::New(isolate, status_code));
-      
-    // obj->Set(String::NewFromUtf8(isolate, "message"), String::NewFromUtf8(isolate, symbol->errtxt));
-    // obj->Set(String::NewFromUtf8(isolate, "code"), v8::Integer::New(isolate, status_code));
 
     return obj;
   }
@@ -156,8 +151,6 @@ namespace symbology {
     
     obj = createStreamHandle(isolate, symbol, (unsigned char*)*data, (char*)*data);
 
-    printf("SYMBOLOGY --- %i", symbol->symbology);
-
     ZBarcode_Delete(symbol);
     args.GetReturnValue().Set(obj);
   }
@@ -165,7 +158,7 @@ namespace symbology {
   void Init(v8::Local<v8::Object> exports) {
     v8::Local<v8::Context> context = exports->CreationContext();
 
-    exports->Set(context,
+    (void)exports->Set(context,
       Nan::New("createStream").ToLocalChecked(),
       Nan::New<v8::FunctionTemplate>(createStream)
           ->GetFunction(context)

@@ -24,7 +24,7 @@ var defaultSymbol = {
   outputOptions: -1,
   foregroundColor: '000000',
   backgroundColor: 'ffffff',
-  fileName: 'out.png',
+  fileName: 'out.bmp',
   scale: 1.0,
   option1: -1,
   option2: -1,
@@ -116,7 +116,7 @@ function blobToBase64Png(image) {
 function pngRender(bitmap, width, height) {
   var image = PNGImage.createImage(width, height);
   var i = 0;
-
+  
   for(var y = 0; y<height; y++) {
     for(var x = 0; x<width; x++) {
       image.setAt(x, y, {
@@ -145,18 +145,19 @@ function pngRender(bitmap, width, height) {
  */
 function theCreateStram(symbol, barcodeData, outputType) {
   outputType = outputType || exp.Output.PNG
-  symbol.fileName = symbol.fileName || 'out.' + outputType
+  symbol.fileName = symbol.fileName.replace(/\.png$/g, '.bmp') || 'out.' + outputType
 
-  if (outputType !== exp.Output.PNG) {
+  // if (outputType !== exp.Output.PNG) {
     symbol.outputOptions = 8; // force buffer to write to rendered_data
-  }
+  // }
 
   var res = createSymbology(symbol, barcodeData, 'createStream');
 
   if(res.code <= 2) {
-    if (typeof res.encodedData === 'string') {
-      res.encodedData = res.encodedData.replace(/\r?\n?[^\r\n]*$/, '')
-    }
+    // console.log('I HAVE DATA: ', res.encodedData)
+    // if (typeof res.encodedData === 'string') {
+      // res.encodedData = res.encodedData.replace(/\r?\n?[^\r\n]*$/, '')
+    // }
 
     return Promise.resolve({
       data: res.encodedData,
@@ -203,6 +204,8 @@ exp.createStream = function(symbol, barcodeData, outputType) {
  * @returns {Promise<Object>} object with resulting props (see docs)
  */
 exp.createFile = function(symbol, barcodeData) {
+  const originalFileName = symbol.fileName
+  symbol.fileName = symbol.fileName.replace(/\.png$/g, '.bmp')
   const outputType = exp.Output[symbol.fileName.split('.').pop().toUpperCase()] || exp.Output.PNG
 
   return theCreateStram(symbol, barcodeData, outputType)
@@ -211,7 +214,7 @@ exp.createFile = function(symbol, barcodeData) {
         var image = pngRender(res.data, res.width, res.height);
 
         return new Promise((resolve, reject) => {
-          image.writeImage(symbol.fileName, function(err) {
+          image.writeImage(originalFileName, function(err) {
             if (err) {
               reject(err)
             } else {

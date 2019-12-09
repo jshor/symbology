@@ -2,333 +2,364 @@
 
 /*
     libzint - the open source barcode library
-    Copyright (C) 2008 Robin Stuart <robin@zint.org.uk>
+    Copyright (C) 2008-2017 Robin Stuart <rstuart114@gmail.com>
 
-    This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License, or
-    (at your option) any later version.
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions
+    are met:
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+    1. Redistributions of source code must retain the above copyright
+       notice, this list of conditions and the following disclaimer.
+    2. Redistributions in binary form must reproduce the above copyright
+       notice, this list of conditions and the following disclaimer in the
+       documentation and/or other materials provided with the distribution.
+    3. Neither the name of the project nor the names of its contributors
+       may be used to endorse or promote products derived from this software
+       without specific prior written permission.
 
-    You should have received a copy of the GNU General Public License along
-    with this program; if not, write to the Free Software Foundation, Inc.,
-    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-*/
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+    ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
+    FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+    DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS
+    OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+    HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+    LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY
+    OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+    SUCH DAMAGE.
+ */
+/* vim: set ts=4 sw=4 et : */
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "common.h"
 
-int ustrlen(const uint8_t data[]) {
-	/* Local replacement for strlen() with uint8_t strings */
-	int i;
-	for (i=0;data[i];i++);
-
-	return i;
+/* Local replacement for strlen() with unsigned char strings */
+size_t ustrlen(const unsigned char data[]) {
+    return strlen((const char*) data);
 }
 
-void ustrcpy(uint8_t target[], const uint8_t source[]) {
-	/* Local replacement for strcpy() with uint8_t strings */
-	int i, len;
-
-	len = ustrlen(source);
-	for(i = 0; i < len; i++) {
-		target[i] = source[i];
-	}
-	target[i] = '\0';
-}
-
-void concat(char dest[], const char source[])
-{ /* Concatinates dest[] with the contents of source[], copying /0 as well */
-	unsigned int i, j, n;
-
-	j = strlen(dest);
-	n = strlen(source);
-	for(i = 0; i <= n; i++) {
-		dest[i + j] = source[i]; }
-}
-
-void uconcat(uint8_t dest[], const uint8_t source[])
-{ /* Concatinates dest[] with the contents of source[], copying /0 as well */
-	unsigned int i, j;
-
-	j = ustrlen(dest);
-	for(i = 0; (int)i <= ustrlen(source); i++) {
-		dest[i + j] = source[i]; }
+/* Converts a character 0-9 to its equivalent integer value */
+int ctoi(const char source) {
+    if ((source >= '0') && (source <= '9'))
+        return (source - '0');
+    if ((source >= 'A') && (source <= 'F'))
+        return (source - 'A' + 10);
+    if ((source >= 'a') && (source <= 'f'))
+        return (source - 'a' + 10);
+    return -1;
 }
 
 
-int ctoi(char source)
-{ /* Converts a character 0-9 to its equivalent integer value */
-	if((source >= '0') && (source <= '9'))
-		return (source - '0');
-	return(source - 'A' + 10);
+/* Convert an integer value to a string representing its binary equivalent */
+void bin_append(const int arg, const int length, char *binary) {
+    int i;
+    int start;
+    size_t posn = strlen(binary);
+
+    start = 0x01 << (length - 1);
+
+    for (i = 0; i < length; i++) {
+        binary[posn + i] = '0';
+        if (arg & (start >> i)) {
+            binary[posn + i] = '1';
+        }
+    }
+    binary[posn + length] = '\0';
+
+    return;
 }
 
-/** Converts an integer value to its hexadecimal character */
-char itoc(int source)
-{
-	if ((source >= 0) && (source <= 9)) {
-		return ('0' + source); }
-	else {
-		return ('A' + (source - 10)); }
+/* Converts an integer value to its hexadecimal character */
+char itoc(const int source) {
+    if ((source >= 0) && (source <= 9)) {
+        return ('0' + source);
+    } else {
+        return ('A' + (source - 10));
+    }
+}
+/* Converts lower case characters to upper case in a string source[] */
+void to_upper(unsigned char source[]) {
+    size_t i, src_len = ustrlen(source);
+
+    for (i = 0; i < src_len; i++) {
+        if ((source[i] >= 'a') && (source[i] <= 'z')) {
+            source [i] = (source[i] - 'a') + 'A';
+        }
+    }
 }
 
-/** Converts lower case characters to upper case in a string source[] */
-void to_upper(uint8_t source[])
-{
-	unsigned int i;
-	unsigned int src_len = ustrlen(source);
+/* Verifies that a string only uses valid characters */
+int is_sane(const char test_string[], const unsigned char source[], const size_t length) {
+    unsigned int j;
+    size_t i, lt = strlen(test_string);
 
-	for (i = 0; i < src_len; i++) {
-		if ((source[i] >= 'a') && (source[i] <= 'z')) {
-			source[i] = (source[i] - 'a') + 'A'; }
-	}
+    for (i = 0; i < length; i++) {
+        unsigned int latch = FALSE;
+        for (j = 0; j < lt; j++) {
+            if (source[i] == test_string[j]) {
+                latch = TRUE;
+                break;
+            }
+        }
+        if (!(latch)) {
+            return ZINT_ERROR_INVALID_DATA;
+        }
+    }
+
+    return 0;
 }
 
-int is_sane(char test_string[], uint8_t source[], int length)
-{ /* Verifies that a string only uses valid characters */
-	unsigned int latch;
-	unsigned int lt = strlen(test_string);
-	unsigned int j;
-	int i;
+/* Replaces huge switch statements for looking up in tables */
+void lookup(const char set_string[], const char *table[], const char data, char dest[]) {
+    size_t i, n = strlen(set_string);
 
-	for(i = 0; i < length; i++) {
-		latch = FALSE;
-		for(j = 0; j < lt; j++) {
-			if (source[i] == test_string[j]) {
-				latch = TRUE;
-				break;
-			}
-		}
-		if (!latch) {
-			return ZERROR_INVALID_DATA; 
-		}
-	}
-
-	return 0;
+    for (i = 0; i < n; i++) {
+        if (data == set_string[i]) {
+            strcat(dest, table[i]);
+        }
+    }
 }
 
-int posn(char set_string[], char data)
-{ /* Returns the position of data in set_string */
-	unsigned int n = strlen(set_string), i;
+/* Returns the position of data in set_string */
+int posn(const char set_string[], const char data) {
+    int i, n = (int)strlen(set_string);
 
-	for(i = 0; i < n; i++)
-		if (data == set_string[i])
-			return i;
-	return 0;
+    for (i = 0; i < n; i++) {
+        if (data == set_string[i]) {
+            return i;
+        }
+    }
+    return -1;
 }
 
-/** Replaces huge switch statements for looking up in tables */
-void lookup(char set_string[], const char *table[], char data, char dest[])
-{
-	unsigned int n = strlen(set_string), i;
-
-	for(i = 0; i < n; i++)
-		if (data == set_string[i])
-			concat(dest, table[i]);
+/* Returns the number of times a character occurs in a string */
+int ustrchr_cnt(const unsigned char string[], const size_t length, const unsigned char c) {
+    int count = 0;
+    int i;
+    for (i = 0; i < length; i++) {
+        if (string[i] == c) {
+            count++;
+        }
+    }
+    return count;
 }
 
-int module_is_set(struct zint_symbol *symbol, int y_coord, int x_coord)
-{
-	return (symbol->encoded_data[y_coord][x_coord / 7] >> (x_coord % 7)) & 1;
+/* Return true (1) if a module is dark/black, otherwise false (0) */
+int module_is_set(const struct zint_symbol *symbol, const int y_coord, const int x_coord) {
+    return (symbol->encoded_data[y_coord][x_coord / 7] >> (x_coord % 7)) & 1;
 }
 
-void set_module(struct zint_symbol *symbol, int y_coord, int x_coord)
-{
-	symbol->encoded_data[y_coord][x_coord / 7] |= 1 << (x_coord % 7);
+/* Set a module to dark/black */
+void set_module(struct zint_symbol *symbol, const int y_coord, const int x_coord) {
+    symbol->encoded_data[y_coord][x_coord / 7] |= 1 << (x_coord % 7);
 }
 
-void unset_module(struct zint_symbol *symbol, int y_coord, int x_coord)
-{
-	symbol->encoded_data[y_coord][x_coord / 7] &= ~(1 << (x_coord % 7));
+/* Set (or unset) a module to white */
+void unset_module(struct zint_symbol *symbol, const int y_coord, const int x_coord) {
+    symbol->encoded_data[y_coord][x_coord / 7] &= ~(1 << (x_coord % 7));
 }
 
-void expand(struct zint_symbol *symbol, char data[])
-{ /* Expands from a width pattern to a bit pattern */
+/* Expands from a width pattern to a bit pattern */
+void expand(struct zint_symbol *symbol, const char data[]) {
 
-	unsigned int reader, n = strlen(data);
-	int writer, i;
-	char latch;
+    size_t reader, n = strlen(data);
+    int writer, i;
+    char latch;
 
-	writer = 0;
-	latch = '1';
+    writer = 0;
+    latch = '1';
 
-	for(reader = 0; reader < n; reader++) {
-		for(i = 0; i < ctoi(data[reader]); i++) {
-			if(latch == '1') { set_module(symbol, symbol->rows, writer); }
-			writer++;
-		}
+    for (reader = 0; reader < n; reader++) {
+        for (i = 0; i < ctoi(data[reader]); i++) {
+            if (latch == '1') {
+                set_module(symbol, symbol->rows, writer);
+            }
+            writer++;
+        }
 
-		latch = (latch == '1' ? '0' : '1');
-	}
+        latch = (latch == '1' ? '0' : '1');
+    }
 
-	if(symbol->symbology != BARCODE_PHARMA) {
-		if(writer > symbol->width) {
-			symbol->width = writer;
-		}
-	} else {
-		/* Pharmacode One ends with a space - adjust for this */
-		if(writer > symbol->width + 2) {
-			symbol->width = writer - 2;
-		}
-	}
-	symbol->rows = symbol->rows + 1;
+    if (symbol->symbology != BARCODE_PHARMA) {
+        if (writer > symbol->width) {
+            symbol->width = writer;
+        }
+    } else {
+        /* Pharmacode One ends with a space - adjust for this */
+        if (writer > symbol->width + 2) {
+            symbol->width = writer - 2;
+        }
+    }
+    symbol->rows = symbol->rows + 1;
 }
 
-int is_stackable(int symbology) {
-	/* Indicates which symbologies can have row binding */
-	if(symbology < BARCODE_PDF417) { return 1; }
-	if(symbology == BARCODE_CODE128B) { return 1; }
-	if(symbology == BARCODE_ISBNX) { return 1; }
-	if(symbology == BARCODE_EAN14) { return 1; }
-	if(symbology == BARCODE_NVE18) { return 1; }
-	if(symbology == BARCODE_KOREAPOST) { return 1; }
-	if(symbology == BARCODE_PLESSEY) { return 1; }
-	if(symbology == BARCODE_TELEPEN_NUM) { return 1; }
-	if(symbology == BARCODE_ITF14) { return 1; }
-	if(symbology == BARCODE_CODE32) { return 1; }
+/* Indicates which symbologies can have row binding */
+int is_stackable(const int symbology) {
+    if (symbology < BARCODE_PDF417) {
+        return 1;
+    }
 
-	return 0;
+    switch (symbology) {
+        case BARCODE_CODE128B:
+        case BARCODE_ISBNX:
+        case BARCODE_EAN14:
+        case BARCODE_NVE18:
+        case BARCODE_KOREAPOST:
+        case BARCODE_PLESSEY:
+        case BARCODE_TELEPEN_NUM:
+        case BARCODE_ITF14:
+        case BARCODE_CODE32:
+        case BARCODE_CODABLOCKF:
+            return 1;
+    }
+
+    return 0;
 }
 
-int is_extendable(int symbology) {
-	/* Indicates which symbols can have addon */
-	if(symbology == BARCODE_EANX) { return 1; }
-	if(symbology == BARCODE_UPCA) { return 1; }
-	if(symbology == BARCODE_UPCE) { return 1; }
-	if(symbology == BARCODE_ISBNX) { return 1; }
-	if(symbology == BARCODE_UPCA_CC) { return 1; }
-	if(symbology == BARCODE_UPCE_CC) { return 1; }
-	if(symbology == BARCODE_EANX_CC) { return 1; }
+/* Indicates which symbols can have addon (EAN-2 and EAN-5) */
+int is_extendable(const int symbology) {
+    if (symbology == BARCODE_EANX || symbology == BARCODE_EANX_CHK) {
+        return 1;
+    }
+    if (symbology == BARCODE_UPCA || symbology == BARCODE_UPCA_CHK) {
+        return 1;
+    }
+    if (symbology == BARCODE_UPCE || symbology == BARCODE_UPCE_CHK) {
+        return 1;
+    }
+    if (symbology == BARCODE_ISBNX) {
+        return 1;
+    }
+    if (symbology == BARCODE_UPCA_CC) {
+        return 1;
+    }
+    if (symbology == BARCODE_UPCE_CC) {
+        return 1;
+    }
+    if (symbology == BARCODE_EANX_CC) {
+        return 1;
+    }
 
-	return 0;
+    return 0;
 }
 
-int roundup(float input)
-{
-	float remainder;
-	int integer_part;
-
-	integer_part = (int)input;
-	remainder = input - integer_part;
-
-	if(remainder > 0.1) {
-		integer_part++;
-	}
-
-	return integer_part;
+/* Indicates which symbols can have composite 2D component data */
+int is_composite(int symbology) {
+    return symbology >= BARCODE_EANX_CC && symbology <= BARCODE_RSS_EXPSTACK_CC;
 }
 
-int istwodigits(uint8_t source[], int position)
-{
-	if((source[position] >= '0') && (source[position] <= '9')) {
-		if((source[position + 1] >= '0') && (source[position + 1] <= '9')) {
-			return 1;
-		}
-	}
+int istwodigits(const unsigned char source[], const size_t position) {
+    if ((source[position] >= '0') && (source[position] <= '9')) {
+        if ((source[position + 1] >= '0') && (source[position + 1] <= '9')) {
+            return 1;
+        }
+    }
 
-	return 0;
+    return 0;
 }
 
-float froundup(float input)
-{
-	float fraction, output = 0.0;
+/* State machine to decode UTF-8 to Unicode codepoints (state 0 means done, state 12 means error) */
+unsigned int decode_utf8(unsigned int* state, unsigned int* codep, const unsigned char byte) {
+    /*
+        Copyright (c) 2008-2009 Bjoern Hoehrmann <bjoern@hoehrmann.de>
 
-	fraction = input - (int)input;
-	if(fraction > 0.01) { output = (input - fraction) + 1.0; } else { output = input; }
+        Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation
+        files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy,
+        modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the
+        Software is furnished to do so, subject to the following conditions:
 
-	return output;
+        The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+        See https://bjoern.hoehrmann.de/utf-8/decoder/dfa/ for details.
+     */
+
+    static const unsigned char utf8d[] = {
+        /* The first part of the table maps bytes to character classes that
+         * reduce the size of the transition table and create bitmasks. */
+         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+         0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,  0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+         1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,  9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,9,
+         7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,  7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,
+         8,8,2,2,2,2,2,2,2,2,2,2,2,2,2,2,  2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,
+        10,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3, 11,6,6,6,5,8,8,8,8,8,8,8,8,8,8,8,
+
+        /* The second part is a transition table that maps a combination
+         * of a state of the automaton and a character class to a state. */
+         0,12,24,36,60,96,84,12,12,12,48,72, 12,12,12,12,12,12,12,12,12,12,12,12,
+        12, 0,12,12,12,12,12, 0,12, 0,12,12, 12,24,12,12,12,12,12,24,12,24,12,12,
+        12,12,12,12,12,12,12,24,12,12,12,12, 12,24,12,12,12,12,12,12,12,24,12,12,
+        12,12,12,12,12,12,12,36,12,36,12,12, 12,36,12,12,12,12,12,36,12,36,12,12,
+        12,36,12,12,12,12,12,12,12,12,12,12,
+    };
+
+    unsigned int type = utf8d[byte];
+
+    *codep = *state != 0 ? (byte & 0x3fu) | (*codep << 6) : (0xff >> type) & byte;
+
+    *state = utf8d[256 + *state + type];
+
+    return *state;
 }
 
-int latin1_process(struct zint_symbol *symbol, uint8_t source[], uint8_t preprocessed[], int *length)
-{
-	int j = 0, i = 0, next;
+/* Convert UTF-8 to UTF-16 for codepoints <= U+FFFF (ie four-byte sequences (requiring UTF-16 surrogates) not allowed) */
+int utf8toutf16(struct zint_symbol *symbol, const unsigned char source[], int vals[], size_t *length) {
+    size_t bpos;
+    int    jpos;
+    unsigned int codepoint, state = 0;
 
-	/* Convert Unicode to Latin-1 for those symbologies which only support Latin-1 */
-	do {
-		next = -1;
-		if(source[i] < 128) {
-			preprocessed[j] = source[i];
-			j++;
-			next = i + 1;
-		} else {
-			if(source[i] == 0xC2) {
-				preprocessed[j] = source[i + 1];
-				j++;
-				next = i + 2;
-			}
-			if(source[i] == 0xC3) {
-				preprocessed[j] = source[i + 1] + 64;
-				j++;
-				next = i + 2;
-			}
-		}
-		if(next == -1) {
-			strcpy(symbol->errtxt, "error: Invalid character in input string (only Latin-1 characters supported)");
-			return ZERROR_INVALID_DATA;
-		}
-		i = next;
-	} while(i < *length);
-	preprocessed[j] = '\0';
-	*length = j;
+    bpos = 0;
+    jpos = 0;
 
-	return 0;
+    while (bpos < *length) {
+        do {
+            decode_utf8(&state, &codepoint, source[bpos++]);
+        } while (bpos < *length && state != 0 && state != 12);
+
+        if (state != 0) {
+            strcpy(symbol->errtxt, "240: Corrupt Unicode data");
+            return ZINT_ERROR_INVALID_DATA;
+        }
+        if (codepoint > 0xffff) {
+            strcpy(symbol->errtxt, "242: Unicode sequences of more than 3 bytes not supported");
+            return ZINT_ERROR_INVALID_DATA;
+        }
+
+        vals[jpos] = codepoint;
+        jpos++;
+
+    }
+    *length = jpos;
+
+    return 0;
 }
 
-int utf8toutf16(struct zint_symbol *symbol, uint8_t source[], int vals[], int *length)
-{
-	int bpos, jpos, error_number;
-	int next;
 
-	bpos = 0;
-	jpos = 0;
-	error_number = 0;
-	next = 0;
+void set_minimum_height(struct zint_symbol *symbol, const int min_height) {
+    /* Enforce minimum permissable height of rows */
+    int fixed_height = 0;
+    int zero_count = 0;
+    int i;
 
-	do {
-		if(source[bpos] <= 0x7f) {
-			/* 1 byte mode (7-bit ASCII) */
-			vals[jpos] = source[bpos];
-			next = bpos + 1;
-			jpos++;
-		} else {
-			if((source[bpos] >= 0x80) && (source[bpos] <= 0xbf)) {
-				strcpy(symbol->errtxt, "Corrupt Unicode data");
-				return ZERROR_INVALID_DATA;
-			}
-			if((source[bpos] >= 0xc0) && (source[bpos] <= 0xc1)) {
-				strcpy(symbol->errtxt, "Overlong encoding not supported");
-				return ZERROR_INVALID_DATA;
-			}
+    for (i = 0; i < symbol->rows; i++) {
+        fixed_height += symbol->row_height[i];
 
-			if((source[bpos] >= 0xc2) && (source[bpos] <= 0xdf)) {
-				/* 2 byte mode */
-				vals[jpos] = ((source[bpos] & 0x1f) << 6) + (source[bpos + 1] & 0x3f);
-				next = bpos + 2;
-				jpos++;
-			} else
-			if((source[bpos] >= 0xe0) && (source[bpos] <= 0xef)) {
-				/* 3 byte mode */
-				vals[jpos] = ((source[bpos] & 0x0f) << 12) + ((source[bpos + 1] & 0x3f) << 6) + (source[bpos + 2] & 0x3f);
-				next = bpos + 3;
-				jpos ++;
-			} else
-			if(source[bpos] >= 0xf0) {
-				strcpy(symbol->errtxt, "Unicode sequences of more than 3 bytes not supported");
-				return ZERROR_INVALID_DATA;
-			}
-		}
+        if (symbol->row_height[i] == 0) {
+            zero_count++;
+        }
+    }
 
-		bpos = next;
-
-	} while(bpos < *length);
-	*length = jpos;
-
-	return error_number;
+    if (zero_count > 0) {
+        if (((symbol->height - fixed_height) / zero_count) < min_height) {
+            for (i = 0; i < symbol->rows; i++) {
+                if (symbol->row_height[i] == 0) {
+                    symbol->row_height[i] = min_height;
+                }
+            }
+        }
+    }
 }
 
