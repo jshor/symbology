@@ -1,3 +1,4 @@
+#include <v8.h>
 #include "zint/zint.h"
 #include <string>
 #include <iostream>
@@ -20,14 +21,20 @@ namespace symbology {
   /**
    * Returns a bitmap (of type V8 Array) of the image in memory.
    */
-  Local<v8::Array> getBitmap(Isolate* isolate, zint_symbol *symbol) {
+  Local<Object> getBitmap(Isolate* isolate, zint_symbol *symbol) {
     int matrix_size = symbol->bitmap_width * symbol->bitmap_height * 3;
     int i;
 
-    Local<v8::Array> outArr = v8::Array::New(isolate, matrix_size);
+    v8::Local<v8::Object> outArr = Object::New(isolate);
+    // Local<v8::Array> outArr = v8::Array::New(isolate, matrix_size);
 
     for (i = 0; i < matrix_size; i++) {
-      outArr->Set(i, v8::Integer::NewFromUnsigned(isolate, symbol->bitmap[i]));
+      // outArr->Set(i, v8::Integer::NewFromUnsigned(isolate, symbol->bitmap[i]));
+      // Nan::Set(outArr, Nan::New<int>i, 1);
+      Nan::Set(outArr, 
+        Nan::New<String>(std::to_string(i)).ToLocalChecked(),
+        v8::Integer::New(isolate, symbol->bitmap[i]));
+      // outArr[i] = symbol->bitmap[i];
     }
     return outArr;
   }
@@ -47,19 +54,28 @@ namespace symbology {
         const char *fileExt = &symbol->outfile[fileNameLength - 3];
         
         if(strcmp("png", fileExt) == 0) {
-          obj->Set(String::NewFromUtf8(isolate, "encodedData"), getBitmap(isolate, symbol));
+          // obj->Set(String::NewFromUtf8(isolate, "encodedData"), getBitmap(isolate, symbol));
+          Nan::Set(obj, Nan::New<String>("encodedData").ToLocalChecked(), getBitmap(isolate, symbol));
         }
 
         if(strcmp("svg", fileExt) == 0 || strcmp("eps", fileExt) == 0) {
-          obj->Set(String::NewFromUtf8(isolate, "encodedData"), String::NewFromUtf8(isolate, symbol->rendered_data));
+          // obj->Set(String::NewFromUtf8(isolate, "encodedData"), String::NewFromUtf8(isolate, symbol->rendered_data));
+          Nan::Set(obj, Nan::New<String>("encodedData").ToLocalChecked(), Nan::New<String>(symbol->rendered_data).ToLocalChecked());
         }
       }
-      obj->Set(String::NewFromUtf8(isolate, "width"), v8::Integer::New(isolate, symbol->bitmap_width));
-      obj->Set(String::NewFromUtf8(isolate, "height"), v8::Integer::New(isolate, symbol->bitmap_height));
+
+      Nan::Set(obj, Nan::New<String>("width").ToLocalChecked(), v8::Integer::New(isolate, symbol->bitmap_width));
+      Nan::Set(obj, Nan::New<String>("height").ToLocalChecked(), v8::Integer::New(isolate, symbol->bitmap_height));
+        
+      // obj->Set(String::NewFromUtf8(isolate, "width"), v8::Integer::New(isolate, symbol->bitmap_width));
+      // obj->Set(String::NewFromUtf8(isolate, "height"), v8::Integer::New(isolate, symbol->bitmap_height));
     }
-    
-    obj->Set(String::NewFromUtf8(isolate, "message"), String::NewFromUtf8(isolate, symbol->errtxt));
-    obj->Set(String::NewFromUtf8(isolate, "code"), v8::Integer::New(isolate, status_code));
+
+    Nan::Set(obj, Nan::New<String>("message").ToLocalChecked(), Nan::New<String>(symbol->errtxt).ToLocalChecked());
+    Nan::Set(obj, Nan::New<String>("code").ToLocalChecked(), v8::Integer::New(isolate, status_code));
+      
+    // obj->Set(String::NewFromUtf8(isolate, "message"), String::NewFromUtf8(isolate, symbol->errtxt));
+    // obj->Set(String::NewFromUtf8(isolate, "code"), v8::Integer::New(isolate, status_code));
 
     return obj;
   }
@@ -132,9 +148,6 @@ namespace symbology {
   void createStream (const Nan::FunctionCallbackInfo<v8::Value>& args) {
     Isolate* isolate = args.GetIsolate();
     v8::Local<v8::Context> context = isolate->GetCurrentContext();
-
-    int arg0 = args[1]->NumberValue(context).FromJust();
-
     Local<Object> obj;
 
     struct zint_symbol *symbol = getSymbolFromArgs(context, args);
@@ -142,6 +155,8 @@ namespace symbology {
     Nan::Utf8String data(args[0]);
     
     obj = createStreamHandle(isolate, symbol, (unsigned char*)*data, (char*)*data);
+
+    printf("SYMBOLOGY --- %i", symbol->symbology);
 
     ZBarcode_Delete(symbol);
     args.GetReturnValue().Set(obj);

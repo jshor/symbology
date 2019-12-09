@@ -207,9 +207,7 @@ exp.createFile = function(symbol, barcodeData) {
 
   return theCreateStram(symbol, barcodeData, outputType)
     .then((res) => {
-      console.log('did the do', outputType)
       if (outputType === exp.Output.PNG) {
-        console.log('found png')
         var image = pngRender(res.data, res.width, res.height);
 
         return new Promise((resolve, reject) => {
@@ -224,8 +222,6 @@ exp.createFile = function(symbol, barcodeData) {
           });
         });
       }
-
-      console.log('WRITING: ', symbol.fileName)
 
       fs.writeFileSync(symbol.fileName, res.data)
 
