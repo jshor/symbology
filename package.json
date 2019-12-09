@@ -23,10 +23,10 @@
     "module_path": "./lib/binding/bin/",
     "remote_path": "./builds/v{version}/{platform}/{arch}/{node_abi}",
     "package_name": "{module_name}.tar.gz",
-    "host": "https://symbology.dev.s3-us-west-2.amazonaws.com"
+    "host": "https://symbology.dev.s3-us-east-2.amazonaws.com"
   },
   "dependencies": {
-    "nan": "2.x",
+    "nan": "^2.14.0",
     "node-pre-gyp": "^0.14.0",
     "pngjs": "3.3.0",
     "pngjs-image": "^0.11.6"

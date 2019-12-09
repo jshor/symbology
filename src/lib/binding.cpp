@@ -1,4 +1,3 @@
-#include <v8.h>
 #include "zint/zint.h"
 #include <string>
 #include <iostream>
@@ -7,40 +6,16 @@
 #include <typeinfo>
 #include <stdio.h>
 #include <string.h>
+#include <nan.h>
 
 namespace symbology {
-
   using v8::FunctionCallbackInfo;
   using v8::Isolate;
   using v8::Local;
+  using v8::Context;
   using v8::Object;
   using v8::String;
   using v8::Value;
-
-  /**
-   * Copy v8 string to external buffer
-   */
-  void copyArgStr(Value *arg, char* buffer, size_t maxchars) {
-    memset(buffer, 0, maxchars);
-    v8::String::Utf8Value str(arg->ToString());
-    if (*str) {
-      strncpy(buffer, *str, maxchars - 1);
-    }
-  }
-
-  /**
-   * Conversion from v8::Value to int
-   */
-  int argToInt(Value *arg) {
-    return (int)(arg->Int32Value());
-  }
-
-  /**
-   * Conversion from v8::Value to int
-   */
-  float argToFloat(Value *arg) {
-    return (float)(arg->NumberValue());
-  }
 
   /**
    * Returns a bitmap (of type V8 Array) of the image in memory.
@@ -63,7 +38,7 @@ namespace symbology {
   Local<Object> createStreamHandle(Isolate* isolate, zint_symbol *symbol, uint8_t *data, char *str) {
     int status_code = ZBarcode_Encode_and_Print(symbol, data, 0, 0);
 
-    Local<Object> obj = Object::New(isolate);
+    v8::Local<v8::Object> obj = Object::New(isolate);
 
     if(status_code <= 2) {
       int fileNameLength = strlen(symbol->outfile);
@@ -82,7 +57,7 @@ namespace symbology {
       obj->Set(String::NewFromUtf8(isolate, "width"), v8::Integer::New(isolate, symbol->bitmap_width));
       obj->Set(String::NewFromUtf8(isolate, "height"), v8::Integer::New(isolate, symbol->bitmap_height));
     }
-    obj->Set(String::NewFromUtf8(isolate, "inputData"), String::NewFromUtf8(isolate, str));
+    
     obj->Set(String::NewFromUtf8(isolate, "message"), String::NewFromUtf8(isolate, symbol->errtxt));
     obj->Set(String::NewFromUtf8(isolate, "code"), v8::Integer::New(isolate, status_code));
 
@@ -90,42 +65,28 @@ namespace symbology {
   }
 
   /**
-   * Renders symbology and creates a PNG, EPS, or SVG file.
+   * Takes the given callback arguments and places their converted values into a new `zint_symbol` instance.
    */
-  Local<Object> createFileHandle(Isolate* isolate, zint_symbol *symbol, uint8_t *data, char *str) {
-    int status_code = ZBarcode_Encode_and_Print(symbol, data, 0, 0);
-
-    Local<Object> obj = Object::New(isolate);
-    if(status_code <= 2) {
-      obj->Set(String::NewFromUtf8(isolate, "fileName"), String::NewFromUtf8(isolate, symbol->outfile));
-    }
-    obj->Set(String::NewFromUtf8(isolate, "inputData"), String::NewFromUtf8(isolate, str));
-    obj->Set(String::NewFromUtf8(isolate, "message"), String::NewFromUtf8(isolate, symbol->errtxt));
-    obj->Set(String::NewFromUtf8(isolate, "code"), v8::Integer::New(isolate, status_code));
-
-    return obj;
-  }
-
-  zint_symbol *getSymbolFromArgs(const FunctionCallbackInfo<Value>& args) {
+  zint_symbol *getSymbolFromArgs(v8::Local<v8::Context> context, const Nan::FunctionCallbackInfo<v8::Value>& args) {
     struct zint_symbol *symbol;
 
     symbol = ZBarcode_Create();
 
     // basic symbology info and render size
-    symbol->symbology = argToInt(*args[1]);
-    symbol->height = 0;//argToInt(*args[2]);
-    symbol->whitespace_width = argToInt(*args[3]);
-    symbol->border_width = argToInt(*args[4]);
+    symbol->symbology = (int)args[1]->NumberValue(context).FromJust();
+    symbol->height = (int)args[2]->NumberValue(context).FromJust();
+    symbol->whitespace_width = (int)args[3]->NumberValue(context).FromJust();
+    symbol->border_width = (int)args[4]->NumberValue(context).FromJust();
 
     // options (-1 indicates not set)
     int option_1, option_2, option_3, output_options;
     float scale;
 
-    scale = argToFloat(*args[9]);
-    option_1 = argToInt(*args[10]);
-    option_2 = argToInt(*args[11]);
-    option_3 = argToInt(*args[12]);
-    output_options = argToInt(*args[5]);
+    scale = (float)args[9]->NumberValue(context).FromJust();
+    option_1 = (int)args[10]->NumberValue(context).FromJust();
+    option_2 = (int)args[911]->NumberValue(context).FromJust();
+    option_3 = (int)args[12]->NumberValue(context).FromJust();
+    output_options = (int)args[5]->NumberValue(context).FromJust();
 
     if(option_1 > -1) {
       symbol->option_1 = option_1;
@@ -143,57 +104,57 @@ namespace symbology {
       symbol->scale = scale;
     }
 
+    Nan::Utf8String bgcolor(args[6]);
+    Nan::Utf8String fgcolor(args[7]);
+    Nan::Utf8String outfile(args[8]);
+    Nan::Utf8String text(args[14]);
+
     // colors
-    copyArgStr(*args[6], (char*)&symbol->bgcolour[0], sizeof(symbol->bgcolour));
-    copyArgStr(*args[7], (char*)&symbol->fgcolour[0], sizeof(symbol->fgcolour));
+    strncpy((char*)&symbol->bgcolour[0], *bgcolor, sizeof(symbol->bgcolour) - 1);
+    strncpy((char*)&symbol->fgcolour[0], *fgcolor, sizeof(symbol->fgcolour) - 1);
     
     // file name to render
-    copyArgStr(*args[8], (char*)&symbol->outfile[0], sizeof(symbol->outfile));
+    strncpy((char*)&symbol->outfile[0], *outfile, sizeof(symbol->outfile) - 1);
 
     // show/hide human-readable text
-    symbol->show_hrt = argToInt(*args[13]);
+    symbol->show_hrt = (int)args[13]->NumberValue(context).FromJust();
     
     // text to display
-    copyArgStr(*args[14], (char*)&symbol->text[0], sizeof(symbol->text));
+    strncpy((char*)&symbol->text[0], *text, sizeof(symbol->text) - 1);
 
     return symbol;
-  }
-
-  /**
-   * Creates a new barcode in the given path and returns an object
-   * containing the status code, message, and fileName, and bitmap params.
-   */
-  void createFile (const FunctionCallbackInfo<Value>& args) {
-    struct zint_symbol *symbol = getSymbolFromArgs(args);
-
-    Isolate* isolate = args.GetIsolate();
-    Local<Object> obj;
-    
-    v8::String::Utf8Value data(args[0]->ToString());
-    obj = createFileHandle(isolate, symbol, (unsigned char*)*data, (char*)*data);
-    ZBarcode_Delete(symbol);
-    args.GetReturnValue().Set(obj);
   }
 
   /**
    * Creates a new barcode stream and returns an object containing the
    * binary data of the bitmap, status code, message, and fileName, and bitmap params.
    */
-  void createStream (const FunctionCallbackInfo<Value>& args) {
-    struct zint_symbol *symbol = getSymbolFromArgs(args);
-
+  void createStream (const Nan::FunctionCallbackInfo<v8::Value>& args) {
     Isolate* isolate = args.GetIsolate();
+    v8::Local<v8::Context> context = isolate->GetCurrentContext();
+
+    int arg0 = args[1]->NumberValue(context).FromJust();
+
     Local<Object> obj;
 
-    v8::String::Utf8Value data(args[0]->ToString());
+    struct zint_symbol *symbol = getSymbolFromArgs(context, args);
+    
+    Nan::Utf8String data(args[0]);
+    
     obj = createStreamHandle(isolate, symbol, (unsigned char*)*data, (char*)*data);
+
     ZBarcode_Delete(symbol);
     args.GetReturnValue().Set(obj);
   }
 
-  void Init(Local<Object> exports) {
-    NODE_SET_METHOD(exports, "createFile", createFile);
-    NODE_SET_METHOD(exports, "createStream", createStream);
+  void Init(v8::Local<v8::Object> exports) {
+    v8::Local<v8::Context> context = exports->CreationContext();
+
+    exports->Set(context,
+      Nan::New("createStream").ToLocalChecked(),
+      Nan::New<v8::FunctionTemplate>(createStream)
+          ->GetFunction(context)
+          .ToLocalChecked());
   }
 
   NODE_MODULE(symbology, Init);
