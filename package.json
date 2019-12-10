@@ -26,10 +26,12 @@
     "host": "https://symbologyjs.s3-us-east-2.amazonaws.com"
   },
   "dependencies": {
+    "git-clone": "^0.1.0",
     "nan": "^2.14.0",
     "node-pre-gyp": "^0.14.0",
     "pngjs": "3.3.0",
-    "pngjs-image": "^0.11.6"
+    "pngjs-image": "^0.11.6",
+    "replace-in-file": "^4.2.0"
   },
   "devDependencies": {
     "aws-sdk": "2.108.0",
@@ -47,10 +49,10 @@
   "scripts": {
     "dev": "node ./src/test.js",
     "start": "node ./index.js",
-    "install": "node-pre-gyp install --fallback-to-build",
     "test": "./node_modules/istanbul/lib/cli.js cover _mocha -- -R spec ./src/**/*.test.js",
     "build": "node-pre-gyp rebuild --target_arch=x64",
     "package-binary": "node-pre-gyp rebuild package --target_arch=x64",
-    "publish-binary": "node-pre-gyp publish --target_arch=x64"
+    "publish-binary": "node-pre-gyp publish --target_arch=x64",
+    "install": "node ./scripts/install.js && node-pre-gyp install --fallback-to-build"
   }
 }

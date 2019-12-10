@@ -1,5 +1,4 @@
 #include <v8.h>
-#include "zint/zint.h"
 #include <string>
 #include <iostream>
 #include <node.h>
@@ -8,6 +7,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <nan.h>
+#include "../../.zint/backend/zint.h"
 
 namespace symbology {
   using v8::FunctionCallbackInfo;
@@ -59,6 +59,7 @@ namespace symbology {
         if(strcmp("svg", fileExt) == 0 || strcmp("eps", fileExt) == 0) {
           // parse the result as a normal string and store it in `encodedData`
           // obj->Set(String::NewFromUtf8(isolate, "encodedData"), String::NewFromUtf8(isolate, symbol->rendered_data));
+          printf("ENCODED: %s", *symbol->encoded_data);
           // Nan::Set(obj, Nan::New<String>("encodedData").ToLocalChecked(), Nan::New<String>(symbol->encoded_data).ToLocalChecked());
         }
       }
