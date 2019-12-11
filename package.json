@@ -31,7 +31,8 @@
     "node-pre-gyp": "^0.14.0",
     "pngjs": "3.3.0",
     "pngjs-image": "^0.11.6",
-    "replace-in-file": "^4.2.0"
+    "replace-in-file": "^4.2.0",
+    "rimraf": "^3.0.0"
   },
   "devDependencies": {
     "aws-sdk": "2.108.0",
@@ -53,6 +54,6 @@
     "build": "node-pre-gyp rebuild --target_arch=x64",
     "package-binary": "node-pre-gyp rebuild package --target_arch=x64",
     "publish-binary": "node-pre-gyp publish --target_arch=x64",
-    "install": "node ./scripts/install.js && node-pre-gyp install --fallback-to-build"
+    "install": "node ./scripts/install.js"
   }
 }

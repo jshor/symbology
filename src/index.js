@@ -72,7 +72,8 @@ function createSymbology(symbologyStruct, barcodeData, fnName) {
     symbologyStruct.outputOptions,
     symbologyStruct.backgroundColor,
     symbologyStruct.foregroundColor,
-    symbologyStruct.fileName,
+    // indicate to the library that we want BMP instead of PNG
+    symbologyStruct.fileName.replace(/\.png$/g, '.bmp'),
     symbologyStruct.scale,
     symbologyStruct.option1,
     symbologyStruct.option2,
@@ -137,28 +138,27 @@ function pngRender(bitmap, width, height) {
  * If PNG, it returns the stream as a base64 string.
  * 
  * @note The file will be created in memory and then passed to the returned object.
- *
+ * 
+ * @private
  * @param {Symbol} symbol - Symbol struct
  * @param {String} barcodeData - data to encode
  * @param {String} outputType - 'png', 'svg', or 'eps' (default: 'png')
+ * @param {Boolean} isStdout - if true, forces the buffer to write to rendered_data
  * @returns {Promise<Object>} object with resulting props (see docs)
  */
-function theCreateStram(symbol, barcodeData, outputType) {
-  outputType = outputType || exp.Output.PNG
-  symbol.fileName = symbol.fileName.replace(/\.png$/g, '.bmp') || 'out.' + outputType
+function callManagedLibrary(symbol, barcodeData, outputType, isStdout) {
+  if (!Object.values(exp.Output).includes(outputType)) {
+    throw new Error(`Invalid output type: ${outputType}`)
+  }
 
-  // if (outputType !== exp.Output.PNG) {
-    symbol.outputOptions = 8; // force buffer to write to rendered_data
-  // }
+  if (outputType !== exp.Output.PNG) {
+    symbol.fileName = `out.${outputType}`
+    symbol.outputOptions = 8
+  }
 
   var res = createSymbology(symbol, barcodeData, 'createStream');
 
   if(res.code <= 2) {
-    // console.log('I HAVE DATA: ', res.encodedData)
-    // if (typeof res.encodedData === 'string') {
-      // res.encodedData = res.encodedData.replace(/\r?\n?[^\r\n]*$/, '')
-    // }
-
     return Promise.resolve({
       data: res.encodedData,
       message: res.message,
@@ -173,8 +173,16 @@ function theCreateStram(symbol, barcodeData, outputType) {
   });
 };
 
+/**
+ * Creates an in-memory of a PNG, SVG or EPS file in the specified fileName path.
+ *
+ * @param {Symbol} symbol - symbol struct
+ * @param {String} barcodeData - data to encode
+ * @param {String} outputType - `png`, `eps`, or `svg`.
+ * @returns {Promise<Object>} object with resulting props (see docs)
+ */
 exp.createStream = function(symbol, barcodeData, outputType) {
-  return theCreateStram(symbol, barcodeData, outputType)
+  return callManagedLibrary(symbol, barcodeData, outputType, true)
     .then((res) => {
       if (outputType === exp.Output.PNG) {
         var pngData = pngRender(res.data, res.width, res.height);
@@ -195,26 +203,23 @@ exp.createStream = function(symbol, barcodeData, outputType) {
 }
 
 /**
- * Creates a stream of a PNG, SVG or EPS file in the specified fileName path.
- * 
- * @note: Zint will render the file type based on the extension of the given file path.
+ * Creates a file of a PNG, SVG or EPS file in the specified fileName path.
  *
  * @param {Symbol} symbol - symbol struct
  * @param {String} barcodeData - data to encode
+ * @param {String} outputType - `png`, `eps`, or `svg`.
  * @returns {Promise<Object>} object with resulting props (see docs)
  */
 exp.createFile = function(symbol, barcodeData) {
-  const originalFileName = symbol.fileName
-  symbol.fileName = symbol.fileName.replace(/\.png$/g, '.bmp')
-  const outputType = exp.Output[symbol.fileName.split('.').pop().toUpperCase()] || exp.Output.PNG
+  const outputType = symbol.fileName.match(/\.([a-z]+)$/).pop()
 
-  return theCreateStram(symbol, barcodeData, outputType)
+  return callManagedLibrary(symbol, barcodeData, outputType)
     .then((res) => {
       if (outputType === exp.Output.PNG) {
         var image = pngRender(res.data, res.width, res.height);
 
         return new Promise((resolve, reject) => {
-          image.writeImage(originalFileName, function(err) {
+          image.writeImage(symbol.fileName, function(err) {
             if (err) {
               reject(err)
             } else {

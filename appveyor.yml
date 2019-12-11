@@ -5,7 +5,7 @@ install:
   - yarn global add windows-build-tools
   - yarn
   - yarn package-binary
-  - yarn publish-binary
+  # - yarn publish-binary
 
 test_script:
   # Output useful info for debugging.
@@ -20,7 +20,7 @@ platform:
 
 environment:
   matrix:
-    - NODE_VERSION: '9'
+    # - NODE_VERSION: '9'
     - NODE_VERSION: '10'
     - NODE_VERSION: '11'
     - NODE_VERSION: '12'

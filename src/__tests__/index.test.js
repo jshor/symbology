@@ -138,6 +138,22 @@ describe('the symbology library', function() {
     });
   });
 
+  describe('rendering SVG images', function() {
+    it('should render a MaxiCode SVG image', function() {
+      return library
+        .createStream(getSymbol({
+          symbology: library.Barcode.MAXICODE,
+          foregroundColor: 'ff00ff',
+          backgroundColor: '00ff00'
+        }), '12345', library.Output.SVG)
+        .then(function(data) {
+          expect(data.code).to.be.a('number');
+          expect(data.message).to.be.a('string');
+          expect(data.data).to.equal(fixtures.maxicodeSvg);
+        });
+    });
+  });
+
   describe('rendering PNG images', function() {
     it('should render a Code 128 PNG image', function() {
       return library
