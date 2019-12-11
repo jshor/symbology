@@ -50,10 +50,11 @@
   "scripts": {
     "dev": "node ./src/test.js",
     "start": "node ./index.js",
-    "test": "./node_modules/istanbul/lib/cli.js cover _mocha -- -R spec ./src/**/*.test.js",
-    "build": "node-pre-gyp rebuild --target_arch=x64",
-    "package-binary": "node-pre-gyp rebuild package --target_arch=x64",
-    "publish-binary": "node-pre-gyp publish --target_arch=x64",
-    "install": "node ./scripts/install.js"
+    "test": "mocha -R spec ./src/**/*.test.js",
+    "test:coverage": "./node_modules/istanbul/lib/cli.js cover _mocha -- -R spec ./src/**/*.test.js",
+    "build": "node-pre-gyp rebuild",
+    "package-binary": "node-pre-gyp rebuild package",
+    "publish-binary": "node-pre-gyp publish",
+    "install": "node ./scripts/install.js && node-pre-gyp rebuild"
   }
 }

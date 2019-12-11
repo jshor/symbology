@@ -4,27 +4,26 @@ language: node_js
 
 os:
   - linux
-  - osx
+  # - osx
 
 node_js:
   - $NODE_VERSION
 
 install:
-  - npm remove node-gyp
   - yarn
 
 script:
-  - yarn test
+  - yarn test:coverage
   - yarn package-binary
   - yarn publish-binary
 
 after_success:
-- cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+  - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
 
 env:
   matrix:
-    - NODE_VERSION="9"
+    # - NODE_VERSION="9"
     - NODE_VERSION="10"
-    - NODE_VERSION="11"
-    - NODE_VERSION="12"
-    - NODE_VERSION="13"
+    # - NODE_VERSION="11"
+    # - NODE_VERSION="12"
+    # - NODE_VERSION="13"

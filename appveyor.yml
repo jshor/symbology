@@ -4,24 +4,25 @@ install:
   - ps: Install-Product node $env:NODE_VERSION $env:platform
   - yarn global add windows-build-tools
   - yarn
+  - yarn test
   - yarn package-binary
   # - yarn publish-binary
 
 test_script:
   # Output useful info for debugging.
-  - node --version
+  - node --version   
   - npm --version
   # run tests
   - yarn test
 
 platform:
-  - x86
+  # - x86
   - x64
 
 environment:
   matrix:
     # - NODE_VERSION: '9'
     - NODE_VERSION: '10'
-    - NODE_VERSION: '11'
-    - NODE_VERSION: '12'
-    - NODE_VERSION: '13'
+    # - NODE_VERSION: '11'
+    # - NODE_VERSION: '12'
+    # - NODE_VERSION: '13'

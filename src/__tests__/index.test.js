@@ -41,7 +41,7 @@ describe('the symbology library', function() {
     beforeEach(function() {
       sandbox.stub(symbology, 'createStream').callsFake(createSymbology);
     });
-
+    
     it('should return a status code and a message', function() {
       return library
         .createFile(getSymbol({fileName: filePath}), '54321')
