@@ -17,10 +17,10 @@ build_script:
   - yarn package:binary
 
 on_success:
-  - echo "publishing now..."
-  # - yarn publish:binary
+  - ps: ./scripts/appveyor.sh
+    # - yarn publish:binary
 
-platform:
+platform:	
   # - x86
   - x64
 
