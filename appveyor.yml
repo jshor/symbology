@@ -1,10 +1,15 @@
 image: Visual Studio 2017
 
 install:
+  - git config --global credential.helper store
+  - ps: Add-Content "$HOME\.git-credentials" "https://$($env:NODE_PRE_GYP_GITHUB_TOKEN):x-oauth-basic@github.com`n"
+  - git config --global user.email "jpshor@gmail.com"
+  - git config --global user.name "Josh Shor"
   - ps: Install-Product node $env:NODE_VERSION $env:platform
   - yarn global add windows-build-tools
   - yarn
   - yarn test
+  - yarn release
   - yarn package-binary
   # - yarn publish-binary
 

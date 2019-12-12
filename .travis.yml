@@ -14,8 +14,9 @@ install:
 
 script:
   - yarn test:coverage
+  - yarn release
   - yarn package-binary
-  - yarn publish-binary
+  # - yarn publish-binary
 
 after_success:
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
