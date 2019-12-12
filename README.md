@@ -1,80 +1,93 @@
-# Symbology.js
+<p align="center">
+  <img src="./docs/symbology-logo.svg" alt="logo" width="500">
+</p>
 
-Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.
+<p align="center">A Node.js module that generates barcode images. Supports 50+ different 1D or 2D symbologies in png, eps, or svg formats.</p>
 
-[![Coverage Status](https://coveralls.io/repos/github/jshor/symbology/badge.svg?branch=master)](https://coveralls.io/github/jshor/symbology?branch=master) [![Build Status](https://travis-ci.org/jshor/symbology.svg?branch=master)](https://travis-ci.org/jshor/symbology) [![npm version](https://badge.fury.io/js/symbology.svg)](https://badge.fury.io/js/symbology) [![License](http://img.shields.io/:license-mit-blue.svg)](http://doge.mit-license.org)
+<p align="center">
+  <a href="https://coveralls.io/github/jshor/symbology?branch=master">
+    <img src="https://img.shields.io/coveralls/github/jshor/symbology?style=for-the-badge"
+      alt="Code coverage">
+  </a>
 
-[![dependency Status](https://david-dm.org/jshor/symbology/status.png)](https://david-dm.org/jshor/symbology#info=dependencies) [![devDependency Status](https://david-dm.org/jshor/symbology/dev-status.png)](https://david-dm.org/jshor/symbology#info=devDependencies)
+  <a href="https://travis-ci.org/jshor/symbology">
+    <img src="https://img.shields.io/travis/jshor/symbology?logo=travis&style=for-the-badge"
+      alt="Build status: Travis">
+  </a>
 
-## 0. Contents
+  <a href="https://ci.appveyor.com/project/jshor/symbology">
+    <img src="https://img.shields.io/travis/jshor/symbology?logo=appveyor&style=for-the-badge"
+      alt="Build status: AppVeyor">
+  </a>
+
+  <a href="https://david-dm.org/jshor/symbology#info=dependencies">
+    <img src="https://img.shields.io/david/jshor/symbology?style=for-the-badge"
+      alt="Dependency Status">
+  </a>
+</p>
+
+## Contents
 
 - [1. Introduction](#1-introduction)
 - [2. Installation](#2-installation)
-- [3. Usage](#3-usage)
-    - [3.1. Import the module](#31-import-the-module)
-    - [3.2. Struct](#32-struct)
-    - [3.3. Available functions](#33-available-functions)
-      - [3.3.1. Stream a barcode](#331-stream-a-barcode)
-      - [3.3.2. Render a file](#332-render-a-file)
-- [4. Available options (struct)](#4-available-options-struct)
+  - [2.1. Manual installation](#21-manual-installation)
+    - [2.1.1. Compiling on Windows](#211-compiling-on-windows)
+    - [2.1.2. Compiling on Linux or macOS](#212-compiling-on-linux-or-macos)
+- [3. API](#3-api)
+  - [3.1. Stream a barcode](#31-stream-a-barcode)
+  - [3.2. Render a file](#32-render-a-file)
+- [4. Available options (`Symbol`)](#4-available-options-symbol)
 - [5. Error handling](#5-error-handling)
 - [6. Symbology types](#6-symbology-types)
 - [7. Development](#7-development)
-    - [7.1. Building](#71-building)
-    - [7.2. Testing](#72-testing)
-    - [7.3. Packaging](#73-packaging)
-    - [7.4. Bugs](#74-bugs)
-    - [7.5. Changelog](#75-changelog)
-- [8. Credits](#8-credits)
-- [9. License](#9-license)
+  - [7.1. Building](#71-building)
+  - [7.2. Testing](#72-testing)
+  - [7.3. Packaging](#73-packaging)
+  - [7.4. Bugs](#74-bugs)
+  - [7.5. Changelog](#75-changelog)
+- [8. Supported platforms](#8-supported-platforms)
+- [9. Credits](#9-credits)
+- [10. License](#10-license)
 
-## 1. Introduction
+# 1. Introduction
 
 This Node.js module will allow you to generate over 50+ different types of 1D or 2D symbologies, including barcodes for books, grocery, shipping carriers, healthcare, and international codes. It can save a png, svg, or eps image, or render a base64 png bitmap.
 
-## 2. Installation
+# 2. Installation
 
-```
-yarn add symbology
-```
-
-or:
-
-
-```
-npm install symbology --save
+```sh
+yarn add symbology --fallback-to-build
 ```
 
-If you run into issues when building compiling the module locally, please make sure you have the prerequisites installed. For more info, see: [7.1.1. Prerequisites](#711-prerequisites).
+## 2.1 Manual installation
 
-## 3. Usage
+If you run into issues downloading the binary, `--fallback-to-build` will compile the module from source.
 
-### 3.1. Import the module
+You may also compile from source by running `npm rebuild`.
 
-```javascript
-var symbology = require('symbology');
+### 2.1.1 Compiling on Windows
+
+Ensure you have [`windows-build-tools`](http://npmjs.com/package/windows-build-tools) globally installed, which bundles Visual C++ Build Tools.
+
+```sh
+yarn global add windows-build-tools
 ```
 
-### 3.2. Struct
+Then you can compile the module by running `npm rebuild` in your project directory.
 
-Prepare a Symbol json object with your desired settings (see [4. Available options (struct)](#4-available-options-struct) for more info):
-```javascript
-var Symbol = {
-  symbology: symbology.Barcode.CODE128,
-  foregroundColor: 'fff000',
-  backgroundColor: '000000',
-  fileName: '/my/directory/barcode.png'
-};
-```
-### 3.3. Available functions
+### 2.1.2 Compiling on Linux or macOS
+
+Simply run `npm rebuild` in your project directory. `node-gyp` will utilize the OS's bundled GCC compiler.
+
+# 3. API
 
 Each function returns a promise that completes with an object containing the exit code and message of the function (see [5. Error handling](#5-error-handling) for more info).
 
 ----------
 
-### 3.3.1. Stream a barcode:
+## 3.1. Stream a barcode:
 
-`createStream(Symbol, data, outputType)`
+`createStream(symbol, data, outputType)`
 
 Writes the file string to the output object in a property `data`. Returns a `Promise`.
 
@@ -82,11 +95,11 @@ Writes the file string to the output object in a property `data`. Returns a `Pro
 
 | Parameter    | Type     | Values                       | Default    |
 |--------------|----------|------------------------------|------------|
-| `Symbol`     | `Struct` | Struct of symbology settings |            |
+| `symbol`     | `Symbol` | Struct of symbology settings |            |
 | `data`       | `String` | Desired data to encode       |            |
 | `outputType` | `String` | Output type                  | `PNG`      |
 
-#### Output Types
+### Output Types
 
 | Enum   | Description                          |
 |--------|--------------------------------------|
@@ -94,30 +107,32 @@ Writes the file string to the output object in a property `data`. Returns a `Pro
 | `SVG`  | Scalable vector graphics             |
 | `PNG`  | Portable network graphics            |
 
-#### Example
+### Example
 
-```javascript
-symbology
-  .createStream(Symbol, '12345', symbology.Output.PNG)
-  .then(function(data) {
-    console.log('Result: ', data);
-  }, function(err) {
-    console.log('Error: ', err);
-  });
+```js
+try {
+  await data = symbology.createStream(Symbol, '12345', symbology.Output.PNG)
+
+  console.log('Result: ', data)
+} catch (err) {
+  console.error('Error: ', err)
+}
 ```
+
 Returns:
-```javascript
-Result: {
-  message: '',
-  code: 0,
-  data: 'data:image/png;base64,iVBOR [...] g=='
+
+```json
+{
+  "message": "",
+  "code": 0,
+  "data": "data:image/png;base64,iVBOR [...] g=="
 }
 ```
 ----------
 
-### 3.3.2. Render a file:
+## 3.2. Render a file:
 
-`createFile(Symbol, data, type)`
+`createFile(Symbol, data)`
 
 Creates a file with the requested barcode. Returns a `Promise`.
 
@@ -126,38 +141,38 @@ For example, to render an svg, the `fileName` must be of the format: `<myfile>.s
 
 | Parameter    | Type     | Values                       |
 |--------------|----------|------------------------------|
-| `Symbol`     | `Struct` | Struct of symbology settings |
+| `symbol`     | `Symbol` | Object of symbology settings |
 | `data`       | `String` | Desired data to encode       |
 
-#### Example
+### Example
 
-```javascript
-symbology
-  .createFile(Symbol, '12345')
-  .then(function(data) {
-    console.log('Result: ', data);
-  }, function(err) {
-    console.log('Error: ', err);
-  });
+```js
+try {
+  await data = symbology.createFile(Symbol, '12345', symbology.Output.PNG)
+
+  console.log('File created! Result: ', data)
+} catch (err) {
+  console.error('Error: ', err)
+}
 ```
 
 This creates a file in the specified `fileName` and will log:
 
-```javascript
-Result: {
-  message: '',
-  code: 0,
-  fileName: 'barcode.png'
+```json
+{
+  "message": "",
+  "code": 0,
+  "fileName": "barcode.png"
 }
 ```
 
-## 4. Available options (struct)
+# 4. Available options (`Symbol`)
 
 A `Symbol` is a regular JavaScript object with the following available properties:
 
 | Enumerated type       | Type               | Meaning                                                                                                         | Required? | Default value |
 |-----------------------|--------------------|-----------------------------------------------------------------------------------------------------------------|-----------|---------------|
-| symbology             | Symbology enum     | The enumerated type of the symbology (see [Enumerated Barcode Types](#enumerated-barcode-types) for more info). | **Yes**   |               |
+| symbology             | Symbology enum     | The enumerated type of the symbology (see [Enumerated Barcode Types](docs/symbology-types.md) for more info). | **Yes**   |               |
 | height                | Number             | The height of the image. If specified, this will maintain the aspect ratio.                                     | No        | 50            |
 | whitespaceWidth       | Number             | Width of whitespace, for barcodes which have this option.                                                       | No        | 0             |
 | borderWidth           | Number             | Width of border.                                                                                                | No        | 0             |
@@ -171,9 +186,9 @@ A `Symbol` is a regular JavaScript object with the following available propertie
 | option3               | Number             | Symbology-type-specific option value.                                                                           | No        | `NULL`        |
 | showHumanReadableText | Boolean            | Show or hide the symbology data as human-readable text (if applicable).                                         | No        | `true`        |
 
-\* required only if using `createFile()`.
+\* required only if using [`createFile()`](#32-render-a-file).
 
-## 5. Error handling
+# 5. Error handling
 
 Each function returns an object having property `code`, which is the status code of the function, and `message`, which contains an error/warning message (if any).
 
@@ -190,42 +205,46 @@ Below are the possible status codes:
 | 10            | ZERROR_FILE_ACCESS      | Cannot write to the given path.                                     |
 | 11            | ZERROR_MEMORY           | Corrupt or insufficient memory.                                     |
 
-## 6. Symbology types
+# 6. Symbology types
 
-There are 53 different available symbology types. For an exhaustive list, please see the [Barcode Types list](https://github.com/jshor/symbology/wiki/Barcode-types).
+There are 53 different available symbology types. For an exhaustive list, please see the [Barcode Types list](docs/symbology-types.md).
 
-## 7. Development
+# 7. Development
 
-### 7.1. Building
+## 7.1. Building
 
 ```
 yarn build
 ```
 
-### 7.2. Testing
+## 7.2. Testing
 
 ```
 yarn test
 ```
 
-### 7.3. Packaging
+## 7.3. Packaging
 
 ```
-yarn package-binary
+yarn package:binary
 ```
 
-### 7.4. Bugs
+## 7.4. Bugs
 
 Please report any bugs [here](https://github.com/jshor/symbology/issues).
 
-### 7.5. Changelog
+## 7.5. Changelog
 
 Available [here](https://github.com/jshor/symbology/blob/master/CHANGELOG.md).
 
-## 8. Credits
+# 8. Supported platforms
+
+Node.js 10+ is supported for macOS, Linux, Windows (x32), and Windows (x64).
+
+# 9. Credits
 
 This library is a JS/C++ wrapper module for the terrific C/C++ library [Zint](https://zint.github.io/), (C) [Robin Stuart](https://github.com/g3rrk). Module by [Josh Shor](https://github.com/jshor).
 
-## 9. License
+# 10. License
 
-MIT.
+[MIT](LICENSE.md).

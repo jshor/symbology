@@ -4,6 +4,7 @@ const rimraf = require('rimraf')
 const path = require('path')
 const patches = require('./patches')
 
+// test commit
 console.log('Removing any existing .zint directory...')
 
 rimraf(path.join(__dirname, '../.zint'), () => {
