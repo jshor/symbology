@@ -1,7 +1,25 @@
 {
   "name": "symbology",
-  "version": "1.2.7",
+  "version": "1.2.4",
   "description": "Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.",
+  "scripts": {
+    "commit": "yarn git-cz",
+    "release": "standard-version",
+    "test": "mocha -R spec ./src/**/*.test.js",
+    "test:coverage": "./node_modules/istanbul/lib/cli.js cover _mocha -- -R spec ./src/**/*.test.js",
+    "build": "node-pre-gyp rebuild",
+    "package:binary": "node-pre-gyp rebuild package",
+    "publish:binary": "node-pre-gyp-github publish --silent --release",
+    "publish:release": "git push --follow-tags origin HEAD:master",
+    "install": "node ./scripts/install.js"
+  },
+  "main": "./src/index.js",
+  "author": "Josh Shor <https://github.com/jshor>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jshor/symbology.git"
+  },
   "keywords": [
     "barcode",
     "datamatrix",
@@ -11,19 +29,15 @@
     "1d barcode",
     "2d barcode"
   ],
-  "main": "./src/index.js",
-  "author": "Josh Shor <https://github.com/jshor>",
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/jshor/symbology.git"
-  },
   "binary": {
     "module_name": "symbology",
     "module_path": "./lib/binding/bin/",
-    "remote_path": "./builds/v{version}/{platform}/{arch}/{node_abi}",
-    "package_name": "{module_name}.tar.gz",
-    "host": "https://symbologyjs.s3-us-east-2.amazonaws.com"
+    "remote_path": "{version}",
+    "package_name": "{module_name}_{platform}_{arch}_{node_abi}.tar.gz",
+    "host": "https://github.com/jshor/symbology/releases/download/"
+  },
+  "engines": {
+    "node": ">=10.0.0"
   },
   "dependencies": {
     "git-clone": "^0.1.0",
@@ -35,26 +49,28 @@
     "rimraf": "^3.0.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^8.2.0",
+    "@commitlint/config-conventional": "^8.2.0",
     "aws-sdk": "2.108.0",
     "chai": "4.1.2",
+    "commitizen": "^4.0.3",
     "coveralls": "2.11.6",
+    "cz-conventional-changelog": "^3.0.2",
+    "husky": "^3.1.0",
     "istanbul": "0.4.2",
     "mocha": "2.5.3",
     "mocha-lcov-reporter": "1.0.0",
+    "node-pre-gyp-github": "^1.4.3",
     "sinon": "3.2.1",
-    "sinon-chai": "2.13.0"
+    "sinon-chai": "2.13.0",
+    "standard-version": "^7.0.1"
   },
   "bundledDependencies": [
     "node-pre-gyp"
   ],
-  "scripts": {
-    "dev": "node ./src/test.js",
-    "start": "node ./index.js",
-    "test": "mocha -R spec ./src/**/*.test.js",
-    "test:coverage": "./node_modules/istanbul/lib/cli.js cover _mocha -- -R spec ./src/**/*.test.js",
-    "build": "node-pre-gyp rebuild",
-    "package-binary": "node-pre-gyp rebuild package",
-    "publish-binary": "node-pre-gyp publish",
-    "install": "node ./scripts/install.js && node-pre-gyp rebuild"
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
   }
 }

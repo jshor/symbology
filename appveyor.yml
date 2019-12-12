@@ -1,28 +1,42 @@
 image: Visual Studio 2017
 
 install:
+  - git config --global credential.helper store
+  - ps: Add-Content "$HOME\.git-credentials" "https://$($env:access_token):x-oauth-basic@github.com`n"
+  - git config --global user.email "Josh Shor"
+  - git config --global user.name "jpshor@gmail.com"
   - ps: Install-Product node $env:NODE_VERSION $env:platform
   - yarn global add windows-build-tools
   - yarn
-  - yarn test
-  - yarn package-binary
-  # - yarn publish-binary
 
 test_script:
-  # Output useful info for debugging.
-  - node --version   
-  - npm --version
-  # run tests
   - yarn test
 
-platform:
-  # - x86
+build_script:
+  - ps: >-
+      if ($env:APPVEYOR_REPO_BRANCH -eq 'master' -and !($env:APPVEYOR_REPO_COMMIT_MESSAGE.Contains("chore(release)"))) {
+        yarn release
+      }
+  - yarn package:binary
+
+on_success:
+  - ps: >-
+      if ($env:APPVEYOR_REPO_BRANCH -eq 'master') {
+        $ErrorActionPreference = "SilentlyContinue"
+        yarn publish:binary
+      }
+
+platform:	
+  - x86
   - x64
 
 environment:
   matrix:
     # - NODE_VERSION: '9'
     - NODE_VERSION: '10'
-    # - NODE_VERSION: '11'
-    # - NODE_VERSION: '12'
-    # - NODE_VERSION: '13'
+    - NODE_VERSION: '11'
+    - NODE_VERSION: '12'
+    - NODE_VERSION: '13'
+
+  access_token:
+    secure: 9Fo9YJd8087d6fYC63Jt2Ozl1xfbPiIlAvnDC022cG56Tu0tIPBVrcCL5PoYQkey

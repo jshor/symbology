@@ -4,18 +4,31 @@ language: node_js
 
 os:
   - linux
-  # - osx
+  - osx
 
 node_js:
   - $NODE_VERSION
+
+before_install:
+  - git remote rm origin
+  - git remote add origin "https://symbology:$NODE_PRE_GYP_GITHUB_TOKEN@github.com/jshor/symbology.git"
 
 install:
   - yarn
 
 script:
+  - if [[ $TRAVIS_BRANCH == "master" && $TRAVIS_COMMIT_MESSAGE != *"chore(release)"* ]]; then
+      yarn release;
+      node ./scripts/updatePkg.js;
+    fi
+  - yarn package:binary
   - yarn test:coverage
-  - yarn package-binary
-  - yarn publish-binary
+  - yarn publish:binary
+  - if [[ $TRAVIS_BRANCH == "master" && $TRAVIS_COMMIT_MESSAGE != *"chore(release)"* ]]; then
+      if [[ $TRAVIS_COMMIT_MESSAGE != *"chore(release)"* ]]; then
+        yarn publish:release;
+      fi
+    fi
 
 after_success:
   - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
@@ -24,6 +37,9 @@ env:
   matrix:
     # - NODE_VERSION="9"
     - NODE_VERSION="10"
-    # - NODE_VERSION="11"
-    # - NODE_VERSION="12"
-    # - NODE_VERSION="13"
+    - NODE_VERSION="11"
+    - NODE_VERSION="12"
+    - NODE_VERSION="13"
+
+  global:
+    secure: aVq1cD7QjvlWFnliM4kWAPc+9Fnc9vVDVSX37e4Ojnbx9m+fcLcIM9HsDUJei+vJecF0812Hcb7lKoIkCz2daqZu8QycAmxeZYdcX2SQ1O2z39pSWa4eNiy8FcfuhVlV9VDWqcxOAO3+AHvFbt34shfD7oJAZW7laVrVrowZDEznqBzxCfROwqzpPdwjVkWzdepbV+xxZNXHdlBCTqNZYeivnM4+P7RYoNsZKjZPan0NgNNH+jhGebjMGYj8KNWidsNLRCaHpRWIJqzHD0+cWNiS/4Q4Ta2VpFOLzL0Ih6Q4P/q8+4fwH4QrN3QHRMfUOjIl+ctOr99y3xrW5qvNjgv4WAzgI1an+iCAUSuaewDX/a18mtyb7SbUqmO8nXqoQVTdvRiFtxFPi4SA5MwSeG4JPsr3444LIlKaQDSCnFtpiOy5Q6u0JQQNnopZDGTRqceqWKNySHw1tLVSQivJ7WbA7avms51x7psxZ16XJ0GN3sj3HExdZUKWENuX0ijFCY28GG9hPxEpZJhAag8eaz0l2sT5lb5/Crx6oaMmzi+OW7gQeg4qfihNF/zWN/d3xGAvJKzq4JWS4RF17Npi6ctgBPv+VCTxdYozJGLnz80Rrgabqya21AeFrnSn9INHkIZGDN5BRiZB4LXvAekhmbTdU4T5LwtI3Wvd7XrwvzA=

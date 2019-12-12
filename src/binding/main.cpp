@@ -113,7 +113,7 @@ namespace symbology {
 
     scale = (float)args[9]->NumberValue(context).FromJust();
     option_1 = (int)args[10]->NumberValue(context).FromJust();
-    option_2 = (int)args[911]->NumberValue(context).FromJust();
+    option_2 = (int)args[11]->NumberValue(context).FromJust();
     option_3 = (int)args[12]->NumberValue(context).FromJust();
     output_options = (int)args[5]->NumberValue(context).FromJust();
 
