@@ -10,6 +10,7 @@ node_js:
   - $NODE_VERSION
 
 before_install:
+  - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
   - git remote rm origin
   - git remote add origin "https://symbology:$NODE_PRE_GYP_GITHUB_TOKEN@github.com/jshor/symbology.git"
 
@@ -17,14 +18,15 @@ install:
   - yarn
 
 script:
-  - if [[ $TRAVIS_BRANCH == "master" && $TRAVIS_COMMIT_MESSAGE != *"chore(release)"* ]]; then
+  - if [[ $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_COMMIT_MESSAGE != *"chore(release)"* ]]; then
       yarn release;
       node ./scripts/updatePkg.js;
     fi
   - yarn package:binary
   - yarn test:coverage
-  - yarn publish:binary
-  - if [[ $TRAVIS_BRANCH == "master" && $TRAVIS_COMMIT_MESSAGE != *"chore(release)"* ]]; then
+  - if [[ $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_COMMIT_MESSAGE != *"chore(release)"* ]]; then
+      yarn publish:binary;
+
       if [[ $TRAVIS_COMMIT_MESSAGE != *"chore(release)"* ]]; then
         yarn publish:release;
       fi

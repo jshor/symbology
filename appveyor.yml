@@ -22,8 +22,10 @@ build_script:
 on_success:
   - ps: >-
       if ($env:APPVEYOR_REPO_BRANCH -eq 'master') {
-        $ErrorActionPreference = "SilentlyContinue"
-        yarn publish:binary
+        try {
+          $ErrorActionPreference = "SilentlyContinue"
+          yarn publish:binary
+        } catch { "OK" }
       }
 
 platform:	

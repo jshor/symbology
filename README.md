@@ -30,6 +30,9 @@
 
 - [1. Introduction](#1-introduction)
 - [2. Installation](#2-installation)
+  - [2.1. Manual installation](#21-manual-installation)
+    - [2.1.1. Compiling on Windows](#211-compiling-on-windows)
+    - [2.1.2. Compiling on Linux or macOS](#212-compiling-on-linux-or-macos)
 - [3. API](#3-api)
   - [3.1. Stream a barcode](#31-stream-a-barcode)
   - [3.2. Render a file](#32-render-a-file)
@@ -46,19 +49,21 @@
 - [9. Credits](#9-credits)
 - [10. License](#10-license)
 
-## 1. Introduction
+# 1. Introduction
 
 This Node.js module will allow you to generate over 50+ different types of 1D or 2D symbologies, including barcodes for books, grocery, shipping carriers, healthcare, and international codes. It can save a png, svg, or eps image, or render a base64 png bitmap.
 
-## 2. Installation
+# 2. Installation
 
 ```sh
-yarn add symbology
+yarn add symbology --fallback-to-build
 ```
 
 ## 2.1 Manual installation
 
-If you run into issues downloading the binary, you may also compile the module from the source code.
+If you run into issues downloading the binary, `--fallback-to-build` will compile the module from source.
+
+You may also compile from source by running `npm rebuild`.
 
 ### 2.1.1 Compiling on Windows
 
@@ -74,13 +79,13 @@ Then you can compile the module by running `npm rebuild` in your project directo
 
 Simply run `npm rebuild` in your project directory. `node-gyp` will utilize the OS's bundled GCC compiler.
 
-## 3. API
+# 3. API
 
 Each function returns a promise that completes with an object containing the exit code and message of the function (see [5. Error handling](#5-error-handling) for more info).
 
 ----------
 
-### 3.1. Stream a barcode:
+## 3.1. Stream a barcode:
 
 `createStream(symbol, data, outputType)`
 
@@ -94,7 +99,7 @@ Writes the file string to the output object in a property `data`. Returns a `Pro
 | `data`       | `String` | Desired data to encode       |            |
 | `outputType` | `String` | Output type                  | `PNG`      |
 
-#### Output Types
+### Output Types
 
 | Enum   | Description                          |
 |--------|--------------------------------------|
@@ -102,7 +107,7 @@ Writes the file string to the output object in a property `data`. Returns a `Pro
 | `SVG`  | Scalable vector graphics             |
 | `PNG`  | Portable network graphics            |
 
-#### Example
+### Example
 
 ```js
 try {
@@ -139,7 +144,7 @@ For example, to render an svg, the `fileName` must be of the format: `<myfile>.s
 | `symbol`     | `Symbol` | Object of symbology settings |
 | `data`       | `String` | Desired data to encode       |
 
-#### Example
+### Example
 
 ```js
 try {
@@ -161,7 +166,7 @@ This creates a file in the specified `fileName` and will log:
 }
 ```
 
-## 4. Available options (`Symbol`)
+# 4. Available options (`Symbol`)
 
 A `Symbol` is a regular JavaScript object with the following available properties:
 
@@ -183,7 +188,7 @@ A `Symbol` is a regular JavaScript object with the following available propertie
 
 \* required only if using [`createFile()`](#32-render-a-file).
 
-## 5. Error handling
+# 5. Error handling
 
 Each function returns an object having property `code`, which is the status code of the function, and `message`, which contains an error/warning message (if any).
 
@@ -200,46 +205,46 @@ Below are the possible status codes:
 | 10            | ZERROR_FILE_ACCESS      | Cannot write to the given path.                                     |
 | 11            | ZERROR_MEMORY           | Corrupt or insufficient memory.                                     |
 
-## 6. Symbology types
+# 6. Symbology types
 
 There are 53 different available symbology types. For an exhaustive list, please see the [Barcode Types list](docs/symbology-types.md).
 
-## 7. Development
+# 7. Development
 
-### 7.1. Building
+## 7.1. Building
 
 ```
 yarn build
 ```
 
-### 7.2. Testing
+## 7.2. Testing
 
 ```
 yarn test
 ```
 
-### 7.3. Packaging
+## 7.3. Packaging
 
 ```
-yarn package-binary
+yarn package:binary
 ```
 
-### 7.4. Bugs
+## 7.4. Bugs
 
 Please report any bugs [here](https://github.com/jshor/symbology/issues).
 
-### 7.5. Changelog
+## 7.5. Changelog
 
 Available [here](https://github.com/jshor/symbology/blob/master/CHANGELOG.md).
 
-## 8. Supported platforms
+# 8. Supported platforms
 
 Node.js 10+ is supported for macOS, Linux, Windows (x32), and Windows (x64).
 
-## 9. Credits
+# 9. Credits
 
 This library is a JS/C++ wrapper module for the terrific C/C++ library [Zint](https://zint.github.io/), (C) [Robin Stuart](https://github.com/g3rrk). Module by [Josh Shor](https://github.com/jshor).
 
-## 10. License
+# 10. License
 
 [MIT](LICENSE.md).
