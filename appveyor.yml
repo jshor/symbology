@@ -21,10 +21,10 @@ build_script:
 
 on_success:
   - ps: >-
-      if (($env:APPVEYOR_REPO_BRANCH -eq 'master') -and ($env:APPVEYOR_PULL_REQUEST_NUMBER -eq '')) {
+      if (($env:APPVEYOR_REPO_BRANCH -eq 'master') -and ($env:APPVEYOR_PULL_REQUEST_NUMBER -eq $NULL)) {
         ./scripts/appveyor.ps1 -ErrorActionPreference 'SilentlyContinue'
       } else {
-        echo "Skipping publishing stage. Branch '$env:APPVEYOR_REPO_BRANCH' -- 'PR $env:APPVEYOR_PULL_REQUEST_NUMBER'"
+        echo "Skipping publishing stage. Branch '$env:APPVEYOR_REPO_BRANCH' -- PR '$env:APPVEYOR_PULL_REQUEST_NUMBER'"
       }
 
 platform:	
