@@ -11,7 +11,7 @@
     "package:binary": "node-pre-gyp rebuild package",
     "publish:binary": "node-pre-gyp-github publish --silent --release",
     "publish:release": "(git push --follow-tags origin HEAD:master && npm publish) || true",
-    "install": "node ./scripts/install.js"
+    "install": "node ./scripts/install.js && node-pre-gyp install --fallback-to-build"
   },
   "main": "./src/index.js",
   "author": "Josh Shor <https://github.com/jshor>",
