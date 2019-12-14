@@ -1,6 +1,6 @@
 {
   "name": "symbology",
-  "version": "1.2.7",
+  "version": "1.3.0",
   "description": "Generate 50+ different 1D or 2D barcodes in png, eps, or svg format.",
   "scripts": {
     "commit": "yarn git-cz",
@@ -10,7 +10,7 @@
     "build": "node-pre-gyp rebuild",
     "package:binary": "node-pre-gyp rebuild package",
     "publish:binary": "node-pre-gyp-github publish --silent --release",
-    "publish:release": "git push --follow-tags origin HEAD:master",
+    "publish:release": "git push --follow-tags origin HEAD:master && npm publish",
     "install": "node ./scripts/install.js"
   },
   "main": "./src/index.js",

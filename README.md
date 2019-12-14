@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./docs/symbology-logo.svg" alt="logo">
+  <img src="./docs/symbology-logo.svg" alt="logo" width="500">
 </p>
 
 <p align="center">A Node.js module that generates barcode images. Supports 50+ different 1D or 2D symbologies in png, eps, or svg formats.</p>
@@ -26,7 +26,7 @@
   </a>
 </p>
 
-Contents
+## Contents
 
 - [1. Introduction](#1-introduction)
 - [2. Installation](#2-installation)
@@ -181,7 +181,7 @@ A `Symbol` is a regular JavaScript object with the following available propertie
 | option3               | Number             | Symbology-type-specific option value.                                                                           | No        | `NULL`        |
 | showHumanReadableText | Boolean            | Show or hide the symbology data as human-readable text (if applicable).                                         | No        | `true`        |
 
-\* required only if using [`createFile()`](#332-render-a-file).
+\* required only if using [`createFile()`](#32-render-a-file).
 
 ## 5. Error handling
 
