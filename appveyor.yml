@@ -14,7 +14,7 @@ test_script:
 
 build_script:
   - ps: >-
-      if ($env:APPVEYOR_REPO_BRANCH -eq 'master' -and $env:APPVEYOR_PULL_REQUEST_NUMBER -eq '' -and !($env:APPVEYOR_REPO_COMMIT_MESSAGE.Contains("chore(release)"))) {
+      if (!($env:APPVEYOR_REPO_COMMIT_MESSAGE.Contains("chore(release)"))) {
         yarn release
       }
   - yarn package:binary
