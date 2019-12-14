@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.1](https://github.com/jshor/symbology/compare/v1.2.3...v1.3.1) (2019-12-14)
+
+### 1.2.7 (2019-12-14)
+
+### 1.2.6 (2019-12-14)
+
+### 1.2.5 (2019-12-14)
+
+
+### Bug Fixes
+
+* adds patch system to apply stdout fixes ([d0ac5bc](https://github.com/jshor/symbology/commit/d0ac5bcab4be9d18dcb32ca71f9e30174d44f46d))
+* **binding:** updates lib to properly convert bitmap chars ([51c0990](https://github.com/jshor/symbology/commit/51c0990b08bcb5aff2b38dd45113fc5a6e1ae365))
+* adds support for Node v12+ ([bffc800](https://github.com/jshor/symbology/commit/bffc800e0bd57e4cf48913bf0d79c33517ab1fd3))
+* **unix:** removes remaining png.c refs; enables pipe() for non-Win32 ([7131d1c](https://github.com/jshor/symbology/commit/7131d1c173a2dff7f86a8d7a07cb4dee8b4dee0b))
+
 ### [1.2.7](https://github.com/jshor/symbology/compare/v1.2.3...v1.2.7) (2019-12-14)
 
 ### 1.2.6 (2019-12-14)
