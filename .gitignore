@@ -1,8 +1,5 @@
 *.DS_Store
 .directory
-*.png
-*.eps
-*.svg
 *.log
 node_modules
 coverage
