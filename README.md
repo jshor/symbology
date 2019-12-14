@@ -16,7 +16,7 @@
   </a>
 
   <a href="https://ci.appveyor.com/project/jshor/symbology">
-    <img src="https://img.shields.io/travis/jshor/symbology?logo=appveyor&style=for-the-badge"
+    <img src="https://img.shields.io/appveyor/ci/jshor/symbology?logo=appveyor&style=for-the-badge"
       alt="Build status: AppVeyor">
   </a>
 

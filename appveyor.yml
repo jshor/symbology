@@ -20,7 +20,12 @@ build_script:
   - yarn package:binary
 
 on_success:
-  - ps: ./scripts/appveyor.ps1 -ErrorActionPreference 'SilentlyContinue'
+  - ps: >-
+      if (($env:APPVEYOR_REPO_BRANCH -eq 'master') -and ($env:APPVEYOR_PULL_REQUEST_NUMBER -eq '')) {
+        ./scripts/appveyor.ps1 -ErrorActionPreference 'SilentlyContinue'
+      } else {
+        echo "Skipping publishing stage. Branch '$env:APPVEYOR_REPO_BRANCH' -- 'PR $env:APPVEYOR_PULL_REQUEST_NUMBER'"
+      }
 
 platform:	
   - x86
