@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://raw.githubusercontent.com/jshor/symbology/master/docs/.vuepress/public/assets/symbology-logo.svg" alt="logo" width="500">
+  <a href="https://symbology.dev"><img src="https://raw.githubusercontent.com/jshor/symbology/master/docs/.vuepress/public/assets/symbology-logo.svg?sanitize=true" alt="Symbology Logo" width="500"></a>
 </p>
 
 <p align="center">A Node.js module that generates barcode images. Supports 50+ different 1D or 2D symbologies in png, eps, or svg formats.</p>
