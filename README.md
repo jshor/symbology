@@ -28,7 +28,13 @@
 
 ## Introduction
 
-This Node.js module will allow you to generate over 50+ different types of 1D or 2D symbologies, including barcodes for books, grocery, shipping carriers, healthcare, and international codes. It can save a png, svg, or eps image, or render a base64 png bitmap.
+This Node.js module will allow you to generate over 50+ different types of 1D or 2D symbologies, including barcodes for books, grocery, shipping carriers, healthcare, and international codes.
+
+It can create a PNG, SVG, or EPS image file, or return a string containing SVG, PostScript, or base64-encoded PNG data.
+
+## Documentation
+
+[Read the comprehensive docs →](https://symbology.dev)
 
 ## Quick start
 
@@ -54,7 +60,7 @@ This will log:
 
 ```json
 {
-  "data": "data:image/png+data;base64,PHN [...] eFd==`
+  "data": "data:image/png+data;base64,PHN [...] eFd==",
   "message": "",
   "code": 0
 }
@@ -99,10 +105,6 @@ symbology
 This creates `uspsExample.eps` which looks like:
 
 ![USPS](https://symbology.dev/assets/barcodes/barcode_42.png)
-
-## Documentation
-
-[Read the comprehensive docs →](https://symbology.dev)
 
 ## License
 
