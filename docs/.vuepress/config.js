@@ -1,9 +1,7 @@
 const path = require('path')
 const getDir = require('./utils/getDir')
 
-console.error(getDir('docs'))
-
-module.exports = { //
+module.exports = {
   base: '/',
   dest: path.join(__dirname, '../../build/docs'),
   locales: {

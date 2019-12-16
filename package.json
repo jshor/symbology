@@ -59,6 +59,7 @@
     "commitizen": "^4.0.3",
     "coveralls": "2.11.6",
     "cz-conventional-changelog": "^3.0.2",
+    "deploy-aws-s3-cloudfront": "^2.3.1",
     "husky": "^3.1.0",
     "istanbul": "0.4.2",
     "mocha": "2.5.3",
