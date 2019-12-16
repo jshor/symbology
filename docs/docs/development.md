@@ -52,7 +52,7 @@ In Travis CI, test coverage results are sent to [Coveralls](https://coveralls.io
 
 ## Committing
 
-Commit message standards abide by [`standard-changelog`](https://github.com/conventional-changelog/conventional-changelog). This module utilizes [`commitizen`](https://github.com/commitizen/cz-cli) as a devDependency to help developers write their commits, and commit messages are enforced using [`commitlint`]().
+Commit message standards abide by [`standard-changelog`](https://github.com/conventional-changelog/conventional-changelog). This module utilizes [`commitizen`](https://github.com/commitizen/cz-cli) as a devDependency to help developers write their commits, and commit messages are enforced using [`commitlint`](https://github.com/conventional-changelog/commitlint).
 
 ## Versioning
 

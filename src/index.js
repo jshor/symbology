@@ -8,6 +8,8 @@ var PNGImage = require('pngjs-image');
 /* enumerated types in exports */
 var exp = {
   Barcode: require('./enums/barcode'),
+  DataMatrix: require('./enums/dataMatrix'),
+  Encoding: require('./enums/encoding'),
   ErrorCode: require('./enums/errorCode'),
   Options: require('./enums/options'),
   Output: require('./enums/output')
@@ -29,14 +31,16 @@ var defaultSymbol = {
   option1: -1,
   option2: -1,
   option3: -1,
-  showHumanReadableText: true // show human-readable text
-  // input_mode: BINARY_MODE,
+  showHumanReadableText: true,
+  encoding: exp.Encoding.DATA_MODE,
+  eci: 0,
+  primary: ''
 };
 
 /**
  * Merges Symbol struct with user-defined symbologyStruct
  * properties. Ensures properties sent are valid.
- * 
+ *
  * @param  {Symbol} obj Symbol struct
  * @return {Symbol} obj Symbol struct
  */
@@ -54,7 +58,7 @@ function validateSymbol(symbologyStruct) {
  * Calls the given function name from the c++ library wrapper, validates
  * the struct values and passes the arguments sent in symbologyStruct
  * in the correct order.
- * 
+ *
  * @param  {Symbol} symbologyStruct
  * @param  {String}     barcodeData
  * @param  {String}     fnName          name of fn to call from c++ lib
@@ -79,14 +83,16 @@ function createSymbology(symbologyStruct, barcodeData, fnName) {
     symbologyStruct.option2,
     symbologyStruct.option3,
     symbologyStruct.showHumanReadableText ? 1 : 0,
-    // symbologyStruct.input_mode,
-    (symbologyStruct.text || barcodeData)
+    (symbologyStruct.text || barcodeData),
+    symbologyStruct.encoding,
+    symbologyStruct.eci,
+    symbologyStruct.primary
   );
 }
 
 /**
  * Renders a PNG Blob stream to a base64 PNG.
- * 
+ *
  * @param  {PNGJS} image
  * @return {Promise<String>} base64 representation
  */
@@ -101,14 +107,14 @@ function blobToBase64Png(image) {
     });
     png.on('end', function() {
       var result = Buffer.concat(chunks);
-      resolve('data:image/png;base64,' + result.toString('base64')); 
+      resolve('data:image/png;base64,' + result.toString('base64'));
     });
   });
 }
 
 /**
  * Renders RGB 24 bitmap into an image instance of PNG
- * 
+ *
  * @param  {Array}  bitmap  containing RGB values
  * @param  {Number} width   width of bitmap
  * @param  {Number} height  height of bitmap
@@ -117,7 +123,7 @@ function blobToBase64Png(image) {
 function pngRender(bitmap, width, height) {
   var image = PNGImage.createImage(width, height);
   var i = 0;
-  
+
   for(var y = 0; y<height; y++) {
     for(var x = 0; x<width; x++) {
       image.setAt(x, y, {
@@ -136,9 +142,9 @@ function pngRender(bitmap, width, height) {
 /**
  * Renders a png, svg, or eps barcode.
  * If PNG, it returns the stream as a base64 string.
- * 
+ *
  * @note The file will be created in memory and then passed to the returned object.
- * 
+ *
  * @private
  * @param {Symbol} symbol - Symbol struct
  * @param {String} barcodeData - data to encode
@@ -153,7 +159,12 @@ function callManagedLibrary(symbol, barcodeData, outputType, isStdout) {
 
   if (outputType !== exp.Output.PNG) {
     symbol.fileName = `out.${outputType}`
-    symbol.outputOptions = 8
+
+    if (parseInt(symbol.outputOptions, 10) > 0) {
+      symbol.outputOptions += 8
+    } else {
+      symbol.outputOptions = 8
+    }
   }
 
   var res = createSymbology(symbol, barcodeData, 'createStream');
@@ -181,7 +192,7 @@ function callManagedLibrary(symbol, barcodeData, outputType, isStdout) {
  * @param {String} outputType - `png`, `eps`, or `svg`.
  * @returns {Promise<Object>} object with resulting props (see docs)
  */
-exp.createStream = function(symbol, barcodeData, outputType) {
+exp.createStream = function(symbol, barcodeData, outputType = exp.Output.PNG) {
   return callManagedLibrary(symbol, barcodeData, outputType, true)
     .then((res) => {
       if (outputType === exp.Output.PNG) {
@@ -211,7 +222,13 @@ exp.createStream = function(symbol, barcodeData, outputType) {
  * @returns {Promise<Object>} object with resulting props (see docs)
  */
 exp.createFile = function(symbol, barcodeData) {
-  const outputType = symbol.fileName.match(/\.([a-z]+)$/).pop()
+  let outputType
+
+  try {
+    outputType = symbol.fileName.match(/\.([a-z]+)$/i).pop().toLowerCase()
+  } catch (e) {
+    throw new Error('Invalid file extension. fileName must end with \'.png\', \'.eps\', or \'.svg\'.')
+  }
 
   return callManagedLibrary(symbol, barcodeData, outputType)
     .then((res) => {

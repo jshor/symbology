@@ -17,7 +17,7 @@ const symbology = require('symbology')
 
 (async function () {
   try {
-    await data = symbology.createStream(Symbol, '12345', symbology.Output.PNG)
+    await data = symbology.createStream(Symbol, '12345')
 
     console.log('Result: ', data)
   } catch (err) {

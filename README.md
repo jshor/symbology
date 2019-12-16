@@ -10,13 +10,13 @@
       alt="Code coverage">
   </a>
 
-  <a href="https://travis-ci.org/jshor/symbology">
-    <img src="https://img.shields.io/travis/jshor/symbology?logo=travis&style=for-the-badge"
+  <a href="https://travis-ci.org/jshor/symbology?branch=master">
+    <img src="https://img.shields.io/travis/com/jshor/symbology/master?logo=travis&style=for-the-badge"
       alt="Build status: Travis">
   </a>
 
-  <a href="https://ci.appveyor.com/project/jshor/symbology">
-    <img src="https://img.shields.io/appveyor/ci/jshor/symbology?logo=appveyor&style=for-the-badge"
+  <a href="https://ci.appveyor.com/project/jshor/symbology?branch=master">
+    <img src="https://img.shields.io/appveyor/ci/jshor/symbology/master?logo=appveyor&style=for-the-badge"
       alt="Build status: AppVeyor">
   </a>
 
@@ -43,7 +43,11 @@ const symbology = require('symbology')
 
 (async function () {
   try {
-    await data = symbology.createStream(Symbol, '12345', symbology.Output.PNG)
+    await data = symbology.createStream({
+      symbology: symbology.Barcode.CODE128,
+      backgroundColor: 'ff00ff',
+      foregroundColor: '00ff00'
+    }, '12345')
 
     console.log('Result: ', data)
   } catch (err) {

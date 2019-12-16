@@ -57,7 +57,7 @@ namespace symbology {
       if(fileNameLength > 4) {
         // check if the file at least is 4 chars long so we can parse the last three and check it as an extension
         const char *fileExt = &symbol->outfile[fileNameLength - 3];
-        
+
         if(strcmp("bmp", fileExt) == 0) {
           // parse the buffer as a bitmap array and store it in `encodedData`
           Nan::Set(obj, Nan::New<String>("encodedData").ToLocalChecked(), getBitmap(isolate, symbol));
@@ -65,7 +65,7 @@ namespace symbology {
 
         if(strcmp("svg", fileExt) == 0 || strcmp("eps", fileExt) == 0) {
           // char buff[10000];
-          
+
           // close(symbol->file_pointer[1]);
           // read(symbol->file_pointer[0], buff, 10000);
 
@@ -137,17 +137,30 @@ namespace symbology {
     Nan::Utf8String fgcolor(args[7]);
     Nan::Utf8String outfile(args[8]);
     Nan::Utf8String text(args[14]);
+    Nan::Utf8String primary(args[17]);
 
     // colors
     strncpy((char*)&symbol->bgcolour[0], *bgcolor, sizeof(symbol->bgcolour) - 1);
     strncpy((char*)&symbol->fgcolour[0], *fgcolor, sizeof(symbol->fgcolour) - 1);
-    
+
     // file name to render
     strncpy((char*)&symbol->outfile[0], *outfile, sizeof(symbol->outfile) - 1);
 
+    // primary character data
+    strncpy((char*)&symbol->primary[0], *primary, sizeof(symbol->primary) - 1);
+
+    // human-readable text to display, if applicable
+    strncpy((char*)&symbol->text[0], *text, sizeof(symbol->text) - 1);
+
     // show/hide human-readable text
     symbol->show_hrt = (int)args[13]->NumberValue(context).FromJust();
-    
+
+    // encoding mode
+    symbol->input_mode = (int)args[15]->NumberValue(context).FromJust();
+
+    // eci mode
+    symbol->eci = (int)args[16]->NumberValue(context).FromJust();
+
     // text to display
     strncpy((char*)&symbol->text[0], *text, sizeof(symbol->text) - 1);
 
@@ -164,9 +177,9 @@ namespace symbology {
     Local<Object> obj;
 
     struct zint_symbol *symbol = getSymbolFromArgs(context, args);
-    
+
     Nan::Utf8String data(args[0]);
-    
+
     obj = createStreamHandle(isolate, symbol, (unsigned char*)*data, (char*)*data);
 
     ZBarcode_Delete(symbol);

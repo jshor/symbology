@@ -8,6 +8,7 @@ module.exports = {
   CODE39: 8,
   EXCODE39: 9,
   EANX: 13,
+  EANX_CHK: 14,
   EAN128: 16,
   CODABAR: 18,
   CODE128: 20,
@@ -22,7 +23,9 @@ module.exports = {
   RSS_EXP: 31,
   TELEPEN: 32,
   UPCA: 34,
+  UPCA_CHK: 35,
   UPCE: 37,
+  UPCE_CHK: 38,
   POSTNET: 40,
   MSI_PLESSEY: 47,
   FIM: 49,
@@ -43,6 +46,7 @@ module.exports = {
   RM4SCC: 70,
   DATAMATRIX: 71,
   EAN14: 72,
+  VIN: 73,
   CODABLOCKF: 74,
   NVE18: 75,
   JAPANPOST: 76,
@@ -70,8 +74,10 @@ module.exports = {
   HIBC_QR: 104,
   HIBC_PDF: 106,
   HIBC_MICPDF: 108,
-  HIBC_BLOCKF: 110,
   HIBC_AZTEC: 112,
+  DOTCODE: 115,
+  HANXIN: 116,
+  MAILMARK: 121,
 
   /* Zint specific */
   AZRUNE: 128,
@@ -88,5 +94,6 @@ module.exports = {
   RSS_EXPSTACK_CC: 139,
   CHANNEL: 140,
   CODEONE: 141,
-  GRIDMATRIX: 142
+  GRIDMATRIX: 142,
+  UPNQR: 143
 };

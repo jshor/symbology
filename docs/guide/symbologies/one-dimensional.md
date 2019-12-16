@@ -6,7 +6,7 @@ One-Dimensional symbols are what most people associate with the term barcode. Th
 
 ![Code 11](/assets/barcodes/barcode_14.png)
 
-Developed by Intermec in 1977, Code 11 is similar to Code 2 of 5 Matrix and is primarily used in telecommunications. The symbol can encode any length string consisting of the digits `0-9` and the dash character (`-`). One modulo-11 check digit is calculated.
+Developed by Intermec in 1977, Code 11 is similar to [Code 2 of 5 Matrix](#code-2-of-5) and is primarily used in telecommunications. The symbol can encode any length string consisting of the digits `0-9` and the dash character (`-`). One modulo-11 check digit is calculated.
 
 ## Code 2 of 5
 
@@ -16,7 +16,7 @@ Code 2 of 5 is a family of one-dimensional symbols, 8 of which are supported. No
 
 ### Standard Code 2 of 5
 
-Also known as **Code 2 of 5 Matrix** is a self-checking code used in industrial applications and photo development. Standard Code 2 of 5 will encode any length numeric input (digits `0-9`).
+Also known as **Code 2 of 5 Matrix**, this symbology is a self-checking code used in industrial applications and photo development. Standard Code 2 of 5 will encode any length numeric input (digits `0-9`).
 
 ### IATA Code 2 of 5
 
@@ -58,10 +58,10 @@ UPC-A is used in the United States for retail applications. The symbol requires 
 
 ```js
 symbology.createStream({
-  symbology: Symbology.UPCA,
+  symbology: Symbology.Barcode.UPCA,
   mode: 1, // TODO
   primary: '331234567890', // TODO
-}, '72527270270+12345', symbology.Output.PNG)
+}, '72527270270+12345')
 ```
 
 :::tip Note
@@ -80,7 +80,7 @@ This library also supports Number System 1 encoding by entering a 7-digit articl
 
 ```js
 symbology.createStream({
-  symbology: Symbology.UPCE
+  symbology: Symbology.Barcode.UPCE
 }, '1123456')
 ```
 
@@ -110,8 +110,8 @@ The following example will encode a standalone EAN-5:
 
 ```js
 symbology.createStream({
-  symbology: Symbology.EANX
-}, '54321', symbology.Output.PNG)
+  symbology: Symbology.Barcode.EANX
+}, '54321')
 ```
 
 #### EAN-8 with EAN-5 Add-on Example
@@ -120,8 +120,8 @@ The following example will encode an EAN-8 symbol with an EAN-5 add-on:
 
 ```js
 symbology.createStream({
-  symbology: Symbology.EANX
-}, '7432365+54321', symbology.Output.PNG)
+  symbology: Symbology.Barcode.EANX
+}, '7432365+54321')
 ```
 
 :::tip Note
@@ -277,7 +277,7 @@ The following is an example of a valid GS1-128 input:
 
 ```js
 symbology.createStream({
-  symbology: Symbology.EAN128
+  symbology: Symbology.Barcode.EAN128
 }, '[01]98898765432106[3202]012345[15]991231')
 ```
 
@@ -350,8 +350,8 @@ Also known as **RSS Expanded**, this is a variable length symbology capable of e
 
 ```js
 symbology.createStream({
-  symbology: Symbology.RSS_EXP
-}, '[01]98898765432106[3202]012345[15]991231', symbology.Output.PNG)
+  symbology: Symbology.Barcode.RSS_EXP
+}, '[01]98898765432106[3202]012345[15]991231')
 ```
 
 ## Korea Post Barcode

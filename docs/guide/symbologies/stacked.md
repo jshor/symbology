@@ -1,6 +1,6 @@
 # Stacked symbologies
 
-An early innovation to get more information into a symbol, used primarily in the vehicle industry, is to simply stack one-dimensional codes on top of each other. The stacked symbologies listed on this page are available in Symbology.js.
+An early innovation to get more information into a symbol, used primarily in the vehicle industry, is to simply stack one-dimensional codes on top of each other. The stacked symbologies listed on this page are available.
 
 ## Codablock-F
 
@@ -94,10 +94,15 @@ Another stacked variation of [GS1 DataBar-14](one-dimensional.md#gs1-databar-iso
 
 ![GS1 DataBar Expanded Stacked](/assets/barcodes/barcode_32.png)
 
-A stacked variation of the GS1 DataBar Expanded symbol for smaller packages.
-Input is the same as for GS1 DataBar Expanded (see section 6.1.12.3). In addition the width of the symbol can be altered using the <span>--cols</span> switch or <span>option_2</span>.
-In this case the number of columns relates to the number of character pairs on each row of the symbol. This symbol can be generated with a two-
-dimensional component to make a composite symbol. For symbols with a 2D component the number of columns must be at least 2.
+A stacked variation of the [GS1 DataBar Expanded](one-dimensional.md#databar-expanded) symbol for smaller packages. The input requirement is the same as for GS1 DataBar Expanded.
+
+### Width
+
+The width of the symbol can be altered by setting `option2` to the desired width.
+
+:::tip Note
+This symbol can be generated with a two-dimensional component to make a composite symbol. For symbols with a 2D component, the number of columns must be at least `2`.
+:::
 
 ## Code 49
 
