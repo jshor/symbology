@@ -1,0 +1,24 @@
+<svg width="42mm" height="25mm" version="1.1" viewBox="0 0 42 25" xmlns="http://www.w3.org/2000/svg">
+ <g fill="#1278aa" stroke="#000">
+  <rect x="3.2808" y="2.8694" width="4.6" height="18.762" stroke-width=".028188"/>
+  <rect x="9.4581" y="2.8623" width="1.2719" height="18.762" stroke-width=".014823"/>
+  <rect x="12.318" y="2.8623" width="1.2719" height="18.762" stroke-width=".014823"/>
+  <rect x="15.228" y="2.8657" width="2.6827" height="18.762" stroke-width=".021527"/>
+  <rect x="19.348" y="2.8623" width="1.2719" height="18.762" stroke-width=".014823"/>
+  <rect x="22.108" y="2.8694" width="4.6" height="18.762" stroke-width=".028188"/>
+  <g stroke-width=".014823">
+   <rect x="28.285" y="2.8623" width="1.2719" height="18.762"/>
+   <rect x="31.144" y="2.8623" width="1.2719" height="18.762"/>
+   <rect x="33.8" y="2.8623" width="1.2719" height="18.762"/>
+  </g>
+  <rect x="36.266" y="2.8657" width="2.6827" height="18.762" stroke-width=".021527"/>
+ </g>
+ <g stroke="#000">
+  <rect x=".32448" y="1.3915" width="1.2719" height="22.238" stroke-width=".016137"/>
+  <rect transform="rotate(90)" x=".33284" y="-4.3104" width="1.2719" height="3.9939" stroke-width=".0068389"/>
+  <rect transform="rotate(90)" x="23.063" y="-4.2978" width="1.2719" height="3.9939" stroke-width=".0068389"/>
+  <rect transform="scale(-1,1)" x="-41.871" y="1.3915" width="1.2719" height="22.238" stroke-width=".016137"/>
+  <rect transform="matrix(0,1,1,0,0,0)" x=".33284" y="37.885" width="1.2719" height="3.9939" stroke-width=".0068389"/>
+  <rect transform="matrix(0,1,1,0,0,0)" x="23.063" y="37.898" width="1.2719" height="3.9939" stroke-width=".0068389"/>
+ </g>
+</svg>
