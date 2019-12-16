@@ -36,25 +36,69 @@ This Node.js module will allow you to generate over 50+ different types of 1D or
 yarn add symbology
 ```
 
-### Example usage
+## Quick Examples
+
+### Code 11 Example
 
 ```js
-const symbology = require('symbology')
-
-(async function () {
-  try {
-    await data = symbology.createStream({
-      symbology: symbology.Barcode.CODE128,
-      backgroundColor: 'ff00ff',
-      foregroundColor: '00ff00'
-    }, '12345')
-
+symbology
+  .createStream({
+    symbology: symbology.Barcode.CODE128
+  }, '8765432164')
+  .then((data) => {
     console.log('Result: ', data)
-  } catch (err) {
-    console.error('Error: ', err)
-  }
-})()
+  })
 ```
+
+This will log:
+
+```json
+{
+  "data": "data:image/png+data;base64,PHN [...] eFd==`
+  "message": "",
+  "code": 0
+}
+```
+
+And the base64 PNG generated will look like:
+
+![code 11](https://symbology.dev/assets/barcodes/barcode_14.png)
+
+### MaxiCode Example
+
+```js
+symbology
+  .createFile({
+    symbology: Symbology.Barcode.MAXICODE,
+    option1: 2,
+    primary: '999999999840012',
+    fileName: 'maxiCodeExample.svg'
+  }, 'Secondary Message Here')
+  .then((data) => {
+    console.log('Result: ', data)
+  })
+```
+
+This creates `maxiCodeExample.svg` which looks like:
+
+![MaxiCode](https://symbology.dev/assets/barcodes/barcode_47.png)
+
+### USPS Example
+
+```js
+symbology
+  .createFile({
+    symbology: Symbology.Barcode.ONECODE
+    fileName: 'uspsExample.eps'
+  }, '01234567094987654321-01234')
+  .then((data) => {
+    console.log('Result: ', data)
+  })
+```
+
+This creates `uspsExample.eps` which looks like:
+
+![USPS](https://symbology.dev/assets/barcodes/barcode_42.png)
 
 ## Documentation
 
