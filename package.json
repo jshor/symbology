@@ -13,7 +13,8 @@
     "publish:release": "(git push --follow-tags origin HEAD:master && npm publish) || true",
     "install": "node ./scripts/install.js && node-pre-gyp install --fallback-to-build",
     "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "docs:build": "vuepress build docs",
+    "docs:publish": "deploy-aws-s3-cloudfront --delete --non-interactive --bucket ${AWS_S3_BUCKET_NAME} --source ./dist/web --distribution ${AWS_CF_ID}"
   },
   "main": "./src/index.js",
   "author": "Josh Shor <https://github.com/jshor>",
