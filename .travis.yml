@@ -29,6 +29,8 @@ script:
 
       if [[ $TRAVIS_COMMIT_MESSAGE != *"chore(release)"* ]]; then
         yarn publish:release;
+        yarn docs:build;
+        yarn docs:publish;
       fi
     fi
 

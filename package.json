@@ -11,7 +11,10 @@
     "package:binary": "node-pre-gyp rebuild package",
     "publish:binary": "node-pre-gyp-github publish --silent --release",
     "publish:release": "(git push --follow-tags origin HEAD:master && npm publish) || true",
-    "install": "node ./scripts/install.js && node-pre-gyp install --fallback-to-build"
+    "install": "node ./scripts/install.js && node-pre-gyp install --fallback-to-build",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "docs:publish": "deploy-aws-s3-cloudfront --delete --non-interactive --bucket ${AWS_S3_BUCKET_NAME} --source ./dist/web --distribution ${AWS_CF_ID}"
   },
   "main": "./src/index.js",
   "author": "Josh Shor <https://github.com/jshor>",
@@ -63,7 +66,8 @@
     "node-pre-gyp-github": "^1.4.3",
     "sinon": "3.2.1",
     "sinon-chai": "2.13.0",
-    "standard-version": "^7.0.1"
+    "standard-version": "^7.0.1",
+    "vuepress": "^1.2.0"
   },
   "bundledDependencies": [
     "node-pre-gyp"
