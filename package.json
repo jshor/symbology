@@ -14,7 +14,7 @@
     "install": "node ./scripts/install.js && node-pre-gyp install --fallback-to-build",
     "docs:dev": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "docs:publish": "deploy-aws-s3-cloudfront --delete --non-interactive --bucket ${AWS_S3_BUCKET_NAME} --source ./dist/web --distribution ${AWS_CF_ID}"
+    "docs:publish": "deploy-aws-s3-cloudfront --delete --non-interactive --bucket ${AWS_S3_BUCKET_NAME} --source ./build/docs --distribution ${AWS_CF_ID}"
   },
   "main": "./src/index.js",
   "author": "Josh Shor <https://github.com/jshor>",
@@ -59,6 +59,7 @@
     "commitizen": "^4.0.3",
     "coveralls": "2.11.6",
     "cz-conventional-changelog": "^3.0.2",
+    "deploy-aws-s3-cloudfront": "^2.3.1",
     "husky": "^3.1.0",
     "istanbul": "0.4.2",
     "mocha": "2.5.3",
