@@ -2,6 +2,54 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.14.0](https://github.com/jshor/symbology/compare/v1.2.3...v1.14.0) (2019-12-16)
+
+## 1.13.0 (2019-12-16)
+
+## 1.12.0 (2019-12-16)
+
+
+### Features
+
+* **encoding:** adds encoding support for ECI and input modes ([#30](https://github.com/jshor/symbology/issues/30)) ([e9ff0d0](https://github.com/jshor/symbology/commit/e9ff0d086f5abd5c2c1cfa85c463909b870d2566))
+
+## 1.11.0 (2019-12-16)
+
+## 1.10.0 (2019-12-16)
+
+## 1.9.0 (2019-12-16)
+
+## 1.8.0 (2019-12-15)
+
+## 1.7.0 (2019-12-14)
+
+
+### Bug Fixes
+
+* powershell bug ([#27](https://github.com/jshor/symbology/issues/27)) ([c8e6fdf](https://github.com/jshor/symbology/commit/c8e6fdf3f70a04384dc97f471e042220dddc7afc))
+
+## 1.6.0 (2019-12-14)
+
+
+### Bug Fixes
+
+* **appveyor:** update script to include debug msg and wrap conditionals ([#26](https://github.com/jshor/symbology/issues/26)) ([2859265](https://github.com/jshor/symbology/commit/285926561bc0d9b7e62e26b7c1d188b0fef0567e))
+
+## 1.5.0 (2019-12-14)
+
+
+### Features
+
+* **windows:** adds Node 11+ support ([#23](https://github.com/jshor/symbology/issues/23)) ([915f15c](https://github.com/jshor/symbology/commit/915f15c46ce677b866b9af983ee429a57d082fd9))
+
+
+### Bug Fixes
+
+* **binding:** updates lib to properly convert bitmap chars ([51c0990](https://github.com/jshor/symbology/commit/51c0990b08bcb5aff2b38dd45113fc5a6e1ae365))
+* **unix:** removes remaining png.c refs; enables pipe() for non-Win32 ([7131d1c](https://github.com/jshor/symbology/commit/7131d1c173a2dff7f86a8d7a07cb4dee8b4dee0b))
+* adds patch system to apply stdout fixes ([d0ac5bc](https://github.com/jshor/symbology/commit/d0ac5bcab4be9d18dcb32ca71f9e30174d44f46d))
+* adds support for Node v12+ ([bffc800](https://github.com/jshor/symbology/commit/bffc800e0bd57e4cf48913bf0d79c33517ab1fd3))
+
 ## [1.13.0](https://github.com/jshor/symbology/compare/v1.2.3...v1.13.0) (2019-12-16)
 
 ## 1.12.0 (2019-12-16)
