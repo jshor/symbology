@@ -1,6 +1,6 @@
 {
   "name": "symbology",
-  "version": "1.12.0",
+  "version": "1.13.0",
   "description": "Generate 50+ different 1D or 2D barcodes in png, svg, or eps formats.",
   "scripts": {
     "commit": "yarn git-cz",
