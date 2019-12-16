@@ -34,7 +34,7 @@ For png, it will render `data` as a base64 string.
 
 ```js
 try {
-  await data = symbology.createStream(Symbol, '12345', symbology.Output.PNG)
+  await data = symbology.createStream(Symbol, '12345')
 
   console.log('Result: ', data)
 } catch (err) {
@@ -75,7 +75,7 @@ For example, to render an svg, the `fileName` must be of the format: `<myfile>.s
 
 ```js
 try {
-  await data = symbology.createFile(Symbol, '12345', symbology.Output.PNG)
+  await data = symbology.createFile(Symbol, '12345')
 
   console.log('File created! Result: ', data)
 } catch (err) {
