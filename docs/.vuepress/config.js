@@ -5,7 +5,7 @@ console.error(getDir('docs'))
 
 module.exports = {
   base: '/',
-  dest: path.join(__dirname, '../../build'),
+  dest: path.join(__dirname, '../../build/docs'),
   locales: {
     '/': {
       lang: 'en-US',
