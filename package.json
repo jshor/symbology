@@ -18,7 +18,7 @@
   },
   "main": "./src/index.js",
   "author": "Josh Shor <https://github.com/jshor>",
-  "license": "MIT",
+  "license": "GPL-3",
   "repository": {
     "type": "git",
     "url": "https://github.com/jshor/symbology.git"
