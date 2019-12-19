@@ -108,4 +108,4 @@ This creates `uspsExample.eps` which looks like:
 
 ## License
 
-[MIT](LICENSE.md).
+[GPL-3](LICENSE.md).
