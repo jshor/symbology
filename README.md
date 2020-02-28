@@ -19,11 +19,6 @@
     <img src="https://img.shields.io/appveyor/ci/jshor/symbology/master?logo=appveyor&style=for-the-badge"
       alt="Build status: AppVeyor">
   </a>
-
-  <a href="https://david-dm.org/jshor/symbology#info=dependencies">
-    <img src="https://img.shields.io/david/jshor/symbology?label=deps&style=for-the-badge"
-      alt="Dependency Status">
-  </a>
 </p>
 
 ## Introduction
