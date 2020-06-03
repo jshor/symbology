@@ -45,6 +45,7 @@
         ".zint/backend/eci.c",
         ".zint/backend/emf.c",
         ".zint/backend/gb2312.c",
+        ".zint/backend/gb18030.c",
         ".zint/backend/general_field.c",
         ".zint/backend/gif.c",
         ".zint/backend/hanxin.c",
