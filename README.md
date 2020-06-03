@@ -42,6 +42,8 @@ yarn add symbology
 ### Code 11 Example
 
 ```js
+const symbology = require('symbology')
+
 symbology
   .createStream({
     symbology: symbology.Barcode.CODE128

@@ -64,20 +64,7 @@ namespace symbology {
         }
 
         if(strcmp("svg", fileExt) == 0 || strcmp("eps", fileExt) == 0) {
-          // char buff[10000];
-
-          // close(symbol->file_pointer[1]);
-          // read(symbol->file_pointer[0], buff, 10000);
-
-          // strcpy(symbol->rendered_data, buff);
-
-          // strcpy(symbol->rendered_data, buff);
-          // parse the result as a normal string and store it in `encodedData`
-          // obj->Set(String::NewFromUtf8(isolate, "encodedData"), String::NewFromUtf8(isolate, symbol->rendered_data));
-          // printf("ENCODED: %s", symbol->rendered_data);
-          // printf("THE RESULT -- %s --END", symbol->rendered_data);
           Nan::Set(obj, Nan::New<String>("encodedData").ToLocalChecked(), Nan::New<String>(symbol->rendered_data).ToLocalChecked());
-          // Nan::Set(obj, Nan::New<String>("encodedData").ToLocalChecked(), Nan::New<String>(symbol->encoded_data).ToLocalChecked());
         }
       }
 

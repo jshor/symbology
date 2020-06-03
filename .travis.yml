@@ -39,7 +39,6 @@ after_success:
 
 env:
   matrix:
-    # - NODE_VERSION="9"
     - NODE_VERSION="10"
     - NODE_VERSION="11"
     - NODE_VERSION="12"

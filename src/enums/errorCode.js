@@ -8,4 +8,4 @@ module.exports = {
   ZERROR_ENCODING_PROBLEM: 9,
   ZERROR_FILE_ACCESS: 10,
   ZERROR_MEMORY: 11
-};
+}
