@@ -38,15 +38,15 @@ module.exports = [
     },
     {
       files: '.zint/**/{svg,ps}.{c,h}',
-      from: /int ([a-z]+)_plot([^\n]+)/g,
+      from: /INTERNAL int ([a-z]+)_plot([^\n]+)/g,
       to: `
-  int pipe(int fd[2]);
-  int close(int fildes);
-  int read(int fildes, void *buf, unsigned nbytes);
-  
-  int $1_plot$2
-      char *buf = malloc(sizeof(symbol->rendered_data));
-      int p[2];`
+int pipe(int fd[2]);
+int close(int fildes);
+int read(int fildes, void *buf, unsigned nbytes);
+
+INTERNAL int $1_plot$2
+    char *buf = malloc(sizeof(symbol->rendered_data));
+    int p[2];`
     },
     {
       files: '.zint/**/{svg,ps}.{c,h}',
@@ -62,4 +62,3 @@ module.exports = [
   `
     }
   ]
-  

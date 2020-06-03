@@ -96,4 +96,4 @@ module.exports = {
   CODEONE: 141,
   GRIDMATRIX: 142,
   UPNQR: 143
-};
+}

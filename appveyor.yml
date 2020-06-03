@@ -6,7 +6,6 @@ install:
   - git config --global user.email "Josh Shor"
   - git config --global user.name "jpshor@gmail.com"
   - ps: Install-Product node $env:NODE_VERSION $env:platform
-  - yarn global add windows-build-tools
   - yarn
 
 test_script:
@@ -27,13 +26,12 @@ on_success:
         echo "Skipping publishing stage. Branch '$env:APPVEYOR_REPO_BRANCH' -- PR '$env:APPVEYOR_PULL_REQUEST_NUMBER'"
       }
 
-platform:	
+platform:
   - x86
   - x64
 
 environment:
   matrix:
-    # - NODE_VERSION: '9'
     - NODE_VERSION: '10'
     - NODE_VERSION: '11'
     - NODE_VERSION: '12'

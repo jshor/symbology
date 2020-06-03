@@ -77,5 +77,6 @@
     "hooks": {
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
-  }
+  },
+  "zintVersion": "e86d9d1"
 }

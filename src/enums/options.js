@@ -8,4 +8,4 @@ module.exports = {
   CMYK_COLOUR: 128,
   BARCODE_DOTTY_MODE: 256,
   GS1_GS_SEPARATOR: 512
-};
+}

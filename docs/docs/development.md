@@ -1,6 +1,6 @@
 # Development
 
-This module is a C++ wrapper around the [Zint barcode library](https://github.com/zint/zint).
+This module is a C++ wrapper around the [Zint barcode library](https://github.com/zint/zint). The version of zint that will be used will be determined by the git reference stored in the `zintVersion` field of `package.json`.
 
 ## Source code management
 
