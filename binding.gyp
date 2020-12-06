@@ -59,7 +59,7 @@
         "src/binding/main.cpp"
       ],
       "include_dirs": [
-        "<!(node -e \"require('nan')\")"
+        "node_modules/nan"
       ],
       "msvs_settings": {
         "VCCLCompilerTool": {
