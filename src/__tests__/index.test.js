@@ -29,6 +29,9 @@ describe('the symbology library', function() {
 
   beforeEach(function() {
     sandbox = sinon.sandbox.create();
+    sandbox
+      .stub(fs, 'writeFileSync')
+      .callsFake((fileName, data) => [fileName, data]);
   });
 
   afterEach(function() {
@@ -37,10 +40,6 @@ describe('the symbology library', function() {
 
   describe('the createFile function to create PNG files', function() {
     var filePath = 'testfile.png';
-
-    beforeEach(function() {
-      sandbox.stub(symbology, 'createStream').callsFake(createSymbology);
-    });
 
     it('should return a status code and a message', function() {
       return library
@@ -94,26 +93,18 @@ describe('the symbology library', function() {
   });
 
   describe('the createStream function for png data', function() {
-    beforeEach(function() {
-      sandbox.stub(symbology, 'createStream').callsFake(createSymbology);
-    });
-
     it('should return an object with status code and svg data', function() {
       return library
         .createStream(getSymbol(), '12345', library.Output.SVG)
         .then(function(data) {
           expect(data.code).to.be.a('number');
           expect(data.message).to.be.a('string');
-        //  expect(data.data).to.match(regex.svg);
+          // expect(data.data).to.match(regex.svg);
         });
     });
   });
 
   describe('the createStream function for png data', function() {
-    beforeEach(function() {
-      sandbox.stub(symbology, 'createStream').callsFake(createSymbology);
-    });
-
     it('should return an object with status code and base64 png data', function() {
       return library
         .createStream(getSymbol(), '12345', library.Output.PNG)
@@ -142,14 +133,13 @@ describe('the symbology library', function() {
     it('should render a MaxiCode SVG image', function() {
       return library
         .createStream(getSymbol({
-          symbology: library.Barcode.MAXICODE,
-          foregroundColor: 'ff00ff',
-          backgroundColor: '00ff00'
-        }), '12345', library.Output.SVG)
+          symbology: library.Barcode.CODE128,
+        }), '999999999840012', library.Output.SVG)
         .then(function(data) {
+          console.log('*************************************************************************************** RESULT: ', data)
           expect(data.code).to.be.a('number');
           expect(data.message).to.be.a('string');
-          expect(data.data).to.equal(fixtures.maxicodeSvg);
+          expect(data.data).to.equal('sdsdsdf'); //fixtures.maxicodeSvg);
         });
     });
   });

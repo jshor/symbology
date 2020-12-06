@@ -1,0 +1,174 @@
+name: Merge to master
+
+on:
+  push:
+    branches:
+      - master
+  release:
+    types: [created]
+
+env:
+  GIT_USER: 'GitHub Actions'
+  GIT_EMAIL: '41898282+github-actions[bot]@users.noreply.github.com'
+  ARTIFACT_DIR: 'build'
+  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Set git credentials
+        run: |
+          git config --global user.email ${{ env.GIT_USER }}
+          git config --global user.name ${{ env.GIT_EMAIL }}
+      - name: Install Yarn
+        run: npm i -g yarn
+      - name: Install dependencies
+        run: yarn
+      - name: Create initial release
+        run: yarn release && node ./scripts/updatePkg.js # TODO: is updatePkg necessary?
+      - name: Build binaries
+        run: yarn build
+      - name: Run tests
+        run: yarn test
+
+  publish:
+    needs: build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest]
+    steps:
+      - name: Publish Binary
+        run: echo "TEST PUBLISH ECHO"
+
+# jobs:
+#   build-unix:
+#     runs-on: ${{ matrix.os }}
+#     strategy:
+#       matrix:
+#         os: [windows-latest]
+#     steps:
+#       - uses: actions/checkout@v2
+#       - uses: actions/setup-node@v1
+#         with:
+#           node-version: 14
+#       - name: Build
+#         run:
+#           if [[ $TRAVIS_COMMIT_MESSAGE != *"chore(release)"* ]]; then
+#             yarn release;
+#             node ./scripts/updatePkg.js;
+#           fi
+#           yarn package:binary
+#           yarn test:coverage
+#           if [[ $TRAVIS_BRANCH == "master" && $TRAVIS_PULL_REQUEST == "false" && $TRAVIS_COMMIT_MESSAGE != *"chore(release)"* ]]; then
+
+#             if [[ $TRAVIS_COMMIT_MESSAGE != *"chore(release)"* ]]; then
+#               yarn docs:build;
+#             fi
+#           fi
+
+
+
+
+
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - uses: actions/checkout@v2
+#       - uses: actions/setup-node@v1
+#         with:
+#           node-version: 14
+#       - name: Install Yarn
+#         run: npm i -g yarn
+#       - name: Install npm dependencies
+#         run: yarn
+#       - name: Run linter
+#         run: yarn lint
+#       - name: Run unit tests
+#         run: yarn test
+#       - name: Build package
+#         run: yarn build
+#       - name: Build documentation
+#         run: yarn docs:build
+#       - name: Report coverage
+#         run: yarn codecov
+#       - name: Upload artifact
+#         uses: actions/upload-artifact@v2
+#         with:
+#           name: ${{ env.ARTIFACT_DIR }}
+#           path: ${{ env.ARTIFACT_DIR }}
+
+
+
+
+  # release:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - uses: TriPSs/conventional-changelog-action@v3
+  #       with:
+  #         github-token: ${{ secrets.GH_TOKEN }}
+  #         git-user-name: ${{ env.GIT_USER }}
+  #         git-user-email: ${{ env.GIT_EMAIL }}
+  #         tag-prefix: 'v'
+  #         release-count: '0'
+  #         skip-on-empty: false
+
+  # deploy:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         persist-credentials: false
+  #     - name: Pull latest
+  #       run: git pull origin master
+  #     - name: Download artifact
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         name: ${{ env.ARTIFACT_DIR }}
+  #         path: ${{ env.ARTIFACT_DIR }}
+  #     - name: Create CNAME Record
+  #       run: echo "datebook.dev" > ${{ env.ARTIFACT_DIR }}/docs/CNAME
+  #     - name: Deploy to GitHub Pages
+  #       uses: JamesIves/github-pages-deploy-action@3.6.1
+  #       with:
+  #         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+  #         GIT_CONFIG_NAME: ${{ env.GIT_USER }}
+  #         GIT_CONFIG_EMAIL: ${{ env.GIT_EMAIL }}
+  #         BRANCH: gh-pages
+  #         FOLDER: ${{ env.ARTIFACT_DIR }}/docs
+  #         CLEAN: true
+
+  # publish-npm:
+  #   needs: release
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Pull latest
+  #       run: git pull origin master
+  #     - name: Download artifact
+  #       uses: actions/download-artifact@v2
+  #       with:
+  #         name: ${{ env.ARTIFACT_DIR }}
+  #         path: ${{ env.ARTIFACT_DIR }}
+  #     - name: Copy dist
+  #       run: cp -r ${{ env.ARTIFACT_DIR }}/dist . && rm -rf build
+  #     - uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 14
+  #         registry-url: https://registry.npmjs.org/
+  #     - run: npm publish
+  #       env:
+  #         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

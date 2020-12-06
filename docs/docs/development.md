@@ -24,6 +24,17 @@ Builds are created using [`node-pre-gyp`](https://github.com/mapbox/node-pre-gyp
 
 Upon installation of dependencies, `node-pre-gyp build` will be run, which will compile the project from source.
 
+### Building on Windows
+
+If you're using Windows (excluding [WSL](https://docs.microsoft.com/en-us/windows/wsl/)), then you'll need to install [windows-build-tools](https://github.com/felixrieseberg/windows-build-tools#windows-build-tools) to compile the native Node module.
+
+```sh
+npm install --global --production windows-build-tools --vs2017
+npm config set msvs_version 2017 –global
+```
+
+This install takes a while, but once it's complete, you can move on to [Creating a build](#creating-a-build) below.
+
 ### Creating a build
 
 To create a packaged build, run:
@@ -60,7 +71,7 @@ This package abides by the [semver standard](https://semver.org/). [`standard-ve
 
 ## Automated builds and CI
 
-Both [AppVeyor](https://ci.appveyor.com/project/jshor/symbology) and [Travis CI](https://travis-ci.org/jshor/symbology) are leveraged to automatically build and test pull requests. At least one admin PR approval and all status checks are required to merge a PR.
+GitHub Actions will automatically build and test pull requests. At least one admin PR approval and all status checks are required to merge a PR.
 
 The following status checks are implemented:
 
