@@ -5,9 +5,18 @@ email, or any other method with the owners of this repository before making a ch
 
 Please note we have a code of conduct, please follow it in all your interactions with the project.
 
+## Developing on Windows
+
+If you're using Windows (excluding [WSL](https://docs.microsoft.com/en-us/windows/wsl/)), then you'll need to install [windows-build-tools](https://github.com/felixrieseberg/windows-build-tools#windows-build-tools) to compile the native Node module.
+
+```sh
+npm install --global --production windows-build-tools --vs2017
+npm config set msvs_version 2017 –global
+```
+
 ## Committing
 
-Commit message standards abide by [`standard-changelog`](https://github.com/conventional-changelog/conventional-changelog). This module utilizes [`commitizen`](https://github.com/commitizen/cz-cli) as a devDependency to help developers write their commits, and commit messages are enforced using [`commitlint`]().
+Commit message standards abide by [`standard-changelog`](https://github.com/conventional-changelog/conventional-changelog). This module utilizes [`commitizen`](https://github.com/commitizen/cz-cli) as a devDependency to help developers write their commits, and commit messages are enforced using [`commitlint`](https://github.com/conventional-changelog/commitlint).
 
 ## Versioning
 
@@ -25,13 +34,12 @@ This package abides by the [semver standard](https://semver.org/). [`standard-ve
 
 ## Automated PR builds via CI
 
-Both [AppVeyor](https://ci.appveyor.com/project/jshor/symbology) and [Travis CI](https://travis-ci.org/jshor/symbology) are leveraged to automatically build and test pull requests. At least one admin PR approval and all status checks are required to merge a PR.
+GitHub Actions will automatically build and test pull requests. At least one admin PR approval and all status checks are required to merge a PR.
 
 The following status checks are implemented:
 
-* Successful Windows builds (AppVeyor)
-* Successful Linux and macOS builds (Travis)
-* Sufficient code coverage (threshold >90%)
+* Successful Windows, Linux and macOS builds
+* Sufficient test code coverage (threshold >= 90%)
 
 ## Code of Conduct
 

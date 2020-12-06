@@ -6,3 +6,4 @@ coverage
 build
 .zint
 lib
+.nyc_output

@@ -1,3 +1,4 @@
 try {
-    yarn publish:binary
+  Write-Output "WILL PUBLISH"
+    # yarn publish:binary
 } catch { "OK" }
