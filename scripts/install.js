@@ -6,34 +6,57 @@ const fs = require('fs')
 const patches = require('./patches')
 const { zintVersion } = require('../package.json')
 
+/** Current zint git ref (specified in package.json) */
 const checkout = zintVersion || 'master'
 
-console.log('Removing any existing .zint directory...')
+/**
+ * Returns the absolute path to the given file in zint source.
+ *
+ * @param {string} p path names
+ * @returns {string}
+ */
+const getPath = p => path.join(__dirname, '../.zint', p)
 
-rimraf(path.join(__dirname, '../.zint'), () => {
-  console.log(`Cloning zint at '${checkout}' in`, path.join(__dirname, '../.zint'))
+/**
+ * Creates zintconfig.h, which contains version definitions from CMake.
+ */
+const createConfigFile = () => {
+  const fileData = fs
+    .readFileSync(getPath('CMakeLists.txt'))
+    .toString()
+    .match(/ZINT_VERSION_[A-Z]+\s+[0-9]+/gi)
+    .map(s => `#define ${s}`)
+    .join('\n')
 
-  clone(`https://github.com/woo-j/zint.git`, './.zint', { checkout }, (err) => {
-    if (err) {
-      console.error(err)
-    } else {
-      console.log('Successfully cloned. Applying code patches...')
+  fs.writeFileSync(getPath('backend/zintconfig.h'), fileData)
+}
 
-      patches.forEach(patch => replace.sync(patch))
+/**
+ * Clones zint, then applies C source patches.
+ */
+const cloneAndPatch = () => {
+  console.log('Removing any existing .zint directory...')
 
-      console.log('Creating zint config header file...')
+  rimraf(path.join(__dirname, '../.zint'), () => {
+    console.log(`Cloning zint at '${checkout}' in`, path.join(__dirname, '../.zint'))
 
-      const configData = `
-#define ZINT_VERSION_MAJOR 2
-#define ZINT_VERSION_MINOR 9
-#define ZINT_VERSION_RELEASE 1
-#define ZINT_VERSION_BUILD 9
-`
+    clone(`https://github.com/woo-j/zint.git`, './.zint', { checkout }, (err) => {
+      if (err) {
+        console.error(err)
+      } else {
+        console.log('Successfully cloned. Applying code patches...')
 
-      fs.writeFileSync('./.zint/backend/zintconfig.h', configData)
+        patches.forEach(patch => replace.sync(patch))
 
-      console.log('Done.')
-    }
+        console.log('Creating zint config header file...')
+
+        createConfigFile()
+
+        console.log('Done.')
+      }
+    })
   })
-})
+}
+
+cloneAndPatch()
 
