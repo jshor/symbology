@@ -10,6 +10,7 @@
         "OTHER_CFLAGS": ["-Wno-sign-compare"]
       },
       "sources": [
+        ".zint/backend/output.c",
         ".zint/backend/2of5.c",
         ".zint/backend/auspost.c",
         ".zint/backend/aztec.c",
