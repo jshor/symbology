@@ -8,14 +8,10 @@
   <a href="https://coveralls.io/github/jshor/symbology?branch=master"><img
     src="https://img.shields.io/coveralls/github/jshor/symbology?style=for-the-badge"
     alt="Code coverage"
-  /></a>
-  
-  <a href="https://github.com/jshor/symbology/actions?query=workflow%3A%22Merge+to+master%22"><img
+  /></a> <a href="https://github.com/jshor/symbology/actions?query=workflow%3A%22Merge+to+master%22"><img
     src="https://img.shields.io/github/workflow/status/jshor/symbology/Merge%20to%20master?style=for-the-badge"
     alt=""
-  /></a>
-
-  <a href="https://npmjs.com/package/symbology"><img
+  /></a> <a href="https://npmjs.com/package/symbology"><img
     src="http://img.shields.io/npm/v/symbology.svg?style=for-the-badge"
     alt="npm version"
   /></a>

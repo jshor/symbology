@@ -16,10 +16,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        # os: [windows-latest, macos-latest, ubuntu-latest]
-        os: [ubuntu-latest]
-        # node-version: [12, 13, 14, 15]
-        node-version: [12]
+        os: [windows-latest, macos-latest, ubuntu-latest]
+        node-version: [12, 13, 14, 15]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -43,8 +41,47 @@ jobs:
           name: binary-artifact
           path: build/stage
 
-  upload-binaries:
+  deploy:
     needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Pull latest
+        run: git pull origin master
+      - name: Install Vuepress
+        run: yarn add vuepress -D
+      - name: Build documentation
+        run: yarn docs:build
+      - name: Create CNAME Record
+        run: echo "symbology.dev" > build/docs/CNAME
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GIT_CONFIG_NAME: ${{ env.GIT_USER }}
+          GIT_CONFIG_EMAIL: ${{ env.GIT_EMAIL }}
+          BRANCH: gh-pages
+          FOLDER: build/docs
+          CLEAN: true
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: TriPSs/conventional-changelog-action@v3
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          git-user-name: ${{ env.GIT_USER }}
+          git-user-email: ${{ env.GIT_EMAIL }}
+          tag-prefix: 'v'
+          release-count: '0'
+          skip-on-empty: false
+
+  upload-binaries:
+    needs: release
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -66,45 +103,6 @@ jobs:
           hub release create "${assets[@]}" -m "v$RELEASE_VERSION" "$RELEASE_VERSION"
         env:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: TriPSs/conventional-changelog-action@v3
-        with:
-          github-token: ${{ secrets.GH_TOKEN }}
-          git-user-name: ${{ env.GIT_USER }}
-          git-user-email: ${{ env.GIT_EMAIL }}
-          tag-prefix: 'v'
-          release-count: '0'
-          skip-on-empty: false
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-      - name: Pull latest
-        run: git pull origin master
-      - name: Install Vuepress
-        run: yarn global add vuepress
-      - name: Build documentation
-        run: yarn docs:build
-      - name: Create CNAME Record
-        run: echo "symbology.dev" > build/docs/CNAME
-      - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@3.7.1
-        with:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-          GIT_CONFIG_NAME: ${{ env.GIT_USER }}
-          GIT_CONFIG_EMAIL: ${{ env.GIT_EMAIL }}
-          BRANCH: gh-pages
-          FOLDER: build/docs
-          CLEAN: true
 
   publish-npm:
     needs: release
