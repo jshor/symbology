@@ -12,8 +12,7 @@
     "binary:rebuild": "node-pre-gyp rebuild package",
     "install": "node ./scripts/install.js && npm run binary:install",
     "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
-    "docs:publish": "deploy-aws-s3-cloudfront --delete --non-interactive --bucket ${AWS_S3_BUCKET_NAME} --source ./build/docs --distribution ${AWS_CF_ID}"
+    "docs:build": "vuepress build docs"
   },
   "main": "./src/index.js",
   "author": "Josh Shor <https://github.com/jshor>",
@@ -51,14 +50,13 @@
     "rimraf": "^3.0.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^8.2.0",
-    "@commitlint/config-conventional": "^8.2.0",
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
     "aws-sdk": "2.108.0",
     "chai": "4.1.2",
-    "commitizen": "^4.0.3",
-    "cz-conventional-changelog": "^3.0.2",
-    "deploy-aws-s3-cloudfront": "^2.3.1",
-    "husky": "^3.1.0",
+    "commitizen": "^4.2.2",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^4.3.5",
     "mocha": "2.5.3",
     "nyc": "^15.1.0",
     "sinon": "3.2.1",
@@ -71,7 +69,13 @@
   ],
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-push": "yarn test"
+    }
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
     }
   },
   "zintVersion": "e86d9d1"
