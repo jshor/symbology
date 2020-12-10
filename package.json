@@ -61,7 +61,7 @@
     "nyc": "^15.1.0",
     "sinon": "3.2.1",
     "sinon-chai": "2.13.0",
-    "standard-version": "^7.0.1",
+    "standard-version": "^9.0.0",
     "vuepress": "^1.2.0"
   },
   "bundledDependencies": [
