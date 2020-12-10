@@ -17,7 +17,7 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest, macos-latest, ubuntu-latest]
-        node-version: [10, 11, 12, 13]
+        node-version: [12, 13, 14, 15]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -40,44 +40,6 @@ jobs:
         with:
           name: binary-artifact
           path: build/stage
-
-  upload-binaries:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Download binary artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: binary-artifact
-          path: build/stage
-      - name: Upload binary artifacts to release
-        # only one folder will be present in build/stage, which is named the new version number
-        # extract this name and set it as the release name, then upload artifact binaries to it
-        run: |
-          set -x
-          assets=()
-          for asset in ./build/stage/**/*; do
-            assets+=("-a" "$asset")
-          done
-          RELEASE_VERSION=$(echo $(ls build/stage| head -1))
-          hub release create "${assets[@]}" -m "v$RELEASE_VERSION" "$RELEASE_VERSION"
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
-
-  release:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: TriPSs/conventional-changelog-action@v3
-        with:
-          github-token: ${{ secrets.GH_TOKEN }}
-          git-user-name: ${{ env.GIT_USER }}
-          git-user-email: ${{ env.GIT_EMAIL }}
-          tag-prefix: 'v'
-          release-count: '0'
-          skip-on-empty: false
 
   deploy:
     needs: build
@@ -103,6 +65,44 @@ jobs:
           BRANCH: gh-pages
           FOLDER: build/docs
           CLEAN: true
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: TriPSs/conventional-changelog-action@v3
+        with:
+          github-token: ${{ secrets.GH_TOKEN }}
+          git-user-name: ${{ env.GIT_USER }}
+          git-user-email: ${{ env.GIT_EMAIL }}
+          tag-prefix: 'v'
+          release-count: '0'
+          skip-on-empty: false
+
+  upload-binaries:
+    needs: release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Download binary artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: binary-artifact
+          path: build/stage
+      - name: Upload binary artifacts to release
+        # only one folder will be present in build/stage, which is named the new version number
+        # extract this name and set it as the release name, then upload artifact binaries to it
+        run: |
+          set -x
+          assets=()
+          for asset in ./build/stage/**/*; do
+            assets+=("-a" "$asset")
+          done
+          RELEASE_VERSION=$(echo $(ls build/stage| head -1))
+          hub release create "${assets[@]}" -m "v$RELEASE_VERSION" "$RELEASE_VERSION"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
 
   publish-npm:
     needs: release

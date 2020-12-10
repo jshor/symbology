@@ -5,20 +5,20 @@
 <p align="center">A Node.js module that generates barcode images. Supports 50+ different 1D or 2D symbologies in png, eps, or svg formats.</p>
 
 <p align="center">
-  <a href="https://coveralls.io/github/jshor/symbology?branch=master">
-    <img src="https://img.shields.io/coveralls/github/jshor/symbology?style=for-the-badge"
-      alt="Code coverage">
-  </a>
+  <a href="https://coveralls.io/github/jshor/symbology?branch=master"><img
+    src="https://img.shields.io/coveralls/github/jshor/symbology?style=for-the-badge"
+    alt="Code coverage"
+  /></a>
+  
+  <a href="https://github.com/jshor/symbology/actions?query=workflow%3A%22Merge+to+master%22"><img
+    src="https://img.shields.io/github/workflow/status/jshor/symbology/Merge%20to%20master?style=for-the-badge"
+    alt=""
+  /></a>
 
-  <a href="https://travis-ci.org/jshor/symbology?branch=master">
-    <img src="https://img.shields.io/travis/com/jshor/symbology/master?logo=travis&style=for-the-badge"
-      alt="Build status: Travis">
-  </a>
-
-  <a href="https://ci.appveyor.com/project/jshor/symbology?branch=master">
-    <img src="https://img.shields.io/appveyor/ci/jshor/symbology/master?logo=appveyor&style=for-the-badge"
-      alt="Build status: AppVeyor">
-  </a>
+  <a href="https://npmjs.com/package/symbology"><img
+    src="http://img.shields.io/npm/v/symbology.svg?style=for-the-badge"
+    alt="npm version"
+  /></a>
 </p>
 
 ## Introduction
@@ -29,7 +29,7 @@ It can create a PNG, SVG, or EPS image file, or return a string containing SVG, 
 
 ## Documentation
 
-[Read the comprehensive docs →](https://symbology.dev)
+[Read the docs →](https://symbology.dev/docs/)
 
 ## Quick start
 
