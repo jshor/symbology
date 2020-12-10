@@ -1,0 +1,29 @@
+name: Pull request
+
+on:
+  pull_request:
+    branches:
+      - master
+  release:
+    types: [created]
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+        # list only the earliest and latest node versions supported
+        # this makes PR builds more efficient
+        node-version: [12, 15]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Install dependencies
+        run: yarn
+      - name: Build binaries
+        run: yarn build
+      - name: Run tests
+        run: yarn test
