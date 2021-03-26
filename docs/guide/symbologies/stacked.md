@@ -10,6 +10,17 @@ This is a stacked symbology based on [Code 128](one-dimensional.md#code-128) whi
 
 The width of the Codablock-F symbol can be specified via `option2` **or** the height (number of rows) can be specified via `option1`. The encoding of GS1 data in Codablock-F symbols is not supported.
 
+#### Example
+
+The following renders a a 5-row Codablock-F symbol:
+
+```js
+symbology.createStream({
+  symbology: symbology.Barcode.CODABLOCKF,
+  option1: 5,
+}, '11010000100101111011101001000011010100011000101000110001010001100010100011000110011001101100011101011')
+```
+
 ## Code 16k (EN 12323)
 
 ![Code 16K](/assets/barcodes/barcode_27.png)
@@ -39,6 +50,17 @@ The width of the generated PDF417 symbol can be specified by setting `option2` t
 :::tip Note
 A separate symbology ID can be used to encode [Health Industry Barcode (HIBC)](one-dimensional.md#hibc-code-39) data which adds a leading `+` character and a modulo-49 check digit to the encoded data.
 :::
+
+#### Example
+
+The following renders a 5-row Codablock-F symbol:
+
+```js
+symbology.createStream({
+  symbology: symbology.Barcode.CODABLOCKF,
+  option1: 5,
+}, '11010000100101111011101001000011010100011000101000110001010001100010100011000110011001101100011101011')
+```
 
 ## Compact PDF417
 
@@ -103,6 +125,16 @@ The width of the symbol can be altered by setting `option2` to the desired width
 :::tip Note
 This symbol can be generated with a two-dimensional component to make a composite symbol. For symbols with a 2D component, the number of columns must be at least `2`.
 :::
+
+#### Example
+
+```js
+symbology.createStream({
+  symbology: symbology.Barcode.EANX_CC,
+  option1: 1,
+  primary: '331234567890'
+}, '[99]1234-abcd')
+```
 
 ## Code 49
 
