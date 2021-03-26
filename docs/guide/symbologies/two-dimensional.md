@@ -88,6 +88,17 @@ Four levels of error correction are available by setting `option1` to one of the
 | 3     | Q           | Approx 55% of symbol      | Approx 25%        |
 | 4     | H           | Approx 65% of symbol      | Approx 30%        |
 
+#### Example
+
+The following example creates a QR code:
+
+```js
+symbology.createStream({
+  symbology: symbology.Barcode.QRCODE,
+  option2: 1
+}, '12345')
+```
+
 ### QR Code Size
 
 The size of the symbol can be set to the QR Code version required (1-40). The size of symbol generated can be set by passing `option2` to one of the following input values:
@@ -170,11 +181,11 @@ The following example creates a symbol from data saved in an ISO-8859-2 file:
 
 ```js
 symbology.createStream({
-  symbology: Symbology.Barcode.MAXICODE,
+  symbology: symbology.Barcode.UPNQR,
   option1: 2,
   borderWidth: 5,
   scale: 3,
-  inputMode: symbology.InputModes.DATA_MODE
+  inputMode: symbology.Encoding.DATA_MODE
 }, 'to je testna črtna koda')
 ```
 
@@ -206,7 +217,7 @@ The primary message can be set via the `primary` option. The secondary message u
 
 ```js
 symbology.createStream({
-  symbology: Symbology.Barcode.MAXICODE,
+  symbology: symbology.Barcode.MAXICODE,
   option1: 2,
   primary: '999999999840012'
 }, 'Secondary Message Here')
@@ -228,7 +239,7 @@ Modes `4`, `5`, and `6` do not require a primary message.
 
 ```js
 symbology.createStream({
-  symbology: Symbology.Barcode.MAXICODE,
+  symbology: symbology.Barcode.MAXICODE,
   option1: 4
 }, 'A MaxiCode Message in Mode 4')
 ```
@@ -312,6 +323,18 @@ To specify the desired size of the symbol, set `option2` to one of the following
 | 17    | 71 x 71     | 35    | 147 x 147   |
 | 18    | 75 x 75     | 36    | 151 x 151   |
 
+#### Example
+
+The following will render a 45x45 Aztec Code symbol with 23% error correction capacity:
+
+```js
+symbology.createStream({
+  symbology: symbology.Barcode.AZTEC,
+  option1: 2,
+  option2: 11
+}, '12345')
+```
+
 :::tip Note
 The symbols marked with an asterisk (*) in the table below are "compact" symbols, meaning they have a smaller bulls-eye pattern at the centre of the symbol.
 :::
@@ -325,6 +348,16 @@ It is not possible to select both symbol size and error correction capacity for 
 ![Aztec Runes](/assets/barcodes/barcode_49.png)
 
 Defined in [ISO/IEC 24778 (Annex A)](https://www.iso.org/standard/41548.html), a truncated version of compact [Aztec Code](l#aztec-code-iso-24778) for encoding whole integers between `0` and `255`. Includes [Reed-Solomon error correction](https://en.wikipedia.org/wiki/Reed%E2%80%93Solomon_error_correction).
+
+#### Example
+
+The following will render an Aztec Runes symbol encoding `123`:
+
+```js
+symbology.createStream({
+  symbology: symbology.Barcode.AZRUNE
+}, '123')
+```
 
 ## Code One
 
@@ -351,6 +384,17 @@ The type can be specified by setting `option2` to one of the following input val
 | 8     | H       | 148 x 134  | 3550                  | 2218                       |
 | 9     | S       | 8X height  | 18                    | **N/A**                    |
 | 10    | T       | 16X height | 90                    | 55                         |
+
+#### Example
+
+The following will render a 22x22 Code One symbol encoding `An Example`:
+
+```js
+symbology.createStream({
+  symbology: symbology.Barcode.CODEONE,
+  option2: 2
+}, 'An Example')
+```
 
 :::warning Important
 * Version `S` symbols can only encode numeric data.
@@ -405,6 +449,18 @@ The symbol size can be specified by setting the `option2` value to one of the fo
 | 12    | 150 x 150 |
 | 13    | 162 x 162 |
 
+#### Example
+
+The following will render a 30x30 Grid Matrix symbol with 20% error correction encoding `12345`:
+
+```js
+symbology.createStream({
+  symbology: symbology.Barcode.GRIDMATRIX,
+  option1: 2,
+  option2: 2
+}, '12345')
+```
+
 :::warning Important
 If you specify both of these values, this library will make a 'best-fit' attempt to satisfy both conditions.
 :::
@@ -418,6 +474,16 @@ DotCode uses a grid of dots in a rectangular formation to encode characters up t
 ### Width
 
 By default, the library will produce a symbol which is approximately square. However, the width of the symbol can be adjusted by setting `option2` to the desired width (in pixels).
+
+#### Example
+
+The following will render a DotCode symbol encoding `12345`:
+
+```js
+symbology.createStream({
+  symbology: symbology.Barcode.DOTCODE
+}, '12345')
+```
 
 :::warning Important
 Outputting DotCode to PNG will require setting the scale of the image to a larger value than the default (~10 pixels) for the dots to be plotted correctly.
@@ -506,6 +572,18 @@ The size of the symbol can be specified by setting `option2` to one of the follo
 | 40    | 101 x 101   | 82    | 185 x 185   |
 | 41    | 103 x 103   | 83    | 187 x 187   |
 | 42    | 105 x 105   | 84    | 189 x 189   |
+
+#### Example
+
+The following will render a 33x33 Han Xin symbol encoding `12345` with ~23% error correction:
+
+```js
+symbology.createStream({
+  symbology: symbology.Barcode.HANXIN,
+  option1: 3,
+  option2: 6
+}, '12345')
+```
 
 :::warning Important
 It is not possible to select both symbol size and error correction capacity for the same symbol. If both options are selected then the error correction capacity selection will be ignored. 

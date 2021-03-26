@@ -5,8 +5,7 @@
   "scripts": {
     "commit": "yarn git-cz",
     "release": "standard-version",
-    "test": "mocha -R spec ./src/**/*.test.js",
-    "test:coverage": "nyc --reporter=text mocha",
+    "test": "rimraf test/e2e/__rendered__/* && jest test/e2e",
     "build": "npm run binary:rebuild",
     "binary:install": "node-pre-gyp install --fallback-to-build",
     "binary:rebuild": "node-pre-gyp rebuild package",
@@ -53,14 +52,11 @@
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
     "aws-sdk": "2.108.0",
-    "chai": "4.1.2",
     "commitizen": "^4.2.2",
     "cz-conventional-changelog": "^3.3.0",
     "husky": "^4.3.5",
-    "mocha": "2.5.3",
-    "nyc": "^15.1.0",
-    "sinon": "3.2.1",
-    "sinon-chai": "2.13.0",
+    "jest": "^26.6.3",
+    "jest-image-snapshot": "^4.3.0",
     "standard-version": "^9.0.0",
     "vuepress": "^1.2.0"
   },
@@ -72,6 +68,11 @@
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
       "pre-push": "yarn test"
     }
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "./test/setup.js"
+    ]
   },
   "config": {
     "commitizen": {

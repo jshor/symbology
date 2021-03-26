@@ -8,6 +8,16 @@ One-Dimensional symbols are what most people associate with the term barcode. Th
 
 Developed by Intermec in 1977, Code 11 is similar to [Code 2 of 5 Matrix](#code-2-of-5) and is primarily used in telecommunications. The symbol can encode any length string consisting of the digits `0-9` and the dash character (`-`). One modulo-11 check digit is calculated.
 
+#### Example
+
+The following will render a Code 11 symbol encoding `8765432164`:
+
+```js
+symbology.createStream({
+  symbology: symbology.Barcode.CODE11
+}, '8765432164')
+```
+
 ## Code 2 of 5
 
 ![ITF-14](/assets/barcodes/barcode_15.png)
@@ -17,6 +27,17 @@ Code 2 of 5 is a family of one-dimensional symbols, 8 of which are supported. No
 ### Standard Code 2 of 5
 
 Also known as **Code 2 of 5 Matrix**, this symbology is a self-checking code used in industrial applications and photo development. Standard Code 2 of 5 will encode any length numeric input (digits `0-9`).
+
+#### Example
+
+The following will render a standard Code 2 of 5 symbol encoding `32109876543211`:
+
+```js
+symbology.createStream({
+  symbology: symbology.Barcode.C25IATA,
+  borderWidth: 6
+}, '32109876543211')
+```
 
 ### IATA Code 2 of 5
 
@@ -58,9 +79,9 @@ UPC-A is used in the United States for retail applications. The symbol requires 
 
 ```js
 symbology.createStream({
-  symbology: Symbology.Barcode.UPCA,
-  mode: 1, // TODO
-  primary: '331234567890', // TODO
+  symbology: symbology.Barcode.UPCA,
+  mode: 1,
+  primary: '331234567890'
 }, '72527270270+12345')
 ```
 
@@ -80,7 +101,7 @@ This library also supports Number System 1 encoding by entering a 7-digit articl
 
 ```js
 symbology.createStream({
-  symbology: Symbology.Barcode.UPCE
+  symbology: symbology.Barcode.UPCE
 }, '1123456')
 ```
 
@@ -110,7 +131,7 @@ The following example will encode a standalone EAN-5:
 
 ```js
 symbology.createStream({
-  symbology: Symbology.Barcode.EANX
+  symbology: symbology.Barcode.EANX
 }, '54321')
 ```
 
@@ -162,11 +183,24 @@ The table below shows the options available:
 | 3                  | Modulo-11             |
 | 4                  | Modulo-11 & Modulo-10 |
 
+
+#### Example
+
+The following example will create an MSI Plessey symbol with modulo-10 check digit encoding `7432365`:
+
+```js
+symbology.createStream({
+  symbology: symbology.Barcode.MSI_PLESSEY,
+  option2: 1
+}, '7432365')
+```
+
 :::tip Note
 Any length numeric (digits `0-9`) input can be encoded.
 :::
 
 ## Telepen
+
 ### Telepen Alpha
 
 ![Telepen](/assets/barcodes/barcode_19.png)
@@ -186,6 +220,16 @@ Data can consist of pairs of numbers or pairs consisting of a numerical digit fo
 ![Code 39](/assets/barcodes/barcode_20.png)
 
 Standard Code 39 was developed in 1974 by Intermec. Input data can be of any length and can include the characters `0-9`, `A-Z`, dash (`-`), full stop (`.`), space (` `), asterisk (`*`), dollar (`$`), slash (`/`), plus (`+`) and percent (`%`).
+
+#### Example
+
+The following example will create a Code 39 symbol with modulo-10 check digit encoding `CODE39`:
+
+```js
+symbology.createStream({
+  symbology: symbology.Barcode.CODE39
+}, 'CODE39')
+```
 
 :::tip Note
 The standard does not require a check digit, but a modulo-43 check digit can be added via `option2`.
@@ -248,6 +292,16 @@ No check digit is generated.
 ![Pharmacode](/assets/barcodes/barcode_22.png)
 
 Developed by Laetus, Pharmacode is used for the identification of pharmaceuticals. The symbology is able to encode whole numbers between `3` and `131070`.
+
+#### Example
+
+The following example will create a Pharmacode symbol with modulo-10 check digit encoding `131070`:
+
+```js
+symbology.createStream({
+  symbology: symbology.Barcode.PHARMA
+}, '131070')
+```
 
 ## Code 128
 
@@ -376,6 +430,17 @@ The maximum values permitted depend on the number of channels used:
 | 6        | 00000         | 44072         |
 | 7        | 000000        | 576688        |
 | 8        | 0000000       | 7742862       |
+
+#### Example
+
+The following example renders a 5-channel Channel Code symbol:
+
+```js
+symbology.createStream({
+  symbology: symbology.Barcode.CHANNEL,
+  option2: 6
+}, '12345')
+```
 
 :::tip Note
 Channel codes `7` and `8` require a processor-intensive algorithm to generate and so response times when generating these codes will be relatively slow.
