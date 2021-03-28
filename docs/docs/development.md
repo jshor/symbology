@@ -45,21 +45,35 @@ yarn package:binary
 
 ### Running tests
 
-Tests are written as `*.spec.js` and utilize [mocha](https://mochajs.org/) and [chai](https://www.chaijs.com/).
+Tests are written as `*.test.js` and utilize [Jest](https://jestjs.io/). 
 
-To run tests:
+Both **unit** and **e2e** tests are written for this project. To run all tests:
 
 ```sh
 yarn test
 ```
 
-To run tests with coverage reporting:
+#### Unit tests
+
+Unit tests are specified in the `__tests__` subdirectories under `src`. 
+
+To run unit tests:
 
 ```sh
-yarn test:coverage
+yarn test:unit
 ```
 
-Test coverage results are sent to [Coveralls](https://coveralls.io/github/jshor/symbology?branch=master).
+Test coverage results are sent to [Codecov](https://app.codecov.io/gh/jshor/symbology).
+
+#### e2e tests
+
+e2e tests are specified in the `test/e2e` directory. They utilize [jest-image-snapshot](https://github.com/americanexpress/jest-image-snapshot) for comparisons of barcode images in tandem with the helper test method, `createImageFile`.
+
+To run e2e tests:
+
+```sh
+yarn test:e2e
+```
 
 ## Committing
 

@@ -5,7 +5,9 @@
   "scripts": {
     "commit": "yarn git-cz",
     "release": "standard-version",
-    "test": "rimraf test/e2e/__rendered__/* && jest test/e2e",
+    "test:e2e": "rimraf test/e2e/__rendered__/* && jest test/e2e",
+    "test:unit": "jest src --collectCoverage true",
+    "test": "yarn test:unit && yarn test:e2e",
     "build": "npm run binary:rebuild",
     "binary:install": "node-pre-gyp install --fallback-to-build",
     "binary:rebuild": "node-pre-gyp rebuild package",
@@ -72,7 +74,16 @@
   "jest": {
     "setupFilesAfterEnv": [
       "./test/setup.js"
-    ]
+    ],
+    "coverageDirectory": "test/coverage",
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 90,
+        "lines": 90,
+        "statements": 90
+      }
+    }
   },
   "config": {
     "commitizen": {
