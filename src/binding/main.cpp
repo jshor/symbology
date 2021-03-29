@@ -39,13 +39,13 @@ namespace symbology {
   /**
    * Renders symbology and returns an object with PNG bitmap data, EPS, or SVG XML.
    */
-  Local<Object> createStreamHandle(Isolate* isolate, zint_symbol *symbol, uint8_t *data, char *str) {
+  Local<Object> createStreamHandle(Isolate* isolate, zint_symbol *symbol, uint8_t *data, char *str, int rotate_angle) {
     int status_code;
 
     if ((symbol->output_options & BARCODE_STDOUT) != 0) {
-      status_code = ZBarcode_Encode_and_Print(symbol, data, 0, 0);
+      status_code = ZBarcode_Encode_and_Print(symbol, data, 0, rotate_angle);
     } else {
-      status_code = ZBarcode_Encode_and_Buffer(symbol, data, 0, 0);
+      status_code = ZBarcode_Encode_and_Buffer(symbol, data, 0, rotate_angle);
     }
 
     v8::Local<v8::Object> obj = Object::New(isolate);
@@ -165,9 +165,13 @@ namespace symbology {
 
     struct zint_symbol *symbol = getSymbolFromArgs(context, args);
 
+    // parse `rotation` angle argument
+    int rotate_angle;
+    rotate_angle = (int)args[18]->NumberValue(context).FromJust();
+
     Nan::Utf8String data(args[0]);
 
-    obj = createStreamHandle(isolate, symbol, (unsigned char*)*data, (char*)*data);
+    obj = createStreamHandle(isolate, symbol, (unsigned char*)*data, (char*)*data, rotate_angle);
 
     ZBarcode_Delete(symbol);
     args.GetReturnValue().Set(obj);

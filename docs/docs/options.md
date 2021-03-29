@@ -21,7 +21,8 @@ The following symbology options are available:
 | `showHumanReadableText` | `Boolean`  | Show or hide the symbology data as human-readable text (if applicable).                          | No        | `true`        |
 | `encoding`              | `Encoding` | [The enumerated encoding type of input data.](encoding.md#encoding-modes)                        | No        | `DATA_MODE`   |
 | `eci`                   | `Number`   | [ECI encoding mode.](encoding.md#extended-channel-interpolation-eci)                             | No        | `0`           |
-| `primary`               | `String`   | Primary message data for more complex symbols.                                                   | No        | `null`        |
+| `primary`               | `String`   | Primary message data for more complex symbols.                                                   | No        | `null`        |v
+| `rotation`              | `Number`   | Clockwise rotation of the barcode. Valid values are `0`, `90`, `180`, or `270`.                  | No        | `0`           |
 | `text`                  | `String`   | Human-readable text to display. Defaults to the input data value.                                | No        | (Data value)  |
 
 \* required only if using [`createFile()`](api.md#createfile).
