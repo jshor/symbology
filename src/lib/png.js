@@ -1,14 +1,13 @@
-const PNGImage = require('pngjs-image')
+const { PNG } = require('pngjs')
 const { isEqual, omit } = require('lodash')
 
 /**
  * Renders a PNG Blob stream to a base64 PNG.
  *
- * @param {PNGJS} image
+ * @param {PNG} png
  * @returns {Promise<String>} base64 representation
  */
-function blobToBase64 (image) {
-  const png = image.getImage()
+function blobToBase64 (png) {
   const chunks = []
 
   return new Promise((resolve) => {
@@ -23,22 +22,13 @@ function blobToBase64 (image) {
 }
 
 /**
- * Writes a PNG buffer to the given file.
+ * Writes the PNG instance to a buffer.
  *
- * @param {PNG} image - image instance
- * @param {String} fileName - file path for the image
- * @returns {Promise<String>}
+ * @param {PNG} png - image instance
+ * @returns {String}
  */
-function writeFile (image, fileName) {
-  return new Promise((resolve, reject) => {
-    image.writeImage(fileName, (err) => {
-      if (err) {
-        reject(err)
-      } else {
-        resolve(fileName)
-      }
-    })
-  })
+function getBuffer (png) {
+  return PNG.sync.write(png)
 }
 
 /**
@@ -82,7 +72,7 @@ function isEqualColor (a, b) {
  * @returns {PNG} instance of PNG
  */
 function render (bitmap, width, height, backgroundColor, foregroundColor) {
-  const image = PNGImage.createImage(width, height)
+  const png = new PNG({ width, height })
   const backgroundColorRgba = getRgbaColor(backgroundColor)
   const foregroundColorRgba = getRgbaColor(foregroundColor)
   let i = 0
@@ -94,23 +84,26 @@ function render (bitmap, width, height, backgroundColor, foregroundColor) {
         green: bitmap[i + 1],
         blue: bitmap[i + 2]
       }
-
       const rgba = isEqualColor(color, backgroundColorRgba)
         ? backgroundColorRgba
         : foregroundColorRgba
+      const pos = (png.width * y + x) << 2
 
-      image.setAt(x, y, rgba)
+      png.data[pos] = rgba.red
+      png.data[pos + 1] = rgba.green
+      png.data[pos + 2] = rgba.blue
+      png.data[pos + 3] = rgba.alpha
 
       i += 3
     }
   }
 
-  return image
+  return png
 }
 
 module.exports = {
   blobToBase64,
-  writeFile,
+  getBuffer,
   getRgbaColor,
   render
 }

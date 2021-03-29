@@ -88,8 +88,9 @@ async function createFile (config, barcodeData) {
   if (outputType === exp.Output.PNG) {
     // write the bitmap to a PNG image file
     const image = png.render(res.data, res.width, res.height, symbol.backgroundColor, symbol.foregroundColor)
+    const buffer = png.getBuffer(image)
 
-    await png.writeFile(image, symbol.fileName)
+    fs.writeFileSync(symbol.fileName, buffer)
   } else {
     // write SVG or EPS to a file
     fs.writeFileSync(symbol.fileName, res.data.trim())
