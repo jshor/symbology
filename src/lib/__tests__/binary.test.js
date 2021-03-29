@@ -36,7 +36,8 @@ describe('Binary methods', () => {
         encoding: Encoding.DATA_MODE,
         eci: 0,
         primary: '',
-        text: 'example text'
+        text: 'example text',
+        rotation: 0
       }
       const barcodeData = 'primary data'
 
@@ -60,7 +61,8 @@ describe('Binary methods', () => {
         'example text',
         symbol.encoding,
         symbol.eci,
-        symbol.primary
+        symbol.primary,
+        symbol.rotation
       )
     })
 
@@ -86,7 +88,8 @@ describe('Binary methods', () => {
         encoding: Encoding.DATA_MODE,
         eci: 0,
         primary: '',
-        text: ''
+        text: '',
+        rotation: 0
       }
       const barcodeData = 'primary data'
 
@@ -110,7 +113,8 @@ describe('Binary methods', () => {
         barcodeData,
         symbol.encoding,
         symbol.eci,
-        symbol.primary
+        symbol.primary,
+        0
       )
     })
   })

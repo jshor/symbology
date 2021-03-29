@@ -34,7 +34,8 @@ const defaultConfig = {
   showHumanReadableText: true,
   encoding: exp.Encoding.DATA_MODE,
   eci: 0,
-  primary: ''
+  primary: '',
+  rotation: 0
 }
 
 /**
