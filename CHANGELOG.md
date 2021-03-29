@@ -1,3 +1,7 @@
+## [2.0.1](https://github.com/jshor/symbology/compare/v2.0.0...v2.0.1) (2021-03-29)
+
+
+
 # [2.0.0](https://github.com/jshor/symbology/compare/v1.2.3...v2.0.0) (2021-03-29)
 
 
