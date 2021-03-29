@@ -41,7 +41,7 @@ describe('Symbology Library', () => {
       }, '12345', 'png')
 
       expect(png.render).toHaveBeenCalledTimes(1)
-      expect(png.render).toHaveBeenCalledWith(mockPngRes.data, mockPngRes.width, mockPngRes.height)
+      expect(png.render).toHaveBeenCalledWith(mockPngRes.data, mockPngRes.width, mockPngRes.height, 'ffffffff', '000000ff')
       expect(png.blobToBase64).toHaveBeenCalledTimes(1)
       expect(png.blobToBase64).toHaveBeenCalledWith(mockPngImage)
 
@@ -81,7 +81,7 @@ describe('Symbology Library', () => {
       }, '12345')
 
       expect(png.render).toHaveBeenCalledTimes(1)
-      expect(png.render).toHaveBeenCalledWith(mockPngRes.data, mockPngRes.width, mockPngRes.height)
+      expect(png.render).toHaveBeenCalledWith(mockPngRes.data, mockPngRes.width, mockPngRes.height, 'ffffffff', '000000ff')
       expect(png.blobToBase64).toHaveBeenCalledTimes(1)
       expect(png.blobToBase64).toHaveBeenCalledWith(mockPngImage)
 
@@ -115,7 +115,7 @@ describe('Symbology Library', () => {
       }, '12345')
 
       expect(png.render).toHaveBeenCalledTimes(1)
-      expect(png.render).toHaveBeenCalledWith(mockPngRes.data, mockPngRes.width, mockPngRes.height)
+      expect(png.render).toHaveBeenCalledWith(mockPngRes.data, mockPngRes.width, mockPngRes.height, 'ffffffff', '000000ff')
       expect(png.writeFile).toHaveBeenCalledTimes(1)
       expect(png.writeFile).toHaveBeenCalledWith(mockPngImage, fileName)
       expect(fs.writeFileSync).not.toHaveBeenCalled()

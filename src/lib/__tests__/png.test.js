@@ -45,9 +45,36 @@ describe('PNG Functions', () => {
     })
   })
 
+  describe('getRgbaColor()', () => {
+    it('should parse the alpha channel for an 8-digit hex color', () => {
+      const color = png.getRgbaColor('ff00ff00')
+
+      expect(color).toEqual({
+        red: 255,
+        green: 0,
+        blue: 255,
+        alpha: 0
+      })
+    })
+
+    it('should parse a 6-digit hex color, with alpha channel falling back to 255', () => {
+      const color = png.getRgbaColor('ff00ff')
+
+      expect(color).toEqual({
+        red: 255,
+        green: 0,
+        blue: 255,
+        alpha: 255
+      })
+    })
+  })
+
   describe('render()', () => {
     const image = PNGImage.createImage(2, 2)
-    const bitmap = Array(12).fill(0) // 2x2 black bitmap
+    const bitmap = [
+      ...Array(6).fill(0), // 1x2 black line (top)
+      ...Array(6).fill(255) // 1x2 white line (bottom)
+    ]
 
     beforeEach(() => {
       jest
@@ -59,19 +86,19 @@ describe('PNG Functions', () => {
     })
 
     it('should fill in each pixel color from the given bitmap array', () => {
-      png.render(bitmap, 2, 2)
+      png.render(bitmap, 2, 2, '000000ff', 'ffffffff')
 
       expect(image.setAt).toHaveBeenCalledTimes(4)
       expect(image.setAt).toHaveBeenCalledWith(expect.any(Number), expect.any(Number), {
         red: 0,
         green: 0,
         blue: 0,
-        alpha: 200
+        alpha: 255
       })
     })
 
     it('should return the PNG buffer instance', () => {
-      const result = png.render(bitmap, 2, 2)
+      const result = png.render(bitmap, 2, 2, '000000ff', 'ffffffff')
 
       expect(result).toEqual(image)
     })

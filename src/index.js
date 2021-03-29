@@ -16,6 +16,28 @@ const exp = {
 }
 
 /**
+ * Default Symbology config, populated with default values
+ */
+const defaultConfig = {
+  symbology: 20,
+  height: 50,
+  whitespaceWidth: 0,
+  borderWidth: 0,
+  outputOptions: -1,
+  foregroundColor: '000000ff',
+  backgroundColor: 'ffffffff',
+  fileName: 'out.bmp',
+  scale: 1.0,
+  option1: -1,
+  option2: -1,
+  option3: -1,
+  showHumanReadableText: true,
+  encoding: exp.Encoding.DATA_MODE,
+  eci: 0,
+  primary: ''
+}
+
+/**
  * Creates an in-memory buffer of a PNG, SVG or EPS image.
  *
  * @param {Symbol} symbol - symbol struct
@@ -23,12 +45,16 @@ const exp = {
  * @param {String} outputType - `png`, `eps`, or `svg`.
  * @returns {Promise<Object>} object with resulting props (see docs)
  */
-async function createStream (symbol, barcodeData, outputType = exp.Output.PNG) {
-  const res = await binary.invoke(symbol, barcodeData, outputType, true)
+async function createStream (config, barcodeData, outputType = exp.Output.PNG) {
+  const symbol = {
+    ...defaultConfig,
+    ...config
+  }
+  const res = await binary.invoke(symbol, barcodeData, outputType)
 
   if (outputType === exp.Output.PNG) {
-    const pngData = png.render(res.data, res.width, res.height)
-    const base64Data = await png.blobToBase64(pngData)
+    const image = png.render(res.data, res.width, res.height, symbol.backgroundColor, symbol.foregroundColor)
+    const base64Data = await png.blobToBase64(image)
 
     return {
       data: base64Data,
@@ -49,13 +75,17 @@ async function createStream (symbol, barcodeData, outputType = exp.Output.PNG) {
  * @param {String} barcodeData - data to encode
  * @returns {Promise<Object>} object with resulting props (see docs)
  */
-async function createFile (symbol, barcodeData) {
+async function createFile (config, barcodeData) {
+  const symbol = {
+    ...defaultConfig,
+    ...config
+  }
   const outputType = binary.getOutputType(symbol.fileName)
   const res = await binary.invoke(symbol, barcodeData, outputType)
 
   if (outputType === exp.Output.PNG) {
     // write the bitmap to a PNG image file
-    const image = png.render(res.data, res.width, res.height)
+    const image = png.render(res.data, res.width, res.height, symbol.backgroundColor, symbol.foregroundColor)
 
     await png.writeFile(image, symbol.fileName)
   } else {
