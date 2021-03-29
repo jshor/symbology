@@ -87,7 +87,7 @@ function invoke (symbol, barcodeData, outputType) {
   if (outputType !== Output.PNG) {
     newSymbol.fileName = `out.${outputType}`
 
-    // apply bitmap output option (8) to output options
+    // apply option 8 (suppress stdout)
     if (parseInt(newSymbol.outputOptions, 10) > 0) {
       newSymbol.outputOptions += 8
     } else {

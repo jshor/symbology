@@ -1,4 +1,7 @@
 # Other Barcode-Like Markings
+
+[Click here](/reference/#other-barcode-like-markings) for a condensed list of these symbologies.
+
 ## Facing Identification Mark (FIM)
 
 ![FIM](/assets/barcodes/barcode_52.png)

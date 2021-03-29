@@ -2,6 +2,8 @@
 
 An early innovation to get more information into a symbol, used primarily in the vehicle industry, is to simply stack one-dimensional codes on top of each other. The stacked symbologies listed on this page are available.
 
+[Click here](/reference/#stacked-symbologies) for a condensed list of stacked symbologies.
+
 ## Codablock-F
 
 ![Codablock-F](/assets/barcodes/codablockf.png)

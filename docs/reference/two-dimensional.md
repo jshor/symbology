@@ -1,5 +1,7 @@
 # Two-Dimensional symbols
 
+[Click here](/reference/#two-dimensional-symbologies) for a condensed list of two-dimensional symbologies.
+
 ## Data Matrix ECC200 (ISO 16022)
 
 ![Data Matrix ECC200](/assets/barcodes/barcode_44.png)
@@ -144,7 +146,7 @@ A separate symbology ID can be used to encode [Health Industry Barcode (HIBC)](o
 
 A miniature version [QR Code](#qr-code-iso-18004) for short messages.
 
-Error correction levels can be set the same way as for [QR Code](#error-correction).
+Error correction levels can be set the same way as for [QR Code](#error-correction) by setting `option1`.
 
 ### Mini QR Code Size
 
@@ -159,6 +161,72 @@ A preferred symbol size can be selected by using the `option2` value to one of t
 
 :::warning Important
 The actual version used may be different if required by the input data.
+:::
+
+## Rectangular Micro QR Code (rMQR)
+
+![Rectangular Micro QR Code (rMQR)](/assets/barcodes/barcode_54.png)
+
+A rectangular version of QR Code. Like QR code rMQR supports encoding of GS-1 data, Latin-1 and Kanji characters in the [Shift-JIS encoding scheme](https://en.wikipedia.org/wiki/Shift_JIS). It does not support other [ISO/IEC 8859](https://en.wikipedia.org/wiki/ISO/IEC_8859) character sets or Unicode. As with other symbologies, data should be entered as UTF-8 with the conversion to Shift-JIS being handled by the library itself.
+
+### rMQR Codewords
+
+The amount of ECC codewords can be adjusted the same way as for [QR Code](#error-correction) by setting `option1`. Note that only ECC levels M and H are valid for this type of symbol.
+
+| Input | ECC Level   | Error Correction Capacity | Recovery Capacity |
+|-------|-------------|---------------------------|-------------------|
+| 2     | M           | Approx 37% of symbol      | Approx 15%        |
+| 4     | H           | Approx 65% of symbol      | Approx 30%        |
+
+### rMQR Size
+
+The size of the symbol can be set by setting `option2` to the QR Code version required (1-40). The size of symbol generated is shown in the table below.
+
+| Input | Version         | Symbol Size |
+|-------|-----------------|-------------|
+| 1     | R7 x 43         | 7 x 43      |
+| 2     | R7 x 59         | 7 x 59      |
+| 3     | R7 x 77         | 7 x 77      |
+| 4     | R7 x 99         | 7 x 99      |
+| 5     | R7 x 139        | 7 x 139     |
+| 6     | R9 x 43         | 9 x 43      |
+| 7     | R9 x 59         | 9 x 59      |
+| 8     | R9 x 77         | 9 x 77      |
+| 9     | R9 x 99         | 9 x 99      |
+| 10    | R9 x 139        | 9 x 139     |
+| 11    | R11 x 27        | 11 x 27     |
+| 12    | R11 x 43        | 11 x 43     |
+| 13    | R11 x 59        | 11 x 59     |
+| 14    | R11 x 77        | 11 x 77     |
+| 15    | R11 x 99        | 11 x 99     |
+| 16    | R11 x 139       | 11 x 139    |
+| 17    | R13 x 27        | 13 x 27     |
+| 18    | R13 x 43        | 13 x 43     |
+| 19    | R13 x 59        | 13 x 59     |
+| 20    | R13 x 77        | 13 x 77     |
+| 21    | R13 x 99        | 13 x 99     |
+| 22    | R13 x 139       | 13 x 139    |
+| 23    | R17 x 43        | 15 x 43     |
+| 24    | R15 x 59        | 15 x 59     |
+| 25    | R15 x 77        | 15 x 77     |
+| 26    | R15 x 99        | 15 x 99     |
+| 27    | R15 x 139       | 15 x 139    |
+| 28    | R17 x 43        | 17 x 43     |
+| 29    | R17 x 59        | 17 x 59     |
+| 30    | R17 x 77        | 17 x 77     |
+| 31    | R17 x 99        | 17 x 99     |
+| 32    | R17 x 139       | 17 x 139    |
+| 33    | Fixed height 7  |             |
+| 34    | Fixed height 9  |             |
+| 35    | Fixed height 11 |             |
+| 36    | Fixed height 13 |             |
+| 37    | Fixed height 15 |             |
+| 38    | Fixed height 17 |             |
+
+#### Maximizing Non-ASCII Data Density
+
+:::tip
+Non-ASCII data density may be maximized by by setting `option3` to `200` for barcode readers that support it.
 :::
 
 ## UPNQR - Univerzalni Plačilni Nalog QR
@@ -494,11 +562,8 @@ Approximately 33% of the resulting symbol is comprised of error correction codew
 :::
 
 ## Han Xin Code
-![barcode](/assets/barcodes/hanxin.png)
 
-:::danger Warning
-Han Xin is a symbology which is still under development by Zint. It is strongly advised against its use in production.
-:::
+![barcode](/assets/barcodes/hanxin.png)
 
 Also known as **Chinese Sensible Code**, this symbology is capable of encoding characters in the [GB-18030 character set](https://en.wikipedia.org/wiki/GB_18030) and is also able to support the [ECI mechanism](../../docs/encoding.md#extended-channel-interpolation-eci). 
 
@@ -587,4 +652,31 @@ symbology.createStream({
 
 :::warning Important
 It is not possible to select both symbol size and error correction capacity for the same symbol. If both options are selected then the error correction capacity selection will be ignored. 
+:::
+
+## Ultracode
+
+![Ultracode](/assets/barcodes/barcode_55.png)
+
+Ultracode uses a grid of coloured elements to encode data. ECI and GS-1 modes are supported.
+
+:::tip Note
+Compression is not implemented by default, but can be initiated by setting `option3` to `128`.
+:::
+
+### Error correction capacity
+
+The amount of error correction can be set by setting `option1` to one of the following values:
+
+| Value | Level | Amount of symbol-holding error correction data |
+|-------|-------|------------------------------------------------|
+| 1     | EC0   | 0% - Error detection                           |
+| 2     | EC1   | Approx 5%                                      |
+| 3     | EC2   | Approx 9% (default)                            |
+| 4     | EC3   | Approx 17%                                     |
+| 5     | EC4   | Approx 25%                                     |
+| 6     | EC5   | Approx 33%                                     |
+
+:::danger Warning
+Ultracode is a symbology which is still under development by Zint. It is strongly advised against its use in production.
 :::

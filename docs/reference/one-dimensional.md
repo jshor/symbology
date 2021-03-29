@@ -2,6 +2,8 @@
 
 One-Dimensional symbols are what most people associate with the term barcode. They consist of a number of bars and a number of spaces of differing widths.
 
+[Click here](/reference/#one-dimensional-symbologies) for a condensed list of one-dimensional symbologies.
+
 ## Code 11
 
 ![Code 11](/assets/barcodes/barcode_14.png)

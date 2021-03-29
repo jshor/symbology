@@ -95,5 +95,7 @@ module.exports = {
   CHANNEL: 140,
   CODEONE: 141,
   GRIDMATRIX: 142,
-  UPNQR: 143
+  UPNQR: 143,
+  ULTRA: 144,
+  RMQR: 145
 }

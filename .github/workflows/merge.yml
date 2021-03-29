@@ -10,6 +10,7 @@ on:
 env:
   GIT_USER: 'GitHub Actions'
   GIT_EMAIL: '41898282+github-actions[bot]@users.noreply.github.com'
+  CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
 jobs:
   build:
@@ -35,6 +36,8 @@ jobs:
         run: yarn build
       - name: Run tests
         run: yarn test
+      - name: Report coverage
+        run: yarn codecov
       - name: Upload binary artifact
         uses: actions/upload-artifact@v2
         with:

@@ -1,5 +1,4 @@
 const path = require('path')
-const getDir = require('./utils/getDir')
 
 module.exports = {
   base: '/',
@@ -14,7 +13,7 @@ module.exports = {
   head: [
     ['link', {
       rel: 'icon',
-      href: '/assets/favicon.png'
+      href: '/assets/favicon.svg'
     }]
   ],
   host: 'localhost',
@@ -38,19 +37,69 @@ module.exports = {
           },
           {
             text: 'Reference',
-            link: '/guide/'
+            link: '/reference/'
           }
         ],
         sidebar: [
           {
             title: 'Documentation',
             path: '/docs/',
-            children: getDir('docs')
+            children: [
+              {
+                title: 'Installation',
+                path: '/docs/installation',
+              },
+              {
+                title: 'API',
+                path: '/docs/api',
+              },
+              {
+                title: 'Options',
+                path: '/docs/options',
+              },
+              {
+                title: 'Encoding',
+                path: '/docs/encoding',
+              },
+              {
+                title: 'Error handling',
+                path: '/docs/error-handling',
+              },
+            ]
           },
           {
             title: 'Reference',
-            path: '/guide/',
-            children: getDir('guide/symbologies')
+            path: '/reference/',
+            children: [
+              {
+                title: 'One-Dimensional symbols',
+                path: '/reference/one-dimensional',
+              },
+              {
+                title: 'Two-Dimensional symbols',
+                path: '/reference/two-dimensional',
+              },
+              {
+                title: 'Composite symbols (ISO 24723)',
+                path: '/reference/composite',
+              },
+              {
+                title: 'Stacked symbologies',
+                path: '/reference/stacked',
+              },
+              {
+                title: 'Two-Track symbols',
+                path: '/reference/two-track',
+              },
+              {
+                title: 'Other Barcode-Like Markings',
+                path: '/reference/other',
+              }
+            ]
+          },
+          {
+            title: 'Development',
+            path: '/development',
           }
         ]
       }

@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:version="1.0 (4035a4fb49, 2020-05-01)"
+   sodipodi:docname="favicon.svg"
+   id="svg40"
+   viewBox="0 0 42 42"
+   version="1.1"
+   height="42mm"
+   width="42mm">
+  <metadata
+     id="metadata46">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs44" />
+  <sodipodi:namedview
+     inkscape:current-layer="g38"
+     inkscape:window-maximized="1"
+     inkscape:window-y="-8"
+     inkscape:window-x="-8"
+     inkscape:cy="77.509139"
+     inkscape:cx="52.888165"
+     inkscape:zoom="6.6082837"
+     showgrid="false"
+     id="namedview42"
+     inkscape:window-height="1387"
+     inkscape:window-width="3440"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0"
+     guidetolerance="10"
+     gridtolerance="10"
+     objecttolerance="10"
+     borderopacity="1"
+     bordercolor="#666666"
+     pagecolor="#ffffff" />
+  <g
+     transform="matrix(0.89901119,0,0,1.0000638,1.3888026,8.9950519)"
+     id="g24"
+     stroke="#000000"
+     fill="#1278aa">
+    <rect
+       stroke-width="0.0419574"
+       height="18.748945"
+       width="10.198765"
+       y="2.8759272"
+       x="5.5584922" />
+    <rect
+       stroke-width="0.0344313"
+       height="18.756081"
+       width="6.8654976"
+       y="2.8723595"
+       x="19.082481" />
+    <rect
+       stroke-width="0.024728"
+       height="18.761999"
+       width="3.5398266"
+       y="2.8657"
+       x="35.408871" />
+    <rect
+       x="29.018225"
+       y="2.8834138"
+       width="3.5398266"
+       height="18.761999"
+       stroke-width="0.024728"
+       id="rect22-5" />
+  </g>
+  <g
+     transform="translate(0,8.9958338)"
+     id="g38"
+     stroke="#000000">
+    <rect
+       id="rect26"
+       stroke-width="1.21619"
+       height="27.045591"
+       width="1.5468698"
+       y="-1.1542817"
+       x="1.4780146" />
+    <rect
+       id="rect28"
+       stroke-width="1.21619"
+       height="4.8573337"
+       width="1.5468698"
+       y="-6.3256431"
+       x="-2.4418113"
+       transform="rotate(90)" />
+    <rect
+       id="rect30"
+       stroke-width="1.21619"
+       height="4.8573337"
+       width="1.5468698"
+       y="-6.3103189"
+       x="25.202337"
+       transform="rotate(90)" />
+    <rect
+       x="39.541046"
+       y="-1.1636794"
+       width="1.5468698"
+       height="27.045591"
+       stroke-width="1.21619"
+       id="rect26-1" />
+    <rect
+       transform="rotate(90)"
+       x="-2.7105491"
+       y="-41.087917"
+       width="1.5468698"
+       height="4.8573337"
+       stroke-width="1.21619"
+       id="rect28-8" />
+    <rect
+       transform="rotate(90)"
+       x="24.933598"
+       y="-41.072594"
+       width="1.5468698"
+       height="4.8573337"
+       stroke-width="1.21619"
+       id="rect30-5" />
+  </g>
+  <style>
+    @media (prefers-color-scheme: dark) {
+      #g24, #g38 {
+        fill: #fff;
+        stroke: #fff;
+      }
+    }
+  </style>
+</svg>

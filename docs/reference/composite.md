@@ -4,20 +4,7 @@ Composite symbols employ a mixture of components to give more comprehensive info
 
 Composite symbols consist of a linear component which can be an [EAN](one-dimensional.md#european-article-number-en-797), [UPC](one-dimensional.md#universal-product-code-en-797), [GS1-128](one-dimensional.md#gs1-128) or [GS1 DataBar](one-dimensional.md#gs1-databar-iso-24724) symbol, a 2D component which is based on [PDF417](stacked.md#pdf417-iso-15438) or [MicroPDF417](stacked.md#micropdf417-iso-24728), and a separator pattern.
 
-The type of linear component to be used is determined by the `symbology` option parameter. Valid values are shown below.
-
-| Numeric Value | Name              | Symbology                                                              |
-|---------------|-------------------|------------------------------------------------------------------------|
-| 130           | `EANX_CC`         | Composite symbol with EAN linear component                             |
-| 131           | `EAN128_CC`       | Composite symbol with GS1-128 linear component                         |
-| 132           | `RSS14_CC`        | Composite symbol with GS1 DataBar-14 linear component                  |
-| 133           | `RSS_LTD_CC`      | Composite symbol with GS1 DataBar Limited component                    |
-| 134           | `RSS_EXP_CC`      | Composite symbol with GS1 DataBar Extended component                   |
-| 135           | `UPCA_CC`         | Composite symbol with UPC A linear component                           |
-| 136           | `UPCE_CC`         | Composite symbol with UPC E linear component                           |
-| 137           | `RSS14STACK_CC`   | Composite symbol with GS1 DataBar-14 Stacked component                 |
-| 138           | `RSS14_OMNI_CC`   | Composite symbol with GS1 DataBar-14 Stacked Omnidirectional component |
-| 139           | `RSS_EXPSTACK_CC` | Composite symbol with GS1 DataBar Expanded Stacked component           |
+The type of linear component to be used is determined by the `symbology` option parameter. [Click here](/reference/#composite-symbologies-iso-24723) for a condensed list of composite symbologies.
 
 The data to be encoded in the linear component of a composite symbol should be set in the `primary` option.
 
