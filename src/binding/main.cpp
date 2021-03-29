@@ -96,9 +96,10 @@ namespace symbology {
 
     // options (-1 indicates not set)
     int option_1, option_2, option_3, output_options;
-    float scale;
+    float scale, dot_size;
 
     scale = (float)args[9]->NumberValue(context).FromJust();
+    dot_size = (float)args[19]->NumberValue(context).FromJust();
     option_1 = (int)args[10]->NumberValue(context).FromJust();
     option_2 = (int)args[11]->NumberValue(context).FromJust();
     option_3 = (int)args[12]->NumberValue(context).FromJust();
@@ -118,6 +119,9 @@ namespace symbology {
     }
     if(scale > 0) {
       symbol->scale = scale;
+    }
+    if(dot_size > -1) {
+      symbol->dot_size = dot_size;
     }
 
     Nan::Utf8String bgcolor(args[6]);
