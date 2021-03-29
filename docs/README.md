@@ -3,7 +3,7 @@ home: true
 heroImage: /assets/hero.svg
 actionText: Read the docs →
 actionLink: /docs/
-footer: © 2019 Symbology.js.
+footer: © 2021 Symbology.js.
 ---
 
 <div style="text-align: center">
@@ -38,7 +38,7 @@ const symbology = require('symbology')
 
 (async function () {
   try {
-    await data = symbology.createStream({
+    const data = await symbology.createStream({
       symbology: symbology.Barcode.CODE128,
       backgroundColor: 'ff00ff',
       foregroundColor: '00ff00'

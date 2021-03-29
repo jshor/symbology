@@ -17,7 +17,11 @@ const symbology = require('symbology')
 
 (async function () {
   try {
-    await data = symbology.createStream(Symbol, '12345')
+    const data = await symbology.createStream({
+      symbology: symbology.Barcode.CODE128,
+      backgroundColor: 'ff00ff',
+      foregroundColor: '00ff00'
+    }, '12345')
 
     console.log('Result: ', data)
   } catch (err) {
