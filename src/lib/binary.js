@@ -1,47 +1,19 @@
 const gyp = require('node-pre-gyp')
 const path = require('path')
-const Encoding = require('../enums/encoding')
 const Output = require('../enums/output')
 const binding = gyp.find(path.join(__dirname,'../../package.json'))
 const symbology = require(binding)
-
-/**
- * Default Symbology config, populated with default values
- */
-const defaultConfig = {
-  symbology: 20,
-  height: 50,
-  whitespaceWidth: 0,
-  borderWidth: 0,
-  outputOptions: -1,
-  foregroundColor: '000000',
-  backgroundColor: 'ffffff',
-  fileName: 'out.bmp',
-  scale: 1.0,
-  option1: -1,
-  option2: -1,
-  option3: -1,
-  showHumanReadableText: true,
-  encoding: Encoding.DATA_MODE,
-  eci: 0,
-  primary: ''
-}
 
 /**
  * Calls the given function name from the c++ library wrapper, validates
  * the struct values and passes the arguments sent in symbologyStruct
  * in the correct order.
  *
- * @param {Symbol} config
+ * @param {Symbol} symbol
  * @param {String} barcodeData
  * @return {Object}
  */
-function createBuffer (config, barcodeData) {
-  const symbol = {
-    ...defaultConfig,
-    ...config
-  }
-
+function createBuffer (symbol, barcodeData) {
   return symbology.createStream(
     barcodeData,
     symbol.symbology,

@@ -25,8 +25,8 @@ describe('Binary methods', () => {
         whitespaceWidth: 3,
         borderWidth: 5,
         outputOptions: 2,
-        foregroundColor: '00ff00',
-        backgroundColor: 'ff0000',
+        foregroundColor: '00ff00ff',
+        backgroundColor: 'ff0000ff',
         fileName: 'myfile.svg',
         scale: 1.3,
         option1: 1,
@@ -64,13 +64,29 @@ describe('Binary methods', () => {
       )
     })
 
-    it('should fallback to default values for ones missing from config', () => {
+    it('should fallback to default values for values missing in config', () => {
       jest
         .spyOn(symbology, 'createStream')
         .mockReturnValue()
 
       const symbol = {
-        symbology: 10
+        symbology: 10,
+        height: 30,
+        whitespaceWidth: 3,
+        borderWidth: 5,
+        outputOptions: 2,
+        foregroundColor: '00ff00ff',
+        backgroundColor: 'ff0000ff',
+        fileName: 'myfile.svg',
+        scale: 1.3,
+        option1: 1,
+        option2: 2,
+        option3: 3,
+        showHumanReadableText: true,
+        encoding: Encoding.DATA_MODE,
+        eci: 0,
+        primary: '',
+        text: ''
       }
       const barcodeData = 'primary data'
 
@@ -78,24 +94,23 @@ describe('Binary methods', () => {
 
       expect(symbology.createStream).toHaveBeenCalledWith(
         barcodeData,
-        /* default config values */
         symbol.symbology,
-        50,
-        0,
-        0,
-        -1,
-        'ffffff',
-        '000000',
-        'out.bmp',
-        1.0,
-        -1,
-        -1,
-        -1,
+        symbol.height,
+        symbol.whitespaceWidth,
+        symbol.borderWidth,
+        symbol.outputOptions,
+        symbol.backgroundColor,
+        symbol.foregroundColor,
+        symbol.fileName,
+        symbol.scale,
+        symbol.option1,
+        symbol.option2,
+        symbol.option3,
         1,
         barcodeData,
-        Encoding.DATA_MODE,
-        0,
-        ''
+        symbol.encoding,
+        symbol.eci,
+        symbol.primary
       )
     })
   })
