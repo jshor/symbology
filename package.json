@@ -1,7 +1,7 @@
 {
   "name": "symbology",
   "version": "2.0.0",
-  "description": "Generate 50+ different 1D or 2D barcodes in png, svg, or eps formats.",
+  "description": "🔖 Generates 1D, 2D, and composite barcodes in png, svg, or eps formats. Supports 50+ symbologies.",
   "scripts": {
     "commit": "yarn git-cz",
     "release": "standard-version",
@@ -22,14 +22,19 @@
     "type": "git",
     "url": "https://github.com/jshor/symbology.git"
   },
+  "homepage": "https://symbology.dev",
   "keywords": [
     "barcode",
-    "datamatrix",
-    "code128",
+    "code 128",
     "qr",
-    "postal",
-    "1d barcode",
-    "2d barcode"
+    "ean",
+    "upc",
+    "isbn",
+    "pdf417",
+    "gs1",
+    "aztec",
+    "data matrix",
+    "usps onecode"
   ],
   "binary": {
     "module_name": "symbology",
@@ -46,8 +51,7 @@
     "lodash": "^4.17.21",
     "nan": "^2.14.2",
     "node-pre-gyp": "^0.14.0",
-    "pngjs": "3.3.0",
-    "pngjs-image": "^0.11.6",
+    "pngjs": "^6.0.0",
     "replace-in-file": "^4.2.0",
     "rimraf": "^3.0.0"
   },
@@ -62,7 +66,7 @@
     "jest": "^26.6.3",
     "jest-image-snapshot": "^4.3.0",
     "standard-version": "^9.0.0",
-    "vuepress": "^1.2.0"
+    "vuepress": "^1.8.2"
   },
   "bundledDependencies": [
     "node-pre-gyp"

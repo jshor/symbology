@@ -1,5 +1,5 @@
 const fs = require('fs')
-const PNGImage = require('pngjs-image')
+const { PNG } = require('pngjs')
 const symbology = require('../')
 const binary = require('../lib/binary')
 const png = require('../lib/png')
@@ -16,7 +16,10 @@ describe('Symbology Library', () => {
     ...mockPngRes,
     data: '<svg>...</svg>'
   }
-  const mockPngImage = PNGImage.createImage(mockPngRes.width, mockPngRes.height)
+  const mockPngImage = new PNG({
+    width: mockPngRes.width,
+    height: mockPngRes.height
+  })
   const mockBase64Png = 'data:image/png;base64,iVBOR=='
 
   beforeEach(() => {
@@ -96,9 +99,6 @@ describe('Symbology Library', () => {
   describe('createFile()', () => {
     beforeEach(() => {
       jest
-        .spyOn(png, 'writeFile')
-        .mockReturnValue()
-      jest
         .spyOn(fs, 'writeFileSync')
         .mockImplementation(() => {})
     })
@@ -116,9 +116,8 @@ describe('Symbology Library', () => {
 
       expect(png.render).toHaveBeenCalledTimes(1)
       expect(png.render).toHaveBeenCalledWith(mockPngRes.data, mockPngRes.width, mockPngRes.height, 'ffffffff', '000000ff')
-      expect(png.writeFile).toHaveBeenCalledTimes(1)
-      expect(png.writeFile).toHaveBeenCalledWith(mockPngImage, fileName)
-      expect(fs.writeFileSync).not.toHaveBeenCalled()
+      expect(fs.writeFileSync).toHaveBeenCalledTimes(1)
+      expect(fs.writeFileSync).toHaveBeenCalledWith(fileName, png.getBuffer(mockPngImage))
 
       expect(res.width).toEqual(mockPngRes.width)
       expect(res.height).toEqual(mockPngRes.height)
@@ -138,7 +137,6 @@ describe('Symbology Library', () => {
         fileName
       }, '12345')
 
-      expect(png.writeFile).not.toHaveBeenCalled()
       expect(png.render).not.toHaveBeenCalled()
       expect(fs.writeFileSync).toHaveBeenCalledTimes(1)
       expect(fs.writeFileSync).toHaveBeenCalledWith(fileName, mockSvgRes.data)
