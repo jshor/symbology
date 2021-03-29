@@ -35,7 +35,8 @@ function createBuffer (symbol, barcodeData) {
     symbol.encoding,
     symbol.eci,
     symbol.primary,
-    symbol.rotation
+    symbol.rotation,
+    symbol.dotSize
   )
 }
 

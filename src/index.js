@@ -35,7 +35,8 @@ const defaultConfig = {
   encoding: exp.Encoding.DATA_MODE,
   eci: 0,
   primary: '',
-  rotation: 0
+  rotation: 0,
+  dotSize: 0.8
 }
 
 /**
@@ -91,7 +92,7 @@ async function createFile (config, barcodeData) {
     await png.writeFile(image, symbol.fileName)
   } else {
     // write SVG or EPS to a file
-    fs.writeFileSync(symbol.fileName, res.data)
+    fs.writeFileSync(symbol.fileName, res.data.trim())
   }
 
   return omit(res, 'data')
