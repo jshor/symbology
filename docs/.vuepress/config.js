@@ -19,7 +19,7 @@ module.exports = {
   host: 'localhost',
   serviceWorker: true,
   themeConfig: {
-    logo: '/assets/symbology-logo.svg',
+    logo: '/assets/hero.svg',
     repo: 'jshor/symbology',
     docsDir: 'docs',
     editLinks: true,

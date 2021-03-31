@@ -33,18 +33,25 @@ yarn add symbology
 
 ### Example usage
 
-```js
-const symbology = require('symbology')
+```ts
+import {
+  SymbologyType,
+  OutputTypes,
+  EncodingMode,
+  createStream
+} from 'symbology'
 
-(async function () {
+(async () => {
   try {
-    const data = await symbology.createStream({
-      symbology: symbology.Barcode.CODE128,
-      backgroundColor: 'ff00ff',
-      foregroundColor: '00ff00'
+    const { data } = await createFile({
+      symbology: SymbologyType.CODE128,
+      encoding: EncodingMode.GS1_MODE,
+      fileName: 'out.svg',
+      backgroundColor: '00000000',
+      foregroundColor: '00ff00ff'
     }, '12345')
 
-    console.log('Result: ', data)
+    console.log('File successfully created.')
   } catch (err) {
     console.error('Error: ', err)
   }

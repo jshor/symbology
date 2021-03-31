@@ -41,16 +41,16 @@ yarn add symbology
 
 ### Code 11 Example
 
-```js
-const symbology = require('symbology')
+```ts
+import { SymbologyType, createFile } from 'symbology'
 
-symbology
-  .createStream({
+(async () => {
+  const { data } = await createStream({
     symbology: symbology.Barcode.CODE128
   }, '8765432164')
-  .then((data) => {
-    console.log('Result: ', data)
-  })
+
+  console.log('Result: ', data)
+})()
 ```
 
 This will log:
@@ -58,7 +58,7 @@ This will log:
 ```json
 {
   "data": "data:image/png+data;base64,PHN [...] eFd==",
-  "message": "",
+  "message": "Symbology successfully created.",
   "code": 0
 }
 ```
@@ -69,17 +69,19 @@ And the base64 PNG generated will look like:
 
 ### MaxiCode Example
 
-```js
-symbology
-  .createFile({
-    symbology: Symbology.Barcode.MAXICODE,
+```ts
+import { SymbologyType, createFile } from 'symbology'
+
+(async () => {
+  const { data } = await createFile({
+    symbology: SymbologyType.MAXICODE,
     option1: 2,
     primary: '999999999840012',
     fileName: 'maxiCodeExample.svg'
   }, 'Secondary Message Here')
-  .then((data) => {
-    console.log('Result: ', data)
-  })
+
+  console.log('Result: ', data)
+})()
 ```
 
 This creates `maxiCodeExample.svg` which looks like:
@@ -88,15 +90,17 @@ This creates `maxiCodeExample.svg` which looks like:
 
 ### USPS Example
 
-```js
-symbology
-  .createFile({
+```ts
+import { SymbologyType, createFile } from 'symbology'
+
+(async () => {
+  const { data } = await createFile({
     symbology: Symbology.Barcode.ONECODE
     fileName: 'uspsExample.eps'
   }, '01234567094987654321-01234')
-  .then((data) => {
-    console.log('Result: ', data)
-  })
+
+  console.log('Result: ', data)
+})()
 ```
 
 This creates `uspsExample.eps` which looks like:

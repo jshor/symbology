@@ -10,9 +10,9 @@ The data to be encoded in the linear component of a composite symbol should be s
 
 #### Example
 
-```js
-symbology.createStream({
-  symbology: symbology.Barcode.EANX_CC,
+```ts
+createStream({
+  symbology: SymbologyType.EANX_CC,
   option1: 1,
   primary: '331234567890'
 }, '[99]1234-abcd')

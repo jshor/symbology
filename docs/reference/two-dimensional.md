@@ -6,7 +6,7 @@
 
 ![Data Matrix ECC200](/assets/barcodes/barcode_44.png)
 
-Also known as **Semacode**, this symbology was developed in 1989 by Acuity CiMatrix in partnership with the US DoD and NASA. The symbol can encode a large amount of data in a small area. characters in the Latin-1 set by default but also supports encoding [GS1 data](../../docs/encoding.md#gs1-data) or other character sets using the [ECI mechanism](../../docs/encoding.md#extended-channel-interpolation-eci).
+Also known as **Semacode**, this symbology was developed in 1989 by Acuity CiMatrix in partnership with the US DoD and NASA. The symbol can encode a large amount of data in a small area. characters in the Latin-1 set by default but also supports encoding [GS1 data](../../docs/EncodingMode.md#gs1-data) or other character sets using the [ECI mechanism](../../docs/EncodingMode.md#extended-channel-interpolation-eci).
 
 :::tip Note
 A separate symbology ID can be used to encode [Health Industry Barcode (HIBC)](one-dimensional.md#hibc-code-39) data which adds a leading `+` character and a modulo-49 check digit to the encoded data.
@@ -25,10 +25,10 @@ The resolution of the Data Matrix can be adjusted to one of the following two op
 
 #### Example
 
-```js
-symbology.createStream({
-  symbology: symbology.Barcode.DATAMATRIX,
-  option3: symbology.DataMatrix.DM_SQUARE
+```ts
+createStream({
+  symbology: SymbologyType.DATAMATRIX,
+  option3: DataMatrix.DM_SQUARE
 }, '12345')
 ```
 
@@ -94,9 +94,9 @@ Four levels of error correction are available by setting `option1` to one of the
 
 The following example creates a QR code:
 
-```js
-symbology.createStream({
-  symbology: symbology.Barcode.QRCODE,
+```ts
+createStream({
+  symbology: SymbologyType.QRCODE,
   option2: 1
 }, '12345')
 ```
@@ -134,7 +134,7 @@ The maximum capacity of a (version 40) QR Code symbol is 7089 numeric digits (42
 
 ### Encoding GS1 data
 
-QR Code symbols can also be used to encode GS1 data. QR Code symbols can by default encode characters in the Latin-1 set and Kanji characters which are members of the Shift-JIS encoding scheme. QR Code also supports using other character sets using the [ECI mechanism](../../docs/encoding.md#extended-channel-interpolation-eci).
+QR Code symbols can also be used to encode GS1 data. QR Code symbols can by default encode characters in the Latin-1 set and Kanji characters which are members of the Shift-JIS encoding scheme. QR Code also supports using other character sets using the [ECI mechanism](../../docs/EncodingMode.md#extended-channel-interpolation-eci).
 
 :::tip Note
 A separate symbology ID can be used to encode [Health Industry Barcode (HIBC)](one-dimensional.md#hibc-code-39) data which adds a leading `+` character and a modulo-49 check digit to the encoded data.
@@ -240,20 +240,20 @@ A variation of QR code used **Združenje Bank Slovenije (Bank Association of Slo
 UPNQR is unusual in that it uses [ISO-8859-2](https://en.wikipedia.org/wiki/ISO/IEC_8859-2)-encoded data. Any UTF-8 data will be automatically converted to ISO-8859-2 format.
 
 :::tip Note
-If your data is already formatted as ISO-8859-2, set the `inputMode` flag to `DATA_MODE`.
+If your data is already formatted as ISO-8859-2, set the `encoding` flag to `EncodingMode.DATA_MODE`.
 :::
 
 #### Example
 
 The following example creates a symbol from data saved in an ISO-8859-2 file:
 
-```js
-symbology.createStream({
-  symbology: symbology.Barcode.UPNQR,
+```ts
+createStream({
+  symbology: SymbologyType.UPNQR,
   option1: 2,
   borderWidth: 5,
   scale: 3,
-  inputMode: symbology.Encoding.DATA_MODE
+  encoding: EncodingMode.DATA_MODE
 }, 'to je testna črtna koda')
 ```
 
@@ -283,9 +283,9 @@ The primary message can be set via the `primary` option. The secondary message u
 
 #### Example
 
-```js
-symbology.createStream({
-  symbology: symbology.Barcode.MAXICODE,
+```ts
+createStream({
+  symbology: SymbologyType.MAXICODE,
   option1: 2,
   primary: '999999999840012'
 }, 'Secondary Message Here')
@@ -305,9 +305,9 @@ Modes `4`, `5`, and `6` do not require a primary message.
 
 #### Example
 
-```js
-symbology.createStream({
-  symbology: symbology.Barcode.MAXICODE,
+```ts
+createStream({
+  symbology: SymbologyType.MAXICODE,
   option1: 4
 }, 'A MaxiCode Message in Mode 4')
 ```
@@ -395,9 +395,9 @@ To specify the desired size of the symbol, set `option2` to one of the following
 
 The following will render a 45x45 Aztec Code symbol with 23% error correction capacity:
 
-```js
-symbology.createStream({
-  symbology: symbology.Barcode.AZTEC,
+```ts
+createStream({
+  symbology: SymbologyType.AZTEC,
   option1: 2,
   option2: 11
 }, '12345')
@@ -421,9 +421,9 @@ Defined in [ISO/IEC 24778 (Annex A)](https://www.iso.org/standard/41548.html), a
 
 The following will render an Aztec Runes symbol encoding `123`:
 
-```js
-symbology.createStream({
-  symbology: symbology.Barcode.AZRUNE
+```ts
+createStream({
+  symbology: SymbologyType.AZRUNE
 }, '123')
 ```
 
@@ -457,9 +457,9 @@ The type can be specified by setting `option2` to one of the following input val
 
 The following will render a 22x22 Code One symbol encoding `An Example`:
 
-```js
-symbology.createStream({
-  symbology: symbology.Barcode.CODEONE,
+```ts
+createStream({
+  symbology: SymbologyType.CODEONE,
   option2: 2
 }, 'An Example')
 ```
@@ -475,7 +475,7 @@ symbology.createStream({
 
 ### Encoding
 
-By default Grid Matrix supports encoding in Latin-1 and Chinese characters within the [GB 2312 standard set](https://en.wikipedia.org/wiki/GB_2312) to be encoded in a checkerboard pattern. Input should be entered as a Unicode UTF-8 stream with conversion to GB 2312 being carried out automatically. The symbology also supports the [ECI mechanism](../../docs/encoding.md#extended-channel-interpolation-eci). 
+By default Grid Matrix supports encoding in Latin-1 and Chinese characters within the [GB 2312 standard set](https://en.wikipedia.org/wiki/GB_2312) to be encoded in a checkerboard pattern. Input should be entered as a Unicode UTF-8 stream with conversion to GB 2312 being carried out automatically. The symbology also supports the [ECI mechanism](../../docs/EncodingMode.md#extended-channel-interpolation-eci). 
 
 ### Error Correction and Size
 
@@ -521,9 +521,9 @@ The symbol size can be specified by setting the `option2` value to one of the fo
 
 The following will render a 30x30 Grid Matrix symbol with 20% error correction encoding `12345`:
 
-```js
-symbology.createStream({
-  symbology: symbology.Barcode.GRIDMATRIX,
+```ts
+createStream({
+  symbology: SymbologyType.GRIDMATRIX,
   option1: 2,
   option2: 2
 }, '12345')
@@ -537,7 +537,7 @@ If you specify both of these values, this library will make a 'best-fit' attempt
 
 ![barcode](/assets/barcodes/dotcode.png)
 
-DotCode uses a grid of dots in a rectangular formation to encode characters up to a maximum of approximately 450 characters (or 900 numeric digits). The symbology supports ECI encoding and GS-1 data encoding.
+DotCode uses a grid of dots in a rectangular formation to encode characters up to a maximum of approximately 450 characters (or 900 numeric digits). The symbology supports ECI encoding and GS-1 data EncodingMode.
 
 ### Width
 
@@ -547,9 +547,9 @@ By default, the library will produce a symbol which is approximately square. How
 
 The following will render a DotCode symbol encoding `12345`:
 
-```js
-symbology.createStream({
-  symbology: symbology.Barcode.DOTCODE
+```ts
+createStream({
+  symbology: SymbologyType.DOTCODE
 }, '12345')
 ```
 
@@ -565,7 +565,7 @@ Approximately 33% of the resulting symbol is comprised of error correction codew
 
 ![barcode](/assets/barcodes/hanxin.png)
 
-Also known as **Chinese Sensible Code**, this symbology is capable of encoding characters in the [GB-18030 character set](https://en.wikipedia.org/wiki/GB_18030) and is also able to support the [ECI mechanism](../../docs/encoding.md#extended-channel-interpolation-eci). 
+Also known as **Chinese Sensible Code**, this symbology is capable of encoding characters in the [GB-18030 character set](https://en.wikipedia.org/wiki/GB_18030) and is also able to support the [ECI mechanism](../../docs/EncodingMode.md#extended-channel-interpolation-eci). 
 
 :::warning Important
 Han Xin does not support the encoding of GS-1 data.
@@ -642,9 +642,9 @@ The size of the symbol can be specified by setting `option2` to one of the follo
 
 The following will render a 33x33 Han Xin symbol encoding `12345` with ~23% error correction:
 
-```js
-symbology.createStream({
-  symbology: symbology.Barcode.HANXIN,
+```ts
+createStream({
+  symbology: SymbologyType.HANXIN,
   option1: 3,
   option2: 6
 }, '12345')

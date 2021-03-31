@@ -16,9 +16,9 @@ The width of the Codablock-F symbol can be specified via `option2` **or** the he
 
 The following renders a a 5-row Codablock-F symbol:
 
-```js
-symbology.createStream({
-  symbology: symbology.Barcode.CODABLOCKF,
+```ts
+createStream({
+  symbology: SymbologyType.CODABLOCKF,
   option1: 5,
 }, '11010000100101111011101001000011010100011000101000110001010001100010100011000110011001101100011101011')
 ```
@@ -57,9 +57,9 @@ A separate symbology ID can be used to encode [Health Industry Barcode (HIBC)](o
 
 The following renders a 5-row Codablock-F symbol:
 
-```js
-symbology.createStream({
-  symbology: symbology.Barcode.CODABLOCKF,
+```ts
+createStream({
+  symbology: SymbologyType.CODABLOCKF,
   option1: 5,
 }, '11010000100101111011101001000011010100011000101000110001010001100010100011000110011001101100011101011')
 ```
@@ -130,9 +130,9 @@ This symbol can be generated with a two-dimensional component to make a composit
 
 #### Example
 
-```js
-symbology.createStream({
-  symbology: symbology.Barcode.EANX_CC,
+```ts
+createStream({
+  symbology: SymbologyType.EANX_CC,
   option1: 1,
   primary: '331234567890'
 }, '[99]1234-abcd')

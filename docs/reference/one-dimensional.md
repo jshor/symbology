@@ -1,6 +1,6 @@
 # One-Dimensional symbols
 
-One-Dimensional symbols are what most people associate with the term barcode. They consist of a number of bars and a number of spaces of differing widths.
+One-Dimensional symbols are what most people associate with the term SymbologyType. They consist of a number of bars and a number of spaces of differing widths.
 
 [Click here](/reference/#one-dimensional-symbologies) for a condensed list of one-dimensional symbologies.
 
@@ -14,9 +14,9 @@ Developed by Intermec in 1977, Code 11 is similar to [Code 2 of 5 Matrix](#code-
 
 The following will render a Code 11 symbol encoding `8765432164`:
 
-```js
-symbology.createStream({
-  symbology: symbology.Barcode.CODE11
+```ts
+createStream({
+  symbology: SymbologyType.CODE11
 }, '8765432164')
 ```
 
@@ -34,9 +34,9 @@ Also known as **Code 2 of 5 Matrix**, this symbology is a self-checking code use
 
 The following will render a standard Code 2 of 5 symbol encoding `32109876543211`:
 
-```js
-symbology.createStream({
-  symbology: symbology.Barcode.C25IATA,
+```ts
+createStream({
+  symbology: SymbologyType.C25IATA,
   borderWidth: 6
 }, '32109876543211')
 ```
@@ -79,16 +79,16 @@ UPC-A is used in the United States for retail applications. The symbol requires 
 
 #### Example
 
-```js
-symbology.createStream({
-  symbology: symbology.Barcode.UPCA,
-  mode: 1,
+```ts
+createStream({
+  symbology: SymbologyType.UPCA,
+  encoding: EncodingMode.UNICODE_MODE,
   primary: '331234567890'
 }, '72527270270+12345')
 ```
 
 :::tip Note
-If your input data already includes the check digit symbology 35 can be used which takes a 12 digit input and validates the check digit before encoding.
+If your input data already includes the check digit symbology 35 can be used which takes a 12 digit input and validates the check digit before EncodingMode.
 :::
 
 ### UPC Version E
@@ -101,14 +101,14 @@ The code requires a 6 digit article number (digits `0-9`). The check digit is au
 
 This library also supports Number System 1 encoding by entering a 7-digit article number stating with the digit 1.
 
-```js
-symbology.createStream({
-  symbology: symbology.Barcode.UPCE
+```ts
+createStream({
+  symbology: SymbologyType.UPCE
 }, '1123456')
 ```
 
 :::tip Note
-If your input data already includes the check digit symbology 38 can be used which takes a 7 or 8 digit input and validates the check digit before encoding.
+If your input data already includes the check digit symbology 38 can be used which takes a 7 or 8 digit input and validates the check digit before EncodingMode.
 :::
 
 ## European Article Number (EN 797)
@@ -131,9 +131,9 @@ The symbology to use is automatically selected depending on the length of the in
 
 The following example will encode a standalone EAN-5:
 
-```js
-symbology.createStream({
-  symbology: symbology.Barcode.EANX
+```ts
+createStream({
+  symbology: SymbologyType.EANX
 }, '54321')
 ```
 
@@ -141,9 +141,9 @@ symbology.createStream({
 
 The following example will encode an EAN-8 symbol with an EAN-5 add-on:
 
-```js
-symbology.createStream({
-  symbology: Symbology.Barcode.EANX
+```ts
+createStream({
+  symbology: Symbology.SymbologyType.EANX
 }, '7432365+54321')
 ```
 
@@ -152,7 +152,7 @@ All of the EAN symbols include check digits which is automatically added.
 :::
 
 :::tip Tip
-If you are encoding an EAN-8 or EAN-13 symbol and your data already includes the check digit then you can use symbology 14 which takes an 8 or 13 digit input and validates the check digit before encoding.
+If you are encoding an EAN-8 or EAN-13 symbol and your data already includes the check digit then you can use symbology 14 which takes an 8 or 13 digit input and validates the check digit before EncodingMode.
 :::
 
 ### SBN, ISBN and ISBN-13
@@ -190,9 +190,9 @@ The table below shows the options available:
 
 The following example will create an MSI Plessey symbol with modulo-10 check digit encoding `7432365`:
 
-```js
-symbology.createStream({
-  symbology: symbology.Barcode.MSI_PLESSEY,
+```ts
+createStream({
+  symbology: SymbologyType.MSI_PLESSEY,
   option2: 1
 }, '7432365')
 ```
@@ -227,9 +227,9 @@ Standard Code 39 was developed in 1974 by Intermec. Input data can be of any len
 
 The following example will create a Code 39 symbol with modulo-10 check digit encoding `CODE39`:
 
-```js
-symbology.createStream({
-  symbology: symbology.Barcode.CODE39
+```ts
+createStream({
+  symbology: SymbologyType.CODE39
 }, 'CODE39')
 ```
 
@@ -299,9 +299,9 @@ Developed by Laetus, Pharmacode is used for the identification of pharmaceutical
 
 The following example will create a Pharmacode symbol with modulo-10 check digit encoding `131070`:
 
-```js
-symbology.createStream({
-  symbology: symbology.Barcode.PHARMA
+```ts
+createStream({
+  symbology: SymbologyType.PHARMA
 }, '131070')
 ```
 
@@ -331,16 +331,16 @@ Also known as **UCC/EAN-128**, this variation of Code 128 is defined by the [GS1
 
 The following is an example of a valid GS1-128 input:
 
-```js
-symbology.createStream({
-  symbology: Symbology.Barcode.EAN128
+```ts
+createStream({
+  symbology: Symbology.SymbologyType.EAN128
 }, '[01]98898765432106[3202]012345[15]991231')
 ```
 
 :::warning Important
   * AIs should be encased in square brackets (`[...]`) in the input data. This will be converted to (rounded brackets) before it is included in the human readable text attached to the symbol.
   * GTIN data (AI `01`) should also include the check digit data.
-  * Fixed length data should be entered at the appropriate length for correct encoding.
+  * Fixed length data should be entered at the appropriate length for correct EncodingMode.
   * GS1-128 does not support extended ASCII characters. Check digits for GTIN data (AI `01`) are not generated and must be included in the input data.
 :::
 
@@ -399,14 +399,14 @@ Also known as **RSS Expanded**, this is a variable length symbology capable of e
 :::warning Important
   * AIs should be encased in square brackets (`[...]`) in the input data. This will be converted to (rounded brackets) before it is included in the human readable text attached to the symbol.
   * GTIN data (AI `01`) should also include the check digit data.
-  * Fixed length data should be entered at the appropriate length for correct encoding.
+  * Fixed length data should be entered at the appropriate length for correct EncodingMode.
 :::
 
 #### Example
 
-```js
-symbology.createStream({
-  symbology: Symbology.Barcode.RSS_EXP
+```ts
+createStream({
+  symbology: Symbology.SymbologyType.RSS_EXP
 }, '[01]98898765432106[3202]012345[15]991231')
 ```
 
@@ -437,9 +437,9 @@ The maximum values permitted depend on the number of channels used:
 
 The following example renders a 5-channel Channel Code symbol:
 
-```js
-symbology.createStream({
-  symbology: symbology.Barcode.CHANNEL,
+```ts
+createStream({
+  symbology: SymbologyType.CHANNEL,
   option2: 6
 }, '12345')
 ```

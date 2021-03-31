@@ -4,7 +4,7 @@ Each symbology type values can be represented using an enumerated type. The type
 
 ## Supported Barcode Types
 
-Below is a tabular list of all supported symbology types. Click on the barcode names for more info on each symbology.
+Below is a tabular list of all supported symbology types. Click on the barcode names for more info on each 
 
 ### One-Dimensional Symbologies
 
