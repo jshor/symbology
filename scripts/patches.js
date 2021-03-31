@@ -58,6 +58,7 @@ INTERNAL int $1_plot$2
       files: '.zint/**/{svg,ps}.{c,h}',
       from: /fflush\(([a-z]+)\);/g,
       to: `
+fprintf($1, "<<< EOF >>>");
 #ifndef _MSC_VER
     fflush($1);
     close(p[1]);

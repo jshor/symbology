@@ -38,7 +38,7 @@
   ],
   "binary": {
     "module_name": "symbology",
-    "module_path": "./lib/binding/bin/",
+    "module_path": "./bin/binding/bin/",
     "remote_path": "{version}",
     "package_name": "{module_name}_{platform}_{arch}_{node_abi}.tar.gz",
     "host": "https://github.com/jshor/symbology/releases/download/"

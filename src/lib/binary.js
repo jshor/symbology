@@ -73,7 +73,12 @@ function invoke (symbol, barcodeData, outputType) {
 
   if (res.code <= 2) {
     return Promise.resolve({
-      data: res.encodedData,
+      // remove all data after the trailing EOF marker
+      data: typeof res.encodedData === 'string'
+        ? res
+          .encodedData
+          .split('<<< EOF >>>')[0]
+        : res.encodedData,
       message: res.message,
       code: res.code,
       width: res.width,

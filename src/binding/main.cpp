@@ -61,9 +61,7 @@ namespace symbology {
         if(strcmp("bmp", fileExt) == 0) {
           // parse the buffer as a bitmap array and store it in `encodedData`
           Nan::Set(obj, Nan::New<String>("encodedData").ToLocalChecked(), getBitmap(isolate, symbol));
-        }
-
-        if(strcmp("svg", fileExt) == 0 || strcmp("eps", fileExt) == 0) {
+        } else if(strcmp("svg", fileExt) == 0 || strcmp("eps", fileExt) == 0) {
           Nan::Set(obj, Nan::New<String>("encodedData").ToLocalChecked(), Nan::New<String>(symbol->rendered_data).ToLocalChecked());
         }
       }
