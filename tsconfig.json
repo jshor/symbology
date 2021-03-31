@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "target": "es5",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "allowJs": true,
+    "declaration": true,
+    "strict": true,
+    "types": [
+      "node",
+      "jest",
+      "jest-image-snapshot",
+      "lodash",
+    ]
+  },
+  "include": [
+    "./src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "test",
+    "./src/**/*.test.ts"
+  ]
+}

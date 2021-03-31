@@ -54,14 +54,14 @@ The following is a list of available ECI codes:
 :::tip ❖ Note 
 When using the ECI flag, all input data will be treated as raw binary. This means that any data which is encoded using a multible byte encoding scheme (one other than UTF-8) will not use optimal compression.
 
-It's recomended that data using these schemes are converted to UTF-8 before rendering the barcode.
+It's recomended that data using these schemes are converted to UTF-8 before rendering the SymbologyType.
 :::
 
 ### GS1 Data
 
 GS1 data can be encoded in a number of symbologies. Application identifiers should be enclosed in square brackets (`[...]`) followed by the data to be encoded.
 
-To encode GS1 data, set the `encoding` option to `Encoding.GS1_MODE` (see [Encoding Modes](#encoding-modes)).
+To encode GS1 data, set the `encoding` option to `EncodingMode.GS1_MODE` (see [Encoding Modes](#encoding-modes)).
 
 :::tip Note
 GS1 mode is automatically assumed for EAN-128, DataBar and Composite symbologies but is also available for [Code 16k](../guide/symbologies/stacked.md#code-16k-en-12323), [Data Matrix](../guide/symbologies/two-dimensional.md#data-matrix-ecc200-iso-16022), [QR Code](../guide/symbologies/two-dimensional.md#qr-code-iso-18004), [Aztec Code](../guide/symbologies/two-dimensional.md#aztec-code-iso-24778), [DotCode](../guide/symbologies/two-dimensional.md#dotcode), and [QR Code](../guide/symbologies/two-dimensional.md#qr-code-iso-18004).
@@ -75,22 +75,24 @@ GS1 mode is automatically assumed for EAN-128, DataBar and Composite symbologies
 
 The way in which the input data is encoded can be set using the `encoding` property. Valid values are described below.
 
-| Value        | Effect                                                       |
-|--------------|--------------------------------------------------------------|
-| DATA_MODE    | Uses full ASCII range interpreted as Latin-1 or binary data. |
-| UNICODE_MODE | Uses pre-formatted UTF-8 input.                              |
-| GS1_MODE     | Encodes GS1 data using FNC1 characters.                      |
+| Value          | Effect                                                       |
+|----------------|--------------------------------------------------------------|
+| `DATA_MODE`    | Uses full ASCII range interpreted as Latin-1 or binary data. |
+| `UNICODE_MODE` | Uses pre-formatted UTF-8 input.                              |
+| `GS1_MODE`     | Encodes GS1 data using FNC1 characters.                      |
+| `WSCAPE_MODE`  | Process input data for escape sequences.                     |
 
-Values can be accessed using the `Encoding` enumerated type. 
+Values can be accessed using the `EncodingMode` enumerated type. 
+
+:::tip Deprecation Notice
+Starting in version 2.1.0, the `Encoding` enum has been renamed to `EncodingMode`, and `Encoding` will be removed in the next major release.
+:::
 
 ### Example
 
-```js
-const symbology = require('symbology')
-
-symbology.createStream({
-  symbology: Symbology.Barcode.CODE128,
-  encoding: symbology.Encoding.GS1_MODE
+```ts
+createStream({
+  symbology: Symbology.SymbologyType.CODE128,
+  encoding: EncodingMode.GS1_MODE
 }, '12345')
 ```
-

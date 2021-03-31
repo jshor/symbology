@@ -4,6 +4,7 @@
 node_modules
 coverage
 build
+dist
 .zint
 bin
 .nyc_output

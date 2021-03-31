@@ -54,15 +54,22 @@ namespace symbology {
       // the barcode creation was successful; parse the result
       int fileNameLength = strlen(symbol->outfile);
 
+      // assign `encodedData` and `bitmap` to be initially empty (required by BinResult)
+      Nan::Set(obj, Nan::New<String>("encodedData").ToLocalChecked(), Nan::New<String>("").ToLocalChecked());
+      Nan::Set(obj, Nan::New<String>("bitmap").ToLocalChecked(), v8::Array::New(isolate, 0));
+
       if(fileNameLength > 4) {
         // check if the file at least is 4 chars long so we can parse the last three and check it as an extension
         const char *fileExt = &symbol->outfile[fileNameLength - 3];
 
         if(strcmp("bmp", fileExt) == 0) {
-          // parse the buffer as a bitmap array and store it in `encodedData`
-          Nan::Set(obj, Nan::New<String>("encodedData").ToLocalChecked(), getBitmap(isolate, symbol));
+          // parse the buffer as a bitmap array and store it in `bitmap`
+          Nan::Set(obj, Nan::New<String>("bitmap").ToLocalChecked(), getBitmap(isolate, symbol));
+
         } else if(strcmp("svg", fileExt) == 0 || strcmp("eps", fileExt) == 0) {
+          // pass the rendered_data (stdout) to `encodedData`
           Nan::Set(obj, Nan::New<String>("encodedData").ToLocalChecked(), Nan::New<String>(symbol->rendered_data).ToLocalChecked());
+
         }
       }
 
