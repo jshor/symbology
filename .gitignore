@@ -5,7 +5,7 @@ node_modules
 coverage
 build
 .zint
-lib/binding
+bin
 .nyc_output
 test/e2e/__rendered__/*
 !test/e2e/__rendered__/.keep
