@@ -1,3 +1,12 @@
+## [2.0.2](https://github.com/jshor/symbology/compare/v2.0.1...v2.0.2) (2021-03-31)
+
+
+### Bug Fixes
+
+* **lib:** fixes EOF and npmignore issues [#55](https://github.com/jshor/symbology/issues/55) ([085d33b](https://github.com/jshor/symbology/commit/085d33bfdf0540cb5138c3b3bf6f983ae0ba5a16))
+
+
+
 ## [2.0.1](https://github.com/jshor/symbology/compare/v2.0.0...v2.0.1) (2021-03-29)
 
 
