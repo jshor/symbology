@@ -1,3 +1,12 @@
+# [2.1.0](https://github.com/jshor/symbology/compare/v2.0.2...v2.1.0) (2021-04-01)
+
+
+### Features
+
+* **ts:** updates package to use TS ([2c4740a](https://github.com/jshor/symbology/commit/2c4740a2dbc47ab79864a451cfaf8d049129d128))
+
+
+
 ## [2.0.2](https://github.com/jshor/symbology/compare/v2.0.1...v2.0.2) (2021-03-31)
 
 
