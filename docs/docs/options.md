@@ -58,10 +58,15 @@ Starting in version 2.1.0, the `Options` enum has been renamed to `OutputOption`
 #### Example
 
 ```ts
-const symbology = require('symbology')
+import {
+  OutputOption,
+  OutputType,
+  SymbologyType,
+  createStream
+} from 'symbology'
 
 createStream({
-  symbology: Symbology.SymbologyType.CODE128,
-  outputOptions: Options.BARCODE_BIND + Options.READER_INIT
-}, '12345')
+  symbology: SymbologyType.CODE128,
+  outputOptions: OutputOption.BARCODE_BIND + OutputOption.READER_INIT
+}, '12345', OutputType.PNG)
 ```

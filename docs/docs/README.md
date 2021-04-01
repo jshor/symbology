@@ -13,7 +13,12 @@ yarn add symbology
 ### Example usage
 
 ```ts
-import { SymbologyType, OutputTypes, EncodingMode, createStream } from 'symbology'
+import {
+  OutputOption,
+  EncodingMode,
+  SymbologyType,
+  createStream
+} from 'symbology'
 
 (async () => {
   try {
@@ -22,7 +27,7 @@ import { SymbologyType, OutputTypes, EncodingMode, createStream } from 'symbolog
       encoding: EncodingMode.GS1_MODE,
       fileName: 'out.svg',
       backgroundColor: '00000000',
-      foregroundColor: '00ff00ff'
+      foregroundColor: '00FF00FF'
     }, '12345')
 
     console.log('File successfully created.')

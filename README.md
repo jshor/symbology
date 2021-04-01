@@ -42,11 +42,11 @@ yarn add symbology
 ### Code 11 Example
 
 ```ts
-import { SymbologyType, createFile } from 'symbology'
+import { SymbologyType, createStream } from 'symbology'
 
 (async () => {
   const { data } = await createStream({
-    symbology: symbology.Barcode.CODE128
+    symbology: SymbologyType.CODE11
   }, '8765432164')
 
   console.log('Result: ', data)
@@ -95,7 +95,7 @@ import { SymbologyType, createFile } from 'symbology'
 
 (async () => {
   const { data } = await createFile({
-    symbology: Symbology.Barcode.ONECODE
+    symbology: SymbologyType.ONECODE
     fileName: 'uspsExample.eps'
   }, '01234567094987654321-01234')
 
