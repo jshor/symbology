@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://datebook.dev/">
+  <a href="https://symbology.dev/">
     <img src="https://symbology.dev/assets/hero.svg" width="159" height="95" />
   </a>
 
