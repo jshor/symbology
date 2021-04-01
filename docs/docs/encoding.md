@@ -92,7 +92,7 @@ Starting in version 2.1.0, the `Encoding` enum has been renamed to `EncodingMode
 
 ```ts
 createStream({
-  symbology: Symbology.SymbologyType.CODE128,
+  symbology: SymbologyType.CODE128,
   encoding: EncodingMode.GS1_MODE
 }, '12345')
 ```

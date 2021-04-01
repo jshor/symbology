@@ -36,7 +36,7 @@ yarn add symbology
 ```ts
 import {
   SymbologyType,
-  OutputTypes,
+  OutputType,
   EncodingMode,
   createStream
 } from 'symbology'
