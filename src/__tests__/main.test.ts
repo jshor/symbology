@@ -3,7 +3,7 @@ import { PNG } from 'pngjs'
 import binary from '../lib/binary'
 import png from '../lib/png'
 import SymbologyType from '../types/enums/SymbologyType'
-import symbology from '../'
+import { createStream, createFile } from '../main'
 import OutputType from '../types/enums/OutputType'
 
 describe('Symbology Library', () => {
@@ -42,7 +42,7 @@ describe('Symbology Library', () => {
         .spyOn(binary, 'invoke')
         .mockResolvedValue(mockPngRes)
 
-      const res = await symbology.createStream({
+      const res = await createStream({
         symbology: SymbologyType.CODE128
       }, '12345', OutputType.PNG)
 
@@ -62,7 +62,7 @@ describe('Symbology Library', () => {
         .spyOn(binary, 'invoke')
         .mockResolvedValue(mockSvgRes)
 
-      const res = await symbology.createStream({
+      const res = await createStream({
         symbology: SymbologyType.CODE128
       }, '12345', OutputType.SVG)
 
@@ -80,7 +80,7 @@ describe('Symbology Library', () => {
         .spyOn(binary, 'invoke')
         .mockResolvedValue(mockPngRes)
 
-      const res = await symbology.createStream({
+      const res = await createStream({
         symbology: SymbologyType.CODE128
       }, '12345')
 
@@ -106,7 +106,7 @@ describe('Symbology Library', () => {
     it('should reject if the fileName is not specified', async () => {
       expect.assertions(1)
 
-      await expect(symbology.createFile({
+      await expect(createFile({
         symbology: SymbologyType.CODE128
       }, '12345')).rejects.toEqual('fileName is required.')
     })
@@ -117,7 +117,7 @@ describe('Symbology Library', () => {
         .mockResolvedValue(mockPngRes)
 
       const fileName = 'out.png'
-      const res = await symbology.createFile({
+      const res = await createFile({
         symbology: SymbologyType.CODE128,
         fileName
       }, '12345')
@@ -138,7 +138,7 @@ describe('Symbology Library', () => {
         .mockResolvedValue(mockSvgRes)
 
       const fileName = 'out.svg'
-      const res = await symbology.createFile({
+      const res = await createFile({
         symbology: SymbologyType.CODE128,
         fileName
       }, '12345')
