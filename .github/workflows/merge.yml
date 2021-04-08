@@ -38,6 +38,11 @@ jobs:
         run: yarn test
       - name: Report coverage
         run: yarn codecov
+      - name: Upload js bundle
+        uses: actions/upload-artifact@v2
+        with:
+          name: js-bundle
+          path: dist
       - name: Upload binary artifact
         uses: actions/upload-artifact@v2
         with:
@@ -74,6 +79,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: Download js bundle
+        uses: actions/download-artifact@v2
+        with:
+          name: js-bundle
+          path: dist
       - uses: TriPSs/conventional-changelog-action@v3
         with:
           github-token: ${{ secrets.GH_TOKEN }}
