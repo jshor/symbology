@@ -1,4 +1,9 @@
-## [2.1.3](https://github.com/jshor/symbology/compare/v2.1.2...v2.1.3) (2021-04-04)
+## [2.1.4](https://github.com/jshor/symbology/compare/v2.1.2...v2.1.4) (2021-04-08)
+
+
+### Bug Fixes
+
+* **build:** fixes compatibility of module exports and npm ([45ebe3b](https://github.com/jshor/symbology/commit/45ebe3b57fd7e187d5ba624525063938f5cc490a))
 
 
 
