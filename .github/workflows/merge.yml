@@ -79,11 +79,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Download js bundle
-        uses: actions/download-artifact@v2
-        with:
-          name: js-bundle
-          path: dist
       - uses: TriPSs/conventional-changelog-action@v3
         with:
           github-token: ${{ secrets.GH_TOKEN }}
@@ -124,13 +119,11 @@ jobs:
       - uses: actions/checkout@v2
       - name: Pull latest
         run: git pull origin master
-      # - name: Download artifact
-      #   uses: actions/download-artifact@v2
-      #   with:
-      #     name: ${{ env.ARTIFACT_DIR }}
-      #     path: ${{ env.ARTIFACT_DIR }}
-      # - name: Copy dist
-      #   run: cp -r ${{ env.ARTIFACT_DIR }}/dist . && rm -rf build
+      - name: Download js bundle
+        uses: actions/download-artifact@v2
+        with:
+          name: js-bundle
+          path: dist
       - uses: actions/setup-node@v1
         with:
           node-version: 14
