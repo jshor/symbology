@@ -1,3 +1,17 @@
+# [3.0.0](https://github.com/jshor/symbology/compare/v2.1.6...v3.0.0) (2021-06-01)
+
+
+### Features
+
+* v3 ([6571397](https://github.com/jshor/symbology/commit/6571397b529e25207da8aa131083beed17c02b20))
+
+
+### BREAKING CHANGES
+
+* drops support for node v12 and v13.
+
+
+
 ## [2.1.6](https://github.com/jshor/symbology/compare/v2.1.5...v2.1.6) (2021-04-30)
 
 
