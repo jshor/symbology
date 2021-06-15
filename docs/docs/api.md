@@ -34,7 +34,7 @@ Output types can be defined using the `OutputType` enumerated type.
 ```ts
 import {
   SymbologyType,
-  OutputTypes,
+  OutputType,
   EncodingMode,
   createStream
 } from 'symbology'
