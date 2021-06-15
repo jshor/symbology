@@ -1,3 +1,12 @@
+## [3.0.2](https://github.com/jshor/symbology/compare/v3.0.1...v3.0.2) (2021-06-15)
+
+
+### Bug Fixes
+
+* corrects syntax error [#71](https://github.com/jshor/symbology/issues/71) ([bcf48d2](https://github.com/jshor/symbology/commit/bcf48d25230a4eacd72ed3356adfdc7aa6e9273a))
+
+
+
 ## [3.0.1](https://github.com/jshor/symbology/compare/v3.0.0...v3.0.1) (2021-06-05)
 
 
