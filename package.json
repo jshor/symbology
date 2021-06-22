@@ -1,6 +1,6 @@
 {
   "name": "symbology",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "description": "🔖 Generates 1D, 2D, and composite barcodes in png, svg, or eps formats. Supports 50+ symbologies.",
   "scripts": {
     "commit": "git-cz",
