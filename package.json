@@ -65,7 +65,7 @@
     "@types/pngjs": "^6.0.0",
     "@typescript-eslint/eslint-plugin": "^4.20.0",
     "@typescript-eslint/parser": "^4.20.0",
-    "aws-sdk": "2.108.0",
+    "aws-sdk": "2.814.0",
     "codecov": "^3.8.1",
     "commitizen": "^4.2.2",
     "cz-conventional-changelog": "^3.3.0",
