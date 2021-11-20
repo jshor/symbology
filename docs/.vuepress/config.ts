@@ -6,7 +6,7 @@ module.exports = {
   locales: {
     '/': {
       lang: 'en-US',
-      title: 'Symbology',
+      text: 'Symbology',
       description: 'Node.js Barcode Generator'
     }
   },
@@ -30,7 +30,7 @@ module.exports = {
         selectText: 'Languages',
         lastUpdated: 'Last Updated',
         editLinkText: 'Edit this page on GitHub',
-        nav: [
+        navbar: [
           {
             text: 'Documentation',
             link: '/docs/'
@@ -42,64 +42,64 @@ module.exports = {
         ],
         sidebar: [
           {
-            title: 'Documentation',
-            path: '/docs/',
+            text: 'Documentation',
+            link: '/docs/',
             children: [
               {
-                title: 'Installation',
-                path: '/docs/installation',
+                text: 'Installation',
+                link: '/docs/installation',
               },
               {
-                title: 'API',
-                path: '/docs/api',
+                text: 'API',
+                link: '/docs/api',
               },
               {
-                title: 'Options',
-                path: '/docs/options',
+                text: 'Options',
+                link: '/docs/options',
               },
               {
-                title: 'Encoding',
-                path: '/docs/encoding',
+                text: 'Encoding',
+                link: '/docs/encoding',
               },
               {
-                title: 'Error handling',
-                path: '/docs/error-handling',
+                text: 'Error handling',
+                link: '/docs/error-handling',
               },
             ]
           },
           {
-            title: 'Reference',
-            path: '/reference/',
+            text: 'Reference',
+            link: '/reference/',
             children: [
               {
-                title: 'One-Dimensional symbols',
-                path: '/reference/one-dimensional',
+                text: 'One-Dimensional symbols',
+                link: '/reference/one-dimensional',
               },
               {
-                title: 'Two-Dimensional symbols',
-                path: '/reference/two-dimensional',
+                text: 'Two-Dimensional symbols',
+                link: '/reference/two-dimensional',
               },
               {
-                title: 'Composite symbols (ISO 24723)',
-                path: '/reference/composite',
+                text: 'Composite symbols (ISO 24723)',
+                link: '/reference/composite',
               },
               {
-                title: 'Stacked symbologies',
-                path: '/reference/stacked',
+                text: 'Stacked symbologies',
+                link: '/reference/stacked',
               },
               {
-                title: 'Two-Track symbols',
-                path: '/reference/two-track',
+                text: 'Two-Track symbols',
+                link: '/reference/two-track',
               },
               {
-                title: 'Other Barcode-Like Markings',
-                path: '/reference/other',
+                text: 'Other Barcode-Like Markings',
+                link: '/reference/other',
               }
             ]
           },
           {
-            title: 'Development',
-            path: '/development',
+            text: 'Development',
+            link: '/development',
           }
         ]
       }
