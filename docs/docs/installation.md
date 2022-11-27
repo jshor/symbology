@@ -20,6 +20,14 @@ npm_config_build_from_source=true yarn add symbology
 npm i symbology --build-from-source=true
 ```
 
+### Building a fresh binary
+
+The following command can be run to create a fresh build:
+
+```sh
+yarn install:rebuild
+```
+
 ## Binary download failures
 
 If you run into issues downloading the binary, the library will attempt to compile the module from source.
