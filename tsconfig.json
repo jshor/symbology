@@ -10,8 +10,7 @@
     "types": [
       "node",
       "jest",
-      "jest-image-snapshot",
-      "lodash",
+      "jest-image-snapshot"
     ]
   },
   "include": [
