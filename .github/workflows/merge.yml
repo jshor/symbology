@@ -9,7 +9,7 @@ on:
 
 env:
   GIT_USER: 'GitHub Actions'
-  GIT_EMAIL: '41898282+github-actions[bot]@users.noreply.github.com'
+  GIT_EMAIL: 'github-actions[bot]@users.noreply.github.com'
   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
 jobs:
@@ -17,7 +17,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest]
+        os: [windows-2019, macos-latest, ubuntu-latest]
         node-version: [14, 15, 16]
     steps:
       - uses: actions/checkout@v2
