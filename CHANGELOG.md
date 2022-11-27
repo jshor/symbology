@@ -1,3 +1,12 @@
+## [3.0.10](https://github.com/jshor/symbology/compare/v3.0.9...v3.0.10) (2022-11-27)
+
+
+### Bug Fixes
+
+* **bin:** updates binary to install as-needed ([86ba08c](https://github.com/jshor/symbology/commit/86ba08c29dbd0c3933637dc4f825ec4cd6a737f5))
+
+
+
 ## [3.0.9](https://github.com/jshor/symbology/compare/v3.0.8...v3.0.9) (2022-11-27)
 
 
