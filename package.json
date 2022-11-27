@@ -49,7 +49,7 @@
     "node": ">=14.0.0 <17.0.0"
   },
   "dependencies": {
-    "@mapbox/node-pre-gyp": "^1.0.7",
+    "@mapbox/node-pre-gyp": "^1.0.10",
     "git-clone": "^0.1.0",
     "nan": "^2.14.2",
     "pngjs": "^6.0.0",
