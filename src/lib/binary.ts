@@ -71,11 +71,6 @@ function invoke (config: SymbologyConfig, barcodeData: string, outputType: Outpu
   const res = binary.createBuffer(symbol, barcodeData)
 
   if (res.code <= 2) {
-    // remove all data after the trailing EOF marker
-    res.encodedData = res
-      .encodedData
-      .split('<<< EOF >>>')[0]
-
     if (res.code === 0) {
       res.message = 'Symbology successfully created.'
     }

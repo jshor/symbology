@@ -8,8 +8,8 @@ module.exports = [
     files: '.zint/**/zint.h',
     from: /struct zint_symbol \{/g,
     to: `
-  struct zint_symbol {
-      char rendered_data[1000000];
+    struct zint_symbol {
+        char rendered_data[1000000];
 `
   },
   /* add stdlib as reference */
@@ -30,42 +30,33 @@ module.exports = [
   {
     files: '.zint/**/{svg,ps}.{c,h}',
     from: /([a-z]+)\s*=\s*stdout;/g,
-    to: `
-#ifndef _MSC_VER
-  pipe(p);
-  $1 = fdopen(p[1], "w");
-#else
-  $1 = fopen("NUL", "w");
-  setvbuf($1, buf, _IOLBF, sizeof(symbol->rendered_data));
-#endif
-`
+    to: ''
   },
   /* assigns pointer to maintain file buffer */
   {
     files: '.zint/**/{svg,ps}.{c,h}',
     from: /INTERNAL int ([a-z]+)_plot([^\n]+)/g,
     to: `
-int pipe(int fd[2]);
-int close(int fildes);
-int read(int fildes, void *buf, unsigned nbytes);
-
 INTERNAL int $1_plot$2
-  char *buf = malloc(sizeof(symbol->rendered_data));
-  int p[2];`
+    char str[sizeof(symbol->rendered_data)];
+`
+  },
+  /* replaces the file buffer allocation with a string one */
+  {
+    files: '.zint/**/{svg,ps}.{c,h}',
+    from: /FILE \*([a-z]+)/g,
+    to: 'char *$1 = str'
+  },
+  /* change file printing to string concatenation */
+  {
+    files: '.zint/**/{svg,ps}.{c,h}',
+    from: /fprintf\(([a-z]+), /g,
+    to: '$1 += sprintf($1, '
   },
   /* reads file buffer into symbol->rendered_data */
   {
     files: '.zint/**/{svg,ps}.{c,h}',
     from: /fflush\(([a-z]+)\);/g,
-    to: `
-fprintf($1, "<<< EOF >>>");
-#ifndef _MSC_VER
-  fflush($1);
-  close(p[1]);
-  read(p[0], symbol->rendered_data, sizeof(symbol->rendered_data));
-#else
-  strcpy(symbol->rendered_data, buf);
-#endif
-`
+    to: 'strcpy(symbol->rendered_data, str);'
   }
 ]
