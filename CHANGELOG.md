@@ -1,3 +1,12 @@
+## [3.0.9](https://github.com/jshor/symbology/compare/v3.0.8...v3.0.9) (2022-11-27)
+
+
+### Bug Fixes
+
+* **svg:** adds fix for SVG/EPS crashes [#96](https://github.com/jshor/symbology/issues/96) ([300a007](https://github.com/jshor/symbology/commit/300a007e0073f32b933a1ced89653dbb40a10ed2))
+
+
+
 ## [3.0.8](https://github.com/jshor/symbology/compare/v3.0.7...v3.0.8) (2021-11-20)
 
 
