@@ -11,7 +11,7 @@ If you're using Windows (excluding [WSL](https://docs.microsoft.com/en-us/window
 
 ```sh
 npm install --global --production windows-build-tools --vs2017
-npm config set msvs_version 2017 –global
+npm config set msvs_version 2017 -global
 ```
 
 ## Committing
