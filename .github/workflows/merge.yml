@@ -68,7 +68,7 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GIT_CONFIG_NAME: ${{ env.GIT_USER }}
           GIT_CONFIG_EMAIL: ${{ env.GIT_EMAIL }}
           BRANCH: gh-pages
@@ -82,7 +82,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: TriPSs/conventional-changelog-action@v3
         with:
-          github-token: ${{ secrets.GH_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           git-user-name: ${{ env.GIT_USER }}
           git-user-email: ${{ env.GIT_EMAIL }}
           tag-prefix: 'v'
@@ -111,7 +111,7 @@ jobs:
           RELEASE_VERSION=$(echo $(ls build/stage| head -1))
           hub release create "${assets[@]}" -m "v$RELEASE_VERSION" "$RELEASE_VERSION"
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   publish-npm:
     needs: release
