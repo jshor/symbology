@@ -1,33 +1,155 @@
 # Options
 
-## Basic Config
+## symbology
 
-The following symbology options are available:
+The enumerated type of the symbology (see [Reference](../reference/) for a list).
 
-| Enumerated type         | Type            | Meaning                                                                                         | Required? | Default value            |
-|-------------------------|-----------------|-------------------------------------------------------------------------------------------------|-----------|--------------------------|
-| `symbology`             | `SymbologyType` | The enumerated type of the symbology (see [Reference](../reference/README.md) for a list).      | **Yes**   |                          |
-| `height`                | `Number`        | The height of the image. If specified, this will maintain the aspect ratio.                     | No        | `50`                     |
-| `whitespaceWidth`       | `Number`        | Width of whitespace, for barcodes which have this option.                                       | No        | `0`                      |
-| `borderWidth`           | `Number`        | Width of border.                                                                                | No        | `0`                      |
-| `outputOptions`         | `OutputOption`  | [Symbology-specific output options.](#output-options)                                           | No        | `0`                      |
-| `foregroundColor`       | `String`        | Barcode foreground color. Supports [alpha channels](https://css-tricks.com/8-digit-hex-codes/). | No        | `FFFFFFFF`               |
-| `backgroundColor`       | `String`        | Barcode background color. Supports [alpha channels](https://css-tricks.com/8-digit-hex-codes/). | No        | `000000FF`               |
-| `fileName`              | `String`        | Full path to the file to render.                                                                | **Yes***  |                          |
-| `scale`                 | `Number`        | Scale of the barcode image. Applies only to PNG.                                                | No        | `1.0`                    |
-| `option1`               | `Number`        | Symbology-type-specific option value.                                                           | No        | `null`                   |
-| `option2`               | `Number`        | Symbology-type-specific option value.                                                           | No        | `null`                   |
-| `option3`               | `Number`        | Symbology-type-specific option value.                                                           | No        | `null`                   |
-| `showHumanReadableText` | `Boolean`       | Show or hide the symbology data as human-readable text (if applicable).                         | No        | `true`                   |
-| `encoding`              | `EncodingMode`  | [The enumerated encoding type of input data.](EncodingMode.md#encoding-modes)                   | No        | `EncodingMode.DATA_MODE` |
-| `eci`                   | `Number`        | [ECI encoding mode.](EncodingMode.md#extended-channel-interpolation-eci)                        | No        | `0`                      |
-| `primary`               | `String`        | Primary message data for more complex symbols.                                                  | No        | `null`                   |
-| `rotation`              | `Number`        | Clockwise rotation of the SymbologyType. Valid values are `0`, `90`, `180`, or `270`.           | No        | `0`                      |
-| `dotSize`               | `Number`        | Size of dot used in [`BARCODE_DOTTY_MODE`](#output-options).                                    | No        | `0.8`                    |
-| `text`                  | `String`        | Human-readable text to display. Defaults to the input data value.                               | No        | (Data value)             |
+* Type: [`SymbologyType`](../reference/)
+* Required: **yes**
 
+## fileName
 
-\* required only if using [`createFile()`](api.md#createfile).
+Full path to the file to create.
+
+* Type: `string`
+* Required: **yes**, if using [`createFile()`](api.md#createfile)
+
+## text
+
+Human-readable text to display.
+
+* Type: `string`
+* Required: no
+* Default value: the input data value
+
+## primary
+
+Primary message data, for more complex symbols.
+
+* Type: `string`
+* Required: no
+* Default value: `null`
+
+## showHumanReadableText
+
+If true, shows text underneath a barcode (if the symbology supports it). If false, text will not show.
+
+* Type: `boolean`
+* Required: no
+* Default value: `true`
+
+## foregroundColor
+
+Barcode foreground color. [Supports alpha channels](https://css-tricks.com/8-digit-hex-codes/).
+
+* Type: `string`
+* Required: no
+* Default value: `FFFFFFFF`
+
+## backgroundColor
+
+Barcode background color. [Supports alpha channels](https://css-tricks.com/8-digit-hex-codes/).
+
+* Type: `string`
+* Required: no
+* Default value: `000000FF`
+
+## encoding
+
+The [encoding type](EncodingMode.md#encoding-modes) of the input data, if applicable.
+
+* Type: [`EncodingMode`](EncodingMode.md#encoding-modes)
+* Required: no
+* Default value: `EncodingMode.DATA_MODE`
+
+## eci
+
+The [ECI encoding mode](https://en.wikipedia.org/wiki/Extended_Channel_Interpretation#Types_of_ECI_indicator) of the input data, if applicable.
+
+* Type: `number`
+* Required: no
+* Default value: `0`
+
+## height
+
+The height of the image, in pixels. If specified, this will maintain the aspect ratio.
+
+* Type: `number`
+* Required: no
+* Default value: `50`
+
+## whitespaceWidth
+
+The width of whitespace, for barcodes which have this option.
+
+* Type: `number`
+* Required: no
+* Default value: `0`
+
+## borderWidth
+
+The width of the border.
+
+* Type: `number`
+* Required: no
+* Default value: `0`
+
+## scale
+
+Scale of the barcode image. **Applies only to PNG**.
+
+* Type: `number`
+* Required: no
+* Default value: `1.0`
+
+## rotation
+
+The clockwise rotation of the SymbologyType.
+
+* Type: `number`
+* Required: no
+* Default value: `0`
+* Valid values: `0`, `90`, `180`, `270`
+
+## dotSize
+
+Size of dot used in [`BARCODE_DOTTY_MODE`](#output-options).
+
+* Type: `number`
+* Required: no
+* Default value: `0.8`
+
+## outputOptions
+
+Symbology-specific [output options](#output-options).
+
+* Type: [`OutputOption`](#output-options)
+* Required: no
+* Default value: `0`
+
+## option1
+
+Symbology-type-specific option value.
+
+* Type: `number`
+* Required: no
+* Default value: `null`
+
+## option2
+
+Symbology-type-specific option value.
+
+* Type: `number`
+* Required: no
+* Default value: `null`
+
+## option3
+
+Symbology-type-specific option value.
+
+* Type: `number`
+* Required: no
+* Default value: `null`
 
 ## Output Options
 
@@ -38,7 +160,7 @@ The `outputOptions` key in the `SymbologyConfig` object can be used to adjust va
 | `BARCODE_NO_ASCII`   | No options selected. (default)                                         |
 | `BARCODE_BIND`       | Boundary bars above and below the symbol and between rows if stacking. |
 | `BARCODE_BOX`        | Add a box surrounding the symbol and whitespace.                       |
-| `READER_INIT`        | Add a reader initialisation symbol to the data before EncodingMode.        |
+| `READER_INIT`        | Add a reader initialisation symbol to the data before EncodingMode.    |
 | `SMALL_TEXT`         | Use a smaller font for the human readable text.                        |
 | `BOLD_TEXT`          | Embolden the human readable text.                                      |
 | `CMYK_COLOUR`        | Select the CMYK colour space option for encapsulated PostScript files. |

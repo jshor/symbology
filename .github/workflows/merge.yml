@@ -60,7 +60,7 @@ jobs:
       - name: Pull latest
         run: git pull origin master
       - name: Install Vuepress
-        run: yarn add vuepress -D
+        run: yarn add vuepress@next -D
       - name: Build documentation
         run: yarn docs:build
       - name: Create CNAME Record
