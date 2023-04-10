@@ -16,7 +16,7 @@ jobs:
         os: [windows-2019, ubuntu-latest, macos-latest]
         # list only the earliest and latest node versions supported
         # this makes PR builds more efficient
-        node-version: [14, 16]
+        node-version: [14, 18]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
