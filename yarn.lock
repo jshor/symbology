@@ -6883,7 +6883,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:2.6.11":
+"node-fetch@npm:^2":
   version: 2.6.11
   resolution: "node-fetch@npm:2.6.11"
   dependencies:
@@ -8390,7 +8390,7 @@ __metadata:
     jest: ^29.5.0
     jest-image-snapshot: ^6.1.0
     nan: ^2.17.0
-    node-fetch: 2.6.11
+    node-fetch: ^2
     pngjs: ^6.0.0
     replace-in-file: ^6.3.5
     rimraf: ^3.0.2
