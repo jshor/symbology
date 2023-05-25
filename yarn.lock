@@ -1557,14 +1557,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest-image-snapshot@npm:^5.1.0":
-  version: 5.1.0
-  resolution: "@types/jest-image-snapshot@npm:5.1.0"
+"@types/jest-image-snapshot@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "@types/jest-image-snapshot@npm:6.1.0"
   dependencies:
     "@types/jest": "*"
     "@types/pixelmatch": "*"
     ssim.js: ^3.1.1
-  checksum: b38b7a978637243499f2767511960bdaeace1a8ca15fadcd9a6988c3ab9a14fa1de4028b04790b89e5611bf7ce98ee4a574a5d99684682ae83239c2fbc8589aa
+  checksum: dfa85ad0a07aa45161ab644443befa6f8e761ce7b2f3cd61c3f350ea1b82d6f4cfefc4ccddf0b8719053fe6f9800eb735e62219f34febd64b6f02efda8ce6010
   languageName: node
   linkType: hard
 
@@ -1656,10 +1656,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^18.16.14":
-  version: 18.16.14
-  resolution: "@types/node@npm:18.16.14"
-  checksum: c11cb3c787236414efe58240ae71854971592554d82ff9d201876ce7cafd51c37aaa001c63602d002e8238614d7331bd6d48ac4c1c0caa826799980b6846fb08
+"@types/node@npm:^20.2.3":
+  version: 20.2.3
+  resolution: "@types/node@npm:20.2.3"
+  checksum: 576065e8fc1fa45798c8f59a6bf809169582d04abc2e25fab1a048ffc734975b9992ae31be0d960cf705a21fb37112f7fcde11aa322beddf7491e73d5a5a988c
   languageName: node
   linkType: hard
 
@@ -6728,20 +6728,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"node-fetch@npm:^2":
-  version: 2.6.11
-  resolution: "node-fetch@npm:2.6.11"
-  dependencies:
-    whatwg-url: ^5.0.0
-  peerDependencies:
-    encoding: ^0.1.0
-  peerDependenciesMeta:
-    encoding:
-      optional: true
-  checksum: 249d0666a9497553384d46b5ab296ba223521ac88fed4d8a17d6ee6c2efb0fc890f3e8091cafe7f9fba8151a5b8d925db2671543b3409a56c3cd522b468b47b3
-  languageName: node
-  linkType: hard
-
 "node-fetch@npm:^2.6.1, node-fetch@npm:^2.6.7":
   version: 2.6.7
   resolution: "node-fetch@npm:2.6.7"
@@ -6753,6 +6739,20 @@ __metadata:
     encoding:
       optional: true
   checksum: 8d816ffd1ee22cab8301c7756ef04f3437f18dace86a1dae22cf81db8ef29c0bf6655f3215cb0cdb22b420b6fe141e64b26905e7f33f9377a7fa59135ea3e10b
+  languageName: node
+  linkType: hard
+
+"node-fetch@npm:^2.6.11":
+  version: 2.6.11
+  resolution: "node-fetch@npm:2.6.11"
+  dependencies:
+    whatwg-url: ^5.0.0
+  peerDependencies:
+    encoding: ^0.1.0
+  peerDependenciesMeta:
+    encoding:
+      optional: true
+  checksum: 249d0666a9497553384d46b5ab296ba223521ac88fed4d8a17d6ee6c2efb0fc890f3e8091cafe7f9fba8151a5b8d925db2671543b3409a56c3cd522b468b47b3
   languageName: node
   linkType: hard
 
@@ -7229,6 +7229,13 @@ __metadata:
   version: 6.0.0
   resolution: "pngjs@npm:6.0.0"
   checksum: ab6c285086060087097eab9fe6b5a528a24f9e79c03dea2b4fd6264ed4fdb5beff4a3257eeeaf2a9dc18249b539609c2a4e4013c567164a1f6b5ba2c974d5ecb
+  languageName: node
+  linkType: hard
+
+"pngjs@npm:^7.0.0":
+  version: 7.0.0
+  resolution: "pngjs@npm:7.0.0"
+  checksum: b19a018930d27de26229c1b3ff250b3a25d09caa22cbb0b0459987d91eb0a560a18ab5d67da45a38ed7514140f26d1db58de83c31159ec101f2bb270a3c707f1
   languageName: node
   linkType: hard
 
@@ -8218,8 +8225,8 @@ __metadata:
     "@commitlint/config-conventional": ^17.6.3
     "@mapbox/node-pre-gyp": ^1.0.10
     "@types/jest": ^29.5.1
-    "@types/jest-image-snapshot": ^5.1.0
-    "@types/node": ^18.16.14
+    "@types/jest-image-snapshot": ^6.1.0
+    "@types/node": ^20.2.3
     "@types/pngjs": ^6.0.1
     "@typescript-eslint/eslint-plugin": ^5.59.7
     "@typescript-eslint/parser": ^5.59.7
@@ -8232,8 +8239,8 @@ __metadata:
     jest: ^29.5.0
     jest-image-snapshot: ^6.1.0
     nan: ^2.17.0
-    node-fetch: ^2
-    pngjs: ^6.0.0
+    node-fetch: ^2.6.11
+    pngjs: ^7.0.0
     replace-in-file: ^6.3.5
     rimraf: ^3.0.2
     rollup: ^3.23.0
