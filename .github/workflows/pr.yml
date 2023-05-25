@@ -24,6 +24,8 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install dependencies
+        run: npm install yarn
+      - name: Install dependencies
         run: yarn
 
       - name: Run linter
