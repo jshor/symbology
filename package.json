@@ -48,7 +48,7 @@
     "host": "https://github.com:TrackLabSolar/symbology/releases/download/"
   },
   "engines": {
-    "node": ">=14.0.0 <19.0.0"
+    "node": ">=16.0.0 <19.0.0"
   },
   "dependencies": {
     "@mapbox/node-pre-gyp": "^1.0.10",
