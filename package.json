@@ -62,7 +62,6 @@
   "devDependencies": {
     "@commitlint/cli": "^17.6.3",
     "@commitlint/config-conventional": "^17.6.3",
-    "@rollup/plugin-node-resolve": "^15.0.2",
     "@types/jest": "^29.5.1",
     "@types/jest-image-snapshot": "^5.1.0",
     "@types/node": "^18.16.14",
@@ -116,5 +115,6 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "zintVersion": "89518c4"
+  "zintVersion": "89518c4",
+  "packageManager": "yarn@3.5.1"
 }
