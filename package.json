@@ -45,7 +45,7 @@
     "module_path": "./bin/binding/bin/",
     "remote_path": "{version}",
     "package_name": "{module_name}_{platform}_{arch}_{node_abi}.tar.gz",
-    "host": "https://github.com/jshor/symbology/releases/download/"
+    "host": "https://github.com:TrackLabSolar/symbology/releases/download/"
   },
   "engines": {
     "node": ">=14.0.0 <19.0.0"
