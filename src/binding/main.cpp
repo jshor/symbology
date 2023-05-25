@@ -187,13 +187,20 @@ namespace symbology {
   }
 
   void Init(v8::Local<v8::Object> exports) {
-    v8::Local<v8::Context> context = exports->GetCreationContext().ToLocalChecked();
+      v8::Local<v8::Context> context;
 
-    (void)exports->Set(context,
-      Nan::New("createStream").ToLocalChecked(),
-      Nan::New<v8::FunctionTemplate>(createStream)
-          ->GetFunction(context)
-          .ToLocalChecked());
+      v8::Local<v8::String> propName = Nan::New("GetCreationContext").ToLocalChecked();
+      if (exports->Has(Nan::GetCurrentContext(), propName).FromMaybe(false)) {
+          context = exports->GetCreationContext().ToLocalChecked();
+      } else {
+          context = exports->CreationContext();
+      }
+
+      (void)exports->Set(context,
+          Nan::New("createStream").ToLocalChecked(),
+          Nan::New<v8::FunctionTemplate>(createStream)
+              ->GetFunction(context)
+              .ToLocalChecked());
   }
 
   NODE_MODULE(symbology, Init);
