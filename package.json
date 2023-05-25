@@ -1,6 +1,6 @@
 {
   "name": "haakco-symbology-test",
-  "version": "3.0.17",
+  "version": "3.0.18",
   "description": "🔖 Generates 1D, 2D, and composite barcodes in png, svg, or eps formats. Supports 50+ symbologies.",
   "scripts": {
     "ye": "node ./test.js",
