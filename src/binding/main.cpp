@@ -187,7 +187,7 @@ namespace symbology {
   }
 
   void Init(v8::Local<v8::Object> exports) {
-    v8::Local<v8::Context> context = exports->CreationContext();
+    v8::Local<v8::Context> context = exports->GetCreationContext().ToLocalChecked();
 
     (void)exports->Set(context,
       Nan::New("createStream").ToLocalChecked(),
