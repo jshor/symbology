@@ -56,9 +56,9 @@ Barcode background color. [Supports alpha channels](https://css-tricks.com/8-dig
 
 ## encoding
 
-The [encoding type](EncodingMode.md#encoding-modes) of the input data, if applicable.
+The [encoding mode](encoding.md#encoding-modes) of the input data, if applicable.
 
-* Type: [`EncodingMode`](EncodingMode.md#encoding-modes)
+* Type: [`EncodingMode`](encoding.md#encoding-modes)
 * Required: no
 * Default value: `EncodingMode.DATA_MODE`
 
@@ -118,6 +118,14 @@ Size of dot used in [`BARCODE_DOTTY_MODE`](#output-options).
 * Type: `number`
 * Required: no
 * Default value: `0.8`
+
+## guardDescent
+
+Height in `x`-dimensions that [EAN/UPC](../reference/one-dimensional.md#universal-product-code-iso-15420) guard bars descend.
+
+* Type: `number`
+* Required: no
+* Default value: `5`
 
 ## outputOptions
 

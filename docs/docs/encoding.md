@@ -75,18 +75,44 @@ GS1 mode is automatically assumed for EAN-128, DataBar and Composite symbologies
 
 The way in which the input data is encoded can be set using the `encoding` property. Valid values are described below.
 
-| Value          | Effect                                                       |
-|----------------|--------------------------------------------------------------|
-| `DATA_MODE`    | Uses full ASCII range interpreted as Latin-1 or binary data. |
-| `UNICODE_MODE` | Uses pre-formatted UTF-8 input.                              |
-| `GS1_MODE`     | Encodes GS1 data using FNC1 characters.                      |
-| `WSCAPE_MODE`  | Process input data for escape sequences.                     |
-
 Values can be accessed using the `EncodingMode` enumerated type. 
 
-:::tip Deprecation Notice
-Starting in version 2.1.0, the `Encoding` enum has been renamed to `EncodingMode`, and `Encoding` will be removed in the next major release.
-:::
+### Basic Modes
+
+| Value               | Effect                                                                                 |
+|---------------------|----------------------------------------------------------------------------------------|
+| `DATA_MODE`         | Uses full ASCII range interpreted as Latin-1 or binary data.                           |
+| `UNICODE_MODE`      | Uses pre-formatted UTF-8 input.                                                        |
+| `GS1_MODE`          | Encodes GS1 data using FNC1 characters.                                                |
+
+### Advanced Modes
+
+| Value               | Effect                                                                                 |
+|---------------------|----------------------------------------------------------------------------------------|
+| `ESCAPE_MODE`       | Process escape sequences.                                                              |
+| `GS1PARENS_MODE`    | Process parentheses as GS1 AI delimiters (instead of square brackets).                 |
+| `GS1NOCHECK_MODE`   | Do not check validity of GS1 data (except that printable ASCII only).                  |
+| `HEIGHTPERROW_MODE` | Interpret `height` as per-row rather than as overall height.                           |
+| `FAST_MODE`         | Use faster (if less optimal) encoding or other shortcuts if available.                 |
+| `EXTRA_ESCAPE_MODE` | Process special symbology-specific escape sequences. Currently only supports Code 128. |
+
+### Combining Modes
+
+Multiple modes can be combined by adding their enum values together.
+
+The following example informs the renderer to both accept pre-formatted UTF-8 input and encode GS1 data using FNC1 characters:
+
+```ts
+EncodingMode.DATA_MODE + EncodingMode.GS1_MODE
+```
+
+Additionally, modes can be arranged to allow multiple options by performing a bitwise OR operation, depending on its context.
+
+The following example informs the renderer to accept pre-formatted UTF-8 input **or** encode GS1 data using FNC1 characters.
+
+```ts
+EncodingMode.DATA_MODE | EncodingMode.GS1_MODE
+```
 
 ### Example
 

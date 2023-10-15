@@ -22,7 +22,7 @@ createStream({
 
 ## Code 2 of 5
 
-![ITF-14](/assets/barcodes/barcode_15.png)
+![Code 2 of 5](/assets/barcodes/barcode_15.png)
 
 Code 2 of 5 is a family of one-dimensional symbols, 8 of which are supported. Note that the names given to these standards alters from one source to another so you should take care to ensure that you have the right barcode type before using these standards.
 
@@ -61,6 +61,8 @@ Data Logic does not include a check digit and can encode any length numeric inpu
 
 ITF-14, also known as **UPC Shipping Container** symbol or **Case Code**, is based on [Interleaved Code 2 of 5](#interleaved-code-2-of-5) and requires a 13 digit numeric input (digits `0-9`). One modulo-10 check digit is automatically added.
 
+By default, a bounding box with a border width of 5 pixels will be added. To specify a border width, set [`borderWidth`](/docs/options.md#borderwidth) option to the desired border in pixels (or `0` to remove it).
+
 ### Deutsche Post Leitcode
 
 Leitcode is based on [Interleaved Code 2 of 5](#interleaved-code-2-of-5) and is used by Deutsche Post for mailing purposes. Leitcode requires a 13-digit numerical input and includes a check digit.
@@ -69,7 +71,7 @@ Leitcode is based on [Interleaved Code 2 of 5](#interleaved-code-2-of-5) and is 
 
 Identcode is based on [Interleaved Code 2 of 5](#interleaved-code-2-of-5) and is used by Deutsche Post for mailing purposes. Identcode requires an 11-digit numerical input and includes a check digit.
 
-## Universal Product Code (EN 797)
+## Universal Product Code ([ISO-15420](https://www.iso.org/standard/46143.html))
 
 ### UPC Version A
 
@@ -87,8 +89,13 @@ createStream({
 }, '72527270270+12345')
 ```
 
-:::tip Note
-If your input data already includes the check digit symbology 35 can be used which takes a 12 digit input and validates the check digit before EncodingMode.
+#### Check Digit
+
+If your input data already includes the check digit, symbology type `BARCODE_UPCA_CHK` can be used to take in a 12-digit input and validate its check digit before encoding.
+
+:::tip Tips
+* The gap between the main symbol and an add-on can be adjusted by setting `option2` to the desired value (a multiple of the `x`-dimension).
+* The height in `x`-dimensions that the guard bars descend below the main bars can be adjusted by setting the [`guardDescent`](/docs/options.md#guarddescent) option to a value between `0` and `20` (defaults to `5`).
 :::
 
 ### UPC Version E
@@ -107,11 +114,16 @@ createStream({
 }, '1123456')
 ```
 
-:::tip Note
-If your input data already includes the check digit symbology 38 can be used which takes a 7 or 8 digit input and validates the check digit before EncodingMode.
+#### Check Digit
+
+If your input data already includes the check digit, symbology type `BARCODE_UPCE_CHK` can be used to take in a 12-digit input and validate its check digit before encoding.
+
+:::tip Tips
+* The gap between the main symbol and an add-on can be adjusted by setting `option2` to a value between `7` (default) and `12`.
+* The height in `x`-dimensions that the guard bars descend below the main bars can be adjusted by setting the [`guardDescent`](/docs/options.md#guarddescent) option to a value between `` and `20` (defaults to `5`).
 :::
 
-## European Article Number (EN 797)
+## European Article Number ([ISO-15420](https://www.iso.org/standard/46143.html))
 
 The International Article Number is a standard describing a barcode symbology and numbering system used in global trade to identify a specific retail product type, in a specific packaging configuration, from a specific manufacturer.
 
@@ -148,11 +160,17 @@ createStream({
 ```
 
 :::tip Note
-All of the EAN symbols include check digits which is automatically added.
 :::
 
-:::tip Tip
-If you are encoding an EAN-8 or EAN-13 symbol and your data already includes the check digit then you can use symbology 14 which takes an 8 or 13 digit input and validates the check digit before EncodingMode.
+#### Check Digit
+
+By default, all EAN symbologies include check digits which are added automatically.
+
+If your input data already includes the check digit, symbology type `BARCODE_EANX_CHK` can be used to take in an 8- or 13-digit input and validate its check digit before encoding.
+
+:::tip Tips
+* The gap between the main symbol and an add-on can be adjusted by setting `option2` to a value between `7` (default) and `12`.
+* The height in `x`-dimensions that the guard bars descend below the main bars can be adjusted by setting the [`guardDescent`](/docs/options.md#guarddescent) option to a value between `0` and `20` (defaults to `5`).
 :::
 
 ### SBN, ISBN and ISBN-13
@@ -307,7 +325,7 @@ createStream({
 
 ## Code 128
 
-### Standard Code 128 (ISO 15417)
+### Standard Code 128 ([ISO-15417](https://www.iso.org/standard/43896.html))
 
 ![Code 128](/assets/barcodes/barcode_23.png)
 
@@ -323,6 +341,15 @@ This library supports the encoding of Latin-1 characters in Code 128 symbols.
 
 It is sometimes advantageous to stop Code 128 from using subset mode C which compresses numerical data. The `CODE128B` symbology suppresses mode C in favour of mode B.
 
+### DPD Code
+
+A variation of Code 128, used by Deutsher Paket Dienst (DPD). 
+
+:::tip Note
+* Requires a 28-character alphanumeric input.
+* The human readable text is applied according to DPD format and a modulo-36 check digit is added.
+:::
+
 ### GS1-128
 
 Also known as **UCC/EAN-128**, this variation of Code 128 is defined by the [GS1 General Specifications](https://www.gs1.org/docs/barcodes/GS1_General_Specifications.pdf).
@@ -337,11 +364,11 @@ createStream({
 }, '[01]98898765432106[3202]012345[15]991231')
 ```
 
-:::warning Important
-  * AIs should be encased in square brackets (`[...]`) in the input data. This will be converted to (rounded brackets) before it is included in the human readable text attached to the symbol.
+:::tip Note
+  * AIs should be encased in square brackets (`[...]`) in the input data. This will be converted to parentheses (`(...)`) before it is included in the human readable text attached to the symbol.
+    * Parentheses (`(...)`) can be included in the encoding data if desired.
   * GTIN data (AI `01`) should also include the check digit data.
-  * Fixed length data should be entered at the appropriate length for correct EncodingMode.
-  * GS1-128 does not support extended ASCII characters. Check digits for GTIN data (AI `01`) are not generated and must be included in the input data.
+  * Fixed length data should be entered at the appropriate length for correct encoding.
 :::
 
 ### EAN-14
