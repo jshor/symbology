@@ -2,7 +2,7 @@ import OutputType from '../../src/types/enums/OutputType'
 import OutputOption from '../../src/types/enums/OutputOption'
 import SymbologyType from '../../src/types/enums/SymbologyType'
 import { createImageFile } from '../helpers'
-import symbology from '../../src'
+import { createStream } from '../../src'
 
 describe('Symbology Transformations', () => {
   describe('rotations', () => {
@@ -57,7 +57,7 @@ describe('Symbology Transformations', () => {
 
   describe('Scalable Vector Graphics', () => {
     it('should stream an SVG image', async () => {
-      const image = await symbology.createStream({
+      const image = await createStream({
         symbology: SymbologyType.CODE128,
       }, '12345', OutputType.SVG)
 
@@ -75,7 +75,7 @@ describe('Symbology Transformations', () => {
 
   describe('PostScript', () => {
     it('should stream a PostScript image', async () => {
-      const image = await symbology.createStream({
+      const image = await createStream({
         symbology: SymbologyType.CODE128,
       }, '12345', OutputType.EPS)
 
@@ -93,7 +93,7 @@ describe('Symbology Transformations', () => {
 
   describe('Portable Network Graphics', () => {
     it('should stream a base64-encoded image', async () => {
-      const image = await symbology.createStream({
+      const image = await createStream({
         symbology: SymbologyType.CODE128
       }, '12345', OutputType.PNG)
 

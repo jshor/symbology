@@ -22,7 +22,7 @@ namespace symbology {
   /**
    * Returns a bitmap (of type V8 Array) of the image in memory.
    */
-  Local<Object> getBitmap(Isolate* isolate, zint_symbol *symbol) {
+  Local<Object> getBitmap (Isolate* isolate, zint_symbol *symbol) {
     v8::Local<v8::Context> context = isolate->GetCurrentContext();
 
     int matrix_size = symbol->bitmap_width * symbol->bitmap_height * 3;
@@ -39,7 +39,7 @@ namespace symbology {
   /**
    * Renders symbology and returns an object with PNG bitmap data, EPS, or SVG XML.
    */
-  Local<Object> createStreamHandle(Isolate* isolate, zint_symbol *symbol, uint8_t *data, char *str, int rotate_angle) {
+  Local<Object> createStreamHandle (Isolate* isolate, zint_symbol *symbol, uint8_t *data, char *str, int rotate_angle) {
     int status_code;
 
     if ((symbol->output_options & BARCODE_STDOUT) != 0) {
@@ -186,14 +186,13 @@ namespace symbology {
     args.GetReturnValue().Set(obj);
   }
 
-  void Init(v8::Local<v8::Object> exports) {
-    v8::Local<v8::Context> context = exports->CreationContext();
+  void Init (v8::Local<v8::Object> exports) {
+    v8::Local<v8::Context> context = exports->GetCreationContext().ToLocalChecked();
 
     (void)exports->Set(context,
       Nan::New("createStream").ToLocalChecked(),
-      Nan::New<v8::FunctionTemplate>(createStream)
-          ->GetFunction(context)
-          .ToLocalChecked());
+      Nan::New<v8::FunctionTemplate>(createStream)->GetFunction(context).ToLocalChecked()
+    );
   }
 
   NODE_MODULE(symbology, Init);

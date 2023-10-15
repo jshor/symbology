@@ -3,6 +3,7 @@ import OutputType from '../../types/enums/OutputType'
 import OutputOption from '../../types/enums/OutputOption'
 import binding from '../../binding'
 import binary from '../binary'
+import SymbologyType from '../../types/enums/SymbologyType'
 
 describe('Binary methods', () => {
   afterEach(() => jest.resetAllMocks())
@@ -143,7 +144,7 @@ describe('Binary methods', () => {
         expect.assertions(1)
 
         await expect(binary.invoke({
-          symbology: 10
+          symbology: 10 as SymbologyType
         }, '12345', OutputType.SVG)).resolves.toEqual({
           ...result,
           message: 'Symbology successfully created.'
@@ -218,7 +219,7 @@ describe('Binary methods', () => {
         expect.assertions(1)
 
         await expect(binary.invoke({
-          symbology: 10
+          symbology: 10 as SymbologyType
         }, '12345', OutputType.SVG)).resolves.toEqual(result)
       })
     })
@@ -241,7 +242,7 @@ describe('Binary methods', () => {
         expect.assertions(1)
 
         await expect(binary.invoke({
-          symbology: 10
+          symbology: 10 as SymbologyType
         }, '12345', OutputType.SVG)).rejects.toEqual(result.message)
       })
     })

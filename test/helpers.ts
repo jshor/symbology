@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import symbology from '../src'
+import { createFile } from '../src'
 import OutputType from '../src/types/enums/OutputType'
 import SymbologyConfig from '../src/types/SymbologyConfig'
 
@@ -16,7 +16,7 @@ export async function createImageFile (symbol: SymbologyConfig, ext: OutputType,
   const random = Math.ceil(Math.random() * 10000)
   const fileName = path.join(__dirname, 'e2e/__rendered__', `${random}.${ext}`)
 
-  await symbology.createFile({ ...symbol, fileName }, data)
+  await createFile({ ...symbol, fileName }, data)
 
   return fs.readFileSync(fileName)
 }
