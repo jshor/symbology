@@ -1,3 +1,17 @@
+# [4.0.0](https://github.com/jshor/symbology/compare/v3.0.13...v4.0.0) (2023-10-15)
+
+
+### Features
+
+* **node:** upgrades to support Node 18, 20 [#120](https://github.com/jshor/symbology/issues/120) ([3b7904d](https://github.com/jshor/symbology/commit/3b7904dddf8f1e2abc50b8910423d8fba4770e7e))
+
+
+### BREAKING CHANGES
+
+* **node:** This drops support for Node.js v14.
+
+
+
 ## [3.0.13](https://github.com/jshor/symbology/compare/v3.0.12...v3.0.13) (2022-11-28)
 
 
