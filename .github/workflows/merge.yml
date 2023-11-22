@@ -18,13 +18,15 @@ jobs:
     if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
     strategy:
       matrix:
-        os: [windows-2019, macos-latest, ubuntu-latest]
+        os: [windows-latest, macos-latest, ubuntu-latest]
         node-version: [16, 18, 20]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Install Python setup tools
+        run: pip install setuptools
       - name: Set git credentials
         run: |
           git config --global user.email ${{ env.GIT_USER }}
@@ -106,10 +108,10 @@ jobs:
           set -x
           assets=()
           for asset in ./build/stage/**/*; do
-            assets+=("-a" "$asset")
+            assets+=("$asset")
           done
           RELEASE_VERSION=$(echo $(ls build/stage| head -1))
-          hub release create "${assets[@]}" -m "v$RELEASE_VERSION" "$RELEASE_VERSION"
+          gh release create -t "v$RELEASE_VERSION" "$RELEASE_VERSION" "${assets[@]}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -127,7 +129,7 @@ jobs:
           path: dist
       - uses: actions/setup-node@v1
         with:
-          node-version: 14
+          node-version: 20
           registry-url: https://registry.npmjs.org/
       - run: npm publish
         env:
