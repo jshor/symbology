@@ -3,7 +3,7 @@ name: Pull request
 on:
   pull_request:
     branches:
-      - master
+      - main
   release:
     types: [created]
 
@@ -13,7 +13,7 @@ jobs:
     if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
     strategy:
       matrix:
-        os: [windows-2019, ubuntu-latest, macos-latest]
+        os: [windows-latest, macos-latest, ubuntu-latest]
         # list only the earliest and latest node versions supported
         # this makes PR builds more efficient
         node-version: [16, 20]

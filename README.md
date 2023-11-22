@@ -12,9 +12,9 @@
   <a href="https://app.codecov.io/gh/jshor/symbology"><img
     src="https://img.shields.io/codecov/c/gh/jshor/symbology?style=for-the-badge"
     alt="Code coverage"
-  /></a> <a href="https://github.com/jshor/symbology/actions?query=workflow%3A%22Merge+to+master%22"><img
-    src="https://img.shields.io/github/workflow/status/jshor/symbology/Merge%20to%20master?style=for-the-badge"
-    alt=""
+  /></a> <a href="https://github.com/jshor/symbology/actions/workflows/merge.yml"><img
+    src="https://img.shields.io/github/actions/workflow/status/jshor/symbology/merge.yml?branch=main&style=for-the-badge"
+    alt="Build status"
   /></a> <a href="https://npmjs.com/package/symbology"><img
     src="http://img.shields.io/npm/v/symbology.svg?style=for-the-badge"
     alt="npm version"
