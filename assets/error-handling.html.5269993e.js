@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-53196634","path":"/docs/error-handling.html","title":"Error handling","lang":"en-US","frontmatter":{},"excerpt":"","headers":[],"git":{"updatedTime":1700671865000,"contributors":[{"name":"Josh Shor","email":"jpshor@gmail.com","commits":1}]},"filePathRelative":"docs/error-handling.md"}');export{e as data};
