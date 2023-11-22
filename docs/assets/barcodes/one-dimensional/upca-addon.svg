@@ -1,0 +1,23 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="336" height="120" version="1.1" xmlns="http://www.w3.org/2000/svg">
+ <desc></desc><title></title>
+ <g id="barcode" fill="#000000">
+  <path d="M18 0h2v120h-2ZM22 0h2v120h-2ZM26 0h6v120h-6ZM34 0h4v120h-4ZM42 0h2v100h-2ZM48 0h4v100h-4ZM54 0h4v100h-4ZM64 0h2v100h-2ZM70 0h2v100h-2ZM76 0h4v100h-4ZM82 0h6v100h-6ZM90 0h4v100h-4ZM98 0h2v100h-2ZM104 0h4v100h-4ZM110 0h2v120h-2ZM114 0h2v120h-2ZM118 0h2v100h-2ZM126 0h2v100h-2ZM132 0h6v100h-6ZM142 0h2v100h-2ZM146 0h4v100h-4ZM152 0h4v100h-4ZM160 0h2v100h-2ZM168 0h2v100h-2ZM174 0h6v100h-6ZM184 0h2v100h-2ZM188 0h2v120h-2ZM198 0h2v120h-2ZM202 0h2v120h-2ZM206 0h2v120h-2ZM232 18h2v82h-2ZM236 18h4v82h-4ZM242 18h4v82h-4ZM250 18h4v82h-4ZM256 18h2v82h-2ZM262 18h2v82h-2ZM268 18h4v82h-4ZM274 18h2v82h-2ZM278 18h2v82h-2ZM288 18h2v82h-2ZM292 18h2v82h-2ZM296 18h2v82h-2ZM304 18h4v82h-4ZM310 18h2v82h-2ZM314 18h4v82h-4ZM324 18h2v82h-2Z"/>
+  <text x="8.7" y="117.2" text-anchor="end" font-family="OCRB, monospace" font-size="14">
+   7
+  </text>
+  <text x="74" y="117.2" text-anchor="middle" font-family="OCRB, monospace" font-size="20">
+   25272
+  </text>
+  <text x="152" y="117.2" text-anchor="middle" font-family="OCRB, monospace" font-size="20">
+   70270
+  </text>
+  <text x="217.3" y="117.2" text-anchor="start" font-family="OCRB, monospace" font-size="14">
+   3
+  </text>
+  <text x="280" y="15.6" text-anchor="middle" font-family="OCRB, monospace" font-size="20">
+   12345
+  </text>
+ </g>
+</svg>

@@ -1,10 +1,10 @@
 import fs from 'fs'
 import { PNG } from 'pngjs'
-import binary from '../lib/binary'
-import png from '../lib/png'
+import * as binary from '../lib/binary'
+import * as png from '../lib/png'
 import SymbologyType from '../types/enums/SymbologyType'
-import { createStream, createFile } from '../main'
-import OutputType from '../types/enums/OutputType'
+import { renderSymbol } from '../main'
+import { RenderType } from '../types/options/BasicOptions'
 
 describe('Symbology Library', () => {
   const mockPngRes = {
@@ -42,9 +42,10 @@ describe('Symbology Library', () => {
         .spyOn(binary, 'invoke')
         .mockResolvedValue(mockPngRes)
 
-      const res = await createStream({
-        symbology: SymbologyType.CODE128
-      }, '12345', OutputType.PNG)
+      const res = await renderSymbol({
+        symbology: SymbologyType.CODE128,
+        renderType: RenderType.PNG
+      }, '12345')
 
       expect(png.render).toHaveBeenCalledTimes(1)
       expect(png.render).toHaveBeenCalledWith(mockPngRes.bitmap, mockPngRes.width, mockPngRes.height, 'FFFFFFFF', '000000FF')
@@ -62,9 +63,10 @@ describe('Symbology Library', () => {
         .spyOn(binary, 'invoke')
         .mockResolvedValue(mockSvgRes)
 
-      const res = await createStream({
-        symbology: SymbologyType.CODE128
-      }, '12345', OutputType.SVG)
+      const res = await renderSymbol({
+        symbology: SymbologyType.CODE128,
+        renderType: RenderType.SVG
+      }, '12345')
 
       expect(png.render).not.toHaveBeenCalled()
       expect(png.blobToBase64).not.toHaveBeenCalled()
@@ -80,8 +82,9 @@ describe('Symbology Library', () => {
         .spyOn(binary, 'invoke')
         .mockResolvedValue(mockPngRes)
 
-      const res = await createStream({
-        symbology: SymbologyType.CODE128
+      const res = await renderSymbol({
+        symbology: SymbologyType.CODE128,
+        renderType: undefined!
       }, '12345')
 
       expect(png.render).toHaveBeenCalledTimes(1)
@@ -106,8 +109,9 @@ describe('Symbology Library', () => {
     it('should reject if the fileName is not specified', async () => {
       expect.assertions(1)
 
-      await expect(createFile({
-        symbology: SymbologyType.CODE128
+      await expect(renderSymbol({
+        symbology: SymbologyType.CODE128,
+        renderType: RenderType.PNG
       }, '12345')).rejects.toEqual('fileName is required.')
     })
 
@@ -117,8 +121,9 @@ describe('Symbology Library', () => {
         .mockResolvedValue(mockPngRes)
 
       const fileName = 'out.png'
-      const res = await createFile({
+      const res = await renderSymbol({
         symbology: SymbologyType.CODE128,
+        renderType: RenderType.PNG,
         fileName
       }, '12345')
 
@@ -138,8 +143,9 @@ describe('Symbology Library', () => {
         .mockResolvedValue(mockSvgRes)
 
       const fileName = 'out.svg'
-      const res = await createFile({
+      const res = await renderSymbol({
         symbology: SymbologyType.CODE128,
+        renderType: RenderType.SVG,
         fileName
       }, '12345')
 

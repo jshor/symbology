@@ -8,6 +8,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <nan.h>
+#include <vector>
 #include "../../.zint/backend/zint.h"
 
 namespace symbology {
@@ -20,7 +21,7 @@ namespace symbology {
   using v8::Value;
 
   /**
-   * Returns a bitmap (of type V8 Array) of the image in memory.
+   * Returns a bitmap array for the given symbol.
    */
   Local<Object> getBitmap (Isolate* isolate, zint_symbol *symbol) {
     v8::Local<v8::Context> context = isolate->GetCurrentContext();
@@ -37,40 +38,51 @@ namespace symbology {
   }
 
   /**
+   * Returns the encoded vector data as a string.
+   */
+  Local<String> getEncodedVector (zint_symbol *symbol) {
+    char* memfile = (char*)malloc(symbol->memfile_size + 1); // allocate an extra byte for a null terminator
+
+    if (!memfile) {
+      return Nan::New<String>("").ToLocalChecked(); // allocation failure
+    }
+
+    memcpy(memfile, symbol->memfile, symbol->memfile_size);
+    memfile[symbol->memfile_size] = '\0'; // null-terminate the string
+
+    Local<String> result = Nan::New<String>(memfile).ToLocalChecked();
+    free(memfile);
+
+    return result;
+  }
+
+  /**
    * Renders symbology and returns an object with PNG bitmap data, EPS, or SVG XML.
    */
   Local<Object> createStreamHandle (Isolate* isolate, zint_symbol *symbol, uint8_t *data, char *str, int rotate_angle) {
     int status_code;
+    const char *file_ext = &symbol->outfile[strlen(symbol->outfile) - 3];
+    bool is_bitmap = strcmp("bmp", file_ext) == 0;
 
-    if ((symbol->output_options & BARCODE_STDOUT) != 0) {
-      status_code = ZBarcode_Encode_and_Print(symbol, data, 0, rotate_angle);
-    } else {
+    if (is_bitmap) {
       status_code = ZBarcode_Encode_and_Buffer(symbol, data, 0, rotate_angle);
+    } else {
+      status_code = ZBarcode_Encode_and_Buffer_Vector(symbol, data, 0, rotate_angle);
     }
 
     v8::Local<v8::Object> obj = Object::New(isolate);
 
     if(status_code <= 2) {
-      // the barcode creation was successful; parse the result
-      int fileNameLength = strlen(symbol->outfile);
-
       // assign `encodedData` and `bitmap` to be initially empty (required by BinResult)
       Nan::Set(obj, Nan::New<String>("encodedData").ToLocalChecked(), Nan::New<String>("").ToLocalChecked());
       Nan::Set(obj, Nan::New<String>("bitmap").ToLocalChecked(), v8::Array::New(isolate, 0));
 
-      if(fileNameLength > 4) {
-        // check if the file at least is 4 chars long so we can parse the last three and check it as an extension
-        const char *fileExt = &symbol->outfile[fileNameLength - 3];
-
-        if(strcmp("bmp", fileExt) == 0) {
-          // parse the buffer as a bitmap array and store it in `bitmap`
-          Nan::Set(obj, Nan::New<String>("bitmap").ToLocalChecked(), getBitmap(isolate, symbol));
-
-        } else if(strcmp("svg", fileExt) == 0 || strcmp("eps", fileExt) == 0) {
-          // pass the rendered_data (stdout) to `encodedData`
-          Nan::Set(obj, Nan::New<String>("encodedData").ToLocalChecked(), Nan::New<String>(symbol->rendered_data).ToLocalChecked());
-
-        }
+      if(is_bitmap) {
+        // parse the buffer as a bitmap array and store it in `bitmap`
+        Nan::Set(obj, Nan::New<String>("bitmap").ToLocalChecked(), getBitmap(isolate, symbol));
+      } else {
+        // pass the encoded vector data to `encodedData`
+        Nan::Set(obj, Nan::New<String>("encodedData").ToLocalChecked(), getEncodedVector(symbol));
       }
 
       // set the buffered bitmap dimensions
@@ -95,45 +107,39 @@ namespace symbology {
 
     // basic symbology info and render size
     symbol->symbology = (int)args[1]->NumberValue(context).FromJust();
-    symbol->height = (int)args[2]->NumberValue(context).FromJust();
     symbol->whitespace_width = (int)args[3]->NumberValue(context).FromJust();
-    symbol->border_width = (int)args[4]->NumberValue(context).FromJust();
+    symbol->whitespace_height = (int)args[4]->NumberValue(context).FromJust();
+    symbol->border_width = (int)args[5]->NumberValue(context).FromJust();
 
     // options (-1 indicates not set)
     int option_1, option_2, option_3, output_options;
-    float scale, dot_size;
+    float scale, dot_size, text_gap, guard_descent, height;
 
-    scale = (float)args[9]->NumberValue(context).FromJust();
-    dot_size = (float)args[19]->NumberValue(context).FromJust();
-    option_1 = (int)args[10]->NumberValue(context).FromJust();
-    option_2 = (int)args[11]->NumberValue(context).FromJust();
-    option_3 = (int)args[12]->NumberValue(context).FromJust();
-    output_options = (int)args[5]->NumberValue(context).FromJust();
+    height = (int)args[2]->NumberValue(context).FromJust();
+    output_options = (int)args[6]->NumberValue(context).FromJust();
+    option_1 = (int)args[11]->NumberValue(context).FromJust();
+    option_2 = (int)args[12]->NumberValue(context).FromJust();
+    option_3 = (int)args[13]->NumberValue(context).FromJust();
+    dot_size = (float)args[20]->NumberValue(context).FromJust();
+    text_gap = (float)args[21]->NumberValue(context).FromJust();
+    guard_descent = (float)args[22]->NumberValue(context).FromJust();
+    scale = (float)args[10]->NumberValue(context).FromJust();
 
-    if(option_1 > -1) {
-      symbol->option_1 = option_1;
-    }
-    if(option_2 > -1) {
-      symbol->option_2 = option_2;
-    }
-    if(option_3 > -1) {
-      symbol->option_3 = option_3;
-    }
-    if(output_options > -1) {
-      symbol->output_options = output_options;
-    }
-    if(scale > 0) {
-      symbol->scale = scale;
-    }
-    if(dot_size > -1) {
-      symbol->dot_size = dot_size;
-    }
+    if(height > -1) symbol->height = height;
+    if(output_options > -1) symbol->output_options = output_options;
+    if(option_1 > -1) symbol->option_1 = option_1;
+    if(option_2 > -1) symbol->option_2 = option_2;
+    if(option_3 > -1) symbol->option_3 = option_3;
+    if(dot_size > -1) symbol->dot_size = dot_size;
+    // if(text_gap > -1) symbol->text_gap = text_gap;
+    if(guard_descent > 0) symbol->guard_descent = guard_descent;
+    if(scale > 0) symbol->scale = scale;
 
-    Nan::Utf8String bgcolor(args[6]);
-    Nan::Utf8String fgcolor(args[7]);
-    Nan::Utf8String outfile(args[8]);
-    Nan::Utf8String text(args[14]);
-    Nan::Utf8String primary(args[17]);
+    Nan::Utf8String bgcolor(args[7]);
+    Nan::Utf8String fgcolor(args[8]);
+    Nan::Utf8String outfile(args[9]);
+    Nan::Utf8String text(args[15]); // TODO: dead code
+    Nan::Utf8String primary(args[18]);
 
     // colors
     strncpy((char*)&symbol->bgcolour[0], *bgcolor, sizeof(symbol->bgcolour) - 1);
@@ -149,16 +155,13 @@ namespace symbology {
     strncpy((char*)&symbol->text[0], *text, sizeof(symbol->text) - 1);
 
     // show/hide human-readable text
-    symbol->show_hrt = (int)args[13]->NumberValue(context).FromJust();
+    symbol->show_hrt = (int)args[14]->NumberValue(context).FromJust();
 
     // encoding mode
-    symbol->input_mode = (int)args[15]->NumberValue(context).FromJust();
+    symbol->input_mode = (int)args[16]->NumberValue(context).FromJust();
 
     // eci mode
-    symbol->eci = (int)args[16]->NumberValue(context).FromJust();
-
-    // text to display
-    strncpy((char*)&symbol->text[0], *text, sizeof(symbol->text) - 1);
+    symbol->eci = (int)args[17]->NumberValue(context).FromJust();
 
     return symbol;
   }
@@ -176,7 +179,7 @@ namespace symbology {
 
     // parse `rotation` angle argument
     int rotate_angle;
-    rotate_angle = (int)args[18]->NumberValue(context).FromJust();
+    rotate_angle = (int)args[19]->NumberValue(context).FromJust();
 
     Nan::Utf8String data(args[0]);
 

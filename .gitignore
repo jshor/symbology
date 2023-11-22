@@ -8,8 +8,10 @@ dist
 .zint
 bin
 lib/binding
-.nyc_output
+test/e2e/__image_snapshots__/__diff_output__
 test/e2e/__rendered__/*
 !test/e2e/__rendered__/.keep
-docs/.vuepress/.cache
-docs/.vuepress/.temp
+docs/.vitepress/cache
+*.png
+*.svg
+*.eps

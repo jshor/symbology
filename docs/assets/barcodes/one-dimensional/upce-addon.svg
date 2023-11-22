@@ -1,0 +1,20 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="248" height="120" version="1.1" xmlns="http://www.w3.org/2000/svg">
+ <desc></desc><title></title>
+ <g id="barcode" fill="#000000">
+  <path d="M18 0h2v120h-2ZM22 0h2v120h-2ZM28 0h2v100h-2ZM34 0h4v100h-4ZM40 0h8v100h-8ZM50 0h2v100h-2ZM54 0h2v100h-2ZM62 0h4v100h-4ZM68 0h6v100h-6ZM78 0h2v100h-2ZM88 0h2v100h-2ZM92 0h2v100h-2ZM98 0h2v100h-2ZM106 0h2v100h-2ZM110 0h2v120h-2ZM114 0h2v120h-2ZM118 0h2v120h-2ZM144 18h2v82h-2ZM148 18h4v82h-4ZM154 18h4v82h-4ZM162 18h4v82h-4ZM168 18h2v82h-2ZM174 18h2v82h-2ZM180 18h4v82h-4ZM186 18h2v82h-2ZM190 18h2v82h-2ZM200 18h2v82h-2ZM204 18h2v82h-2ZM208 18h2v82h-2ZM216 18h4v82h-4ZM222 18h2v82h-2ZM226 18h4v82h-4ZM236 18h2v82h-2Z"/>
+  <text x="8.7" y="117.2" text-anchor="end" font-family="OCRB, monospace" font-size="14">
+   1
+  </text>
+  <text x="67" y="117.2" text-anchor="middle" font-family="OCRB, monospace" font-size="20">
+   234567
+  </text>
+  <text x="125.3" y="117.2" text-anchor="start" font-family="OCRB, monospace" font-size="14">
+   0
+  </text>
+  <text x="192" y="15.6" text-anchor="middle" font-family="OCRB, monospace" font-size="20">
+   12345
+  </text>
+ </g>
+</svg>

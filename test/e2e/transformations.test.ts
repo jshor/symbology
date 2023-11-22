@@ -1,34 +1,16 @@
-import OutputType from '../../src/types/enums/OutputType'
-import OutputOption from '../../src/types/enums/OutputOption'
 import SymbologyType from '../../src/types/enums/SymbologyType'
 import { createImageFile } from '../helpers'
-import { createStream } from '../../src'
+import { renderSymbol } from '../../src'
+import { RenderType } from '../../src/types/options/BasicOptions'
 
 describe('Symbology Transformations', () => {
   describe('rotations', () => {
-    it('should rotate the symbol 90 degrees clockwise', async () => {
+    it.each([90, 180, 270])('should rotate the symbol %s degrees clockwise', async (rotation) => {
       const image = await createImageFile({
         symbology: SymbologyType.CODE128,
-        rotation: 90
-      }, OutputType.PNG, '12345')
-
-      expect(image).toMatchImageSnapshot()
-    })
-
-    it('should rotate the symbol 180 degrees clockwise', async () => {
-      const image = await createImageFile({
-        symbology: SymbologyType.CODE128,
-        rotation: 180
-      }, OutputType.PNG, '12345')
-
-      expect(image).toMatchImageSnapshot()
-    })
-
-    it('should rotate the symbol 270 degrees clockwise', async () => {
-      const image = await createImageFile({
-        symbology: SymbologyType.CODE128,
-        rotation: 270
-      }, OutputType.PNG, '12345')
+        renderType: RenderType.PNG,
+        rotation
+      }, '12345')
 
       expect(image).toMatchImageSnapshot()
     })
@@ -38,8 +20,9 @@ describe('Symbology Transformations', () => {
     it('should set the default dot size to 0.8px in dotty mode', async () => {
       const image = await createImageFile({
         symbology: SymbologyType.DOTCODE,
-        outputOptions: OutputOption.BARCODE_DOTTY_MODE
-      }, OutputType.PNG, '12345')
+        renderType: RenderType.PNG,
+        dotty: true
+      }, '12345')
 
       expect(image).toMatchImageSnapshot()
     })
@@ -47,9 +30,10 @@ describe('Symbology Transformations', () => {
     it('should render the dot size as 1px in dotty mode', async () => {
       const image = await createImageFile({
         symbology: SymbologyType.DOTCODE,
-        outputOptions: OutputOption.BARCODE_DOTTY_MODE,
+        dotty: true,
+        renderType: RenderType.PNG,
         dotSize: 1
-      }, OutputType.PNG, '12345')
+      }, '12345')
 
       expect(image).toMatchImageSnapshot()
     })
@@ -57,9 +41,10 @@ describe('Symbology Transformations', () => {
 
   describe('Scalable Vector Graphics', () => {
     it('should stream an SVG image', async () => {
-      const image = await createStream({
+      const image = await renderSymbol({
         symbology: SymbologyType.CODE128,
-      }, '12345', OutputType.SVG)
+        renderType: RenderType.SVG
+      }, '12345')
 
       expect(image.data).toMatchSnapshot()
     })
@@ -67,7 +52,8 @@ describe('Symbology Transformations', () => {
     it('should render an SVG file', async () => {
       const image = await createImageFile({
         symbology: SymbologyType.CODE128,
-      }, OutputType.SVG, '12345')
+        renderType: RenderType.SVG
+      }, '12345')
 
       expect(image.toString()).toMatchSnapshot()
     })
@@ -75,9 +61,10 @@ describe('Symbology Transformations', () => {
 
   describe('PostScript', () => {
     it('should stream a PostScript image', async () => {
-      const image = await createStream({
+      const image = await renderSymbol({
         symbology: SymbologyType.CODE128,
-      }, '12345', OutputType.EPS)
+        renderType: RenderType.EPS
+      }, '12345')
 
       expect(image.data).toMatchSnapshot()
     })
@@ -85,7 +72,8 @@ describe('Symbology Transformations', () => {
     it('should render an eps file', async () => {
       const image = await createImageFile({
         symbology: SymbologyType.CODE128,
-      }, OutputType.EPS, '12345')
+        renderType: RenderType.EPS
+      }, '12345')
 
       expect(image.toString()).toMatchSnapshot()
     })
@@ -93,9 +81,10 @@ describe('Symbology Transformations', () => {
 
   describe('Portable Network Graphics', () => {
     it('should stream a base64-encoded image', async () => {
-      const image = await createStream({
-        symbology: SymbologyType.CODE128
-      }, '12345', OutputType.PNG)
+      const image = await renderSymbol({
+        symbology: SymbologyType.CODE128,
+        renderType: RenderType.PNG
+      }, '12345')
 
       expect(image.data).toMatchSnapshot()
     })

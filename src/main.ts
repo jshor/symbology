@@ -1,106 +1,95 @@
 import fs from 'fs'
-import binary from './lib/binary'
-import png from './lib/png'
-import EncodingMode from './types/enums/EncodingMode'
-import OutputOption from './types/enums/OutputOption'
-import OutputType from './types/enums/OutputType'
-import SymbologyConfig from './types/SymbologyConfig'
-import SymbologyResult from './types/SymbologyResult'
+import { invoke } from './lib/binary'
+import * as png from './lib/png'
+import { transformOptions } from './transformOptions'
+import { type SymbologyResult } from './types/SymbologyResult'
+import {
+  type BasicOptions,
+  type SymbologyOptions,
+  RenderType
+} from './types/options/BasicOptions'
+import { type BinResult } from './types/BinResult'
 
-/**
- * Default Symbology config, populated with default values
- */
-const defaultConfig: SymbologyConfig = {
-  symbology: 20,
-  height: 50,
-  whitespaceWidth: 0,
-  borderWidth: 0,
-  outputOptions: OutputOption.BARCODE_NO_ASCII,
-  foregroundColor: '000000FF',
-  backgroundColor: 'FFFFFFFF',
-  scale: 1.0,
-  option1: -1,
-  option2: -1,
-  option3: -1,
-  showHumanReadableText: true,
-  encoding: EncodingMode.DATA_MODE,
-  eci: 0,
-  primary: '',
-  rotation: 0,
-  dotSize: 0.8
+
+export async function renderSymbol (options: SymbologyOptions, input: string) {
+  const config = transformOptions(options)
+  const result = await createStream(config, input)
+
+  if (options.fileName) {
+    return renderFile({ config, result, fileName: options.fileName })
+  }
+
+  return renderStream({ config, result })
 }
 
 /**
  * Renders a symbology image as a string in SVG, EPS, or base64-encoded PNG format.
- *
- * @param {SymbologyConfig} config - symbology configuration
- * @param {string} barcodeData - data to encode
- * @param {OutputType} outputType - `png`, `eps`, or `svg`.
- * @returns {Promise<SymbologyResult>} object with resulting props (see docs)
  */
-export async function createStream (config: SymbologyConfig, barcodeData: string, outputType: OutputType = OutputType.PNG): Promise<SymbologyResult> {
-  const symbol: SymbologyConfig = {
-    ...defaultConfig,
-    ...config,
-    fileName: `out.${outputType}`
-  }
-  const res = await binary.invoke(symbol, barcodeData, outputType)
+export async function createStream (config: BasicOptions, input: string): Promise<BinResult> {
+  const fileNameExtension = (() => {
+    switch (config.renderType) {
+      case RenderType.PNG:
+        return 'bmp' // force bitmap for any raster type
+      case RenderType.SVG:
+        return 'svg'
+      default:
+        return 'eps'
+    }
+  })()
 
-  if (outputType === OutputType.PNG) {
+  return invoke({
+    ...config,
+    fileName: `out.${fileNameExtension}`
+  }, input, config.renderType)
+}
+
+async function renderStream ({ config, result }: {
+  config: BasicOptions
+  result: BinResult
+}): Promise<SymbologyResult> {
+  if (config.renderType === RenderType.PNG) {
     // write the bitmap to a base64-encoded PNG string
-    const image = png.render(res.bitmap, res.width, res.height, symbol.backgroundColor, symbol.foregroundColor)
-    const base64Data = await png.blobToBase64(image)
+    const image = png.render(result.bitmap, result.width, result.height, config.backgroundColor, config.foregroundColor)
+    const base64result = await png.blobToBase64(image)
 
     return {
-      data: base64Data,
-      width: res.width,
-      height: res.height,
-      message: res.message
+      data: base64result,
+      width: result.width,
+      height: result.height,
+      message: result.message
     }
   }
 
   return {
-    data: res.encodedData,
-    width: res.width,
-    height: res.height,
-    message: res.message
+    data: result.encodedData,
+    width: result.width,
+    height: result.height,
+    message: result.message
   }
 }
 
 /**
  * Creates a symbology image file of a PNG, SVG or EPS file in the specified `fileName` path.
- *
- * @param {SymbologyConfig} config - symbology configuration
- * @param {string} barcodeData - data to encode
- * @returns {Promise<SymbologyResult>} object with resulting props (see docs)
  */
-export async function createFile (config: SymbologyConfig, barcodeData: string): Promise<SymbologyResult> {
-  const symbol: SymbologyConfig = {
-    ...defaultConfig,
-    ...config
-  }
-
-  if (!symbol.fileName) {
-    return Promise.reject('fileName is required.')
-  }
-
-  const outputType = binary.getOutputType(symbol.fileName)
-  const res = await binary.invoke(symbol, barcodeData, outputType)
-
-  if (outputType === OutputType.PNG) {
+export async function renderFile ({ config, result, fileName }: {
+  config: BasicOptions
+  result: BinResult
+  fileName: string
+}): Promise<SymbologyResult> {
+  if (config.renderType === RenderType.PNG) {
     // write the bitmap to a PNG image file
-    const image = png.render(res.bitmap, res.width, res.height, symbol.backgroundColor, symbol.foregroundColor)
+    const image = png.render(result.bitmap, result.width, result.height, config.backgroundColor, config.foregroundColor)
     const buffer = png.getBuffer(image)
 
-    fs.writeFileSync(symbol.fileName, buffer)
+    fs.writeFileSync(fileName, buffer)
   } else {
     // write SVG or EPS to a file
-    fs.writeFileSync(symbol.fileName, res.encodedData)
+    fs.writeFileSync(fileName, result.encodedData)
   }
 
   return {
-    width: res.width,
-    height: res.height,
-    message: res.message
+    width: result.width,
+    height: result.height,
+    message: result.message
   }
 }

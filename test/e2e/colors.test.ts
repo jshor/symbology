@@ -1,5 +1,5 @@
-import OutputType from '../../src/types/enums/OutputType'
 import SymbologyType from '../../src/types/enums/SymbologyType'
+import { RenderType } from '../../src/types/options/BasicOptions'
 import { createImageFile } from '../helpers'
 
 describe('Symbology Colors', () => {
@@ -7,8 +7,9 @@ describe('Symbology Colors', () => {
     const image = await createImageFile({
       symbology: SymbologyType.CODE128,
       backgroundColor: '000000ff',
-      foregroundColor: 'ffffffff'
-    }, OutputType.PNG, '12345')
+      foregroundColor: 'ffffffff',
+      renderType: RenderType.PNG
+    }, '12345')
 
     expect(image).toMatchImageSnapshot()
   })
@@ -17,8 +18,9 @@ describe('Symbology Colors', () => {
     const image = await createImageFile({
       symbology: SymbologyType.CODE128,
       backgroundColor: '000000ff',
-      foregroundColor: 'ff0000ff'
-    }, OutputType.PNG, '12345')
+      foregroundColor: 'ff0000ff',
+      renderType: RenderType.PNG
+    }, '12345')
 
     expect(image).toMatchImageSnapshot()
   })
@@ -27,8 +29,9 @@ describe('Symbology Colors', () => {
     const image = await createImageFile({
       symbology: SymbologyType.CODE128,
       backgroundColor: '0000ffff',
-      foregroundColor: 'ffffffff'
-    }, OutputType.PNG, '12345')
+      foregroundColor: 'ffffffff',
+      renderType: RenderType.PNG
+    }, '12345')
 
     expect(image).toMatchImageSnapshot()
   })
@@ -37,8 +40,9 @@ describe('Symbology Colors', () => {
     const image = await createImageFile({
       symbology: SymbologyType.CODE128,
       backgroundColor: '00000000',
-      foregroundColor: 'ffffffff'
-    }, OutputType.PNG, '12345')
+      foregroundColor: 'ffffffff',
+      renderType: RenderType.PNG
+    }, '12345')
 
     expect(image).toMatchImageSnapshot()
   })

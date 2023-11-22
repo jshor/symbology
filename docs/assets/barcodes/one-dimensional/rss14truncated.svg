@@ -1,0 +1,11 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100" height="43" version="1.1" xmlns="http://www.w3.org/2000/svg">
+ <desc></desc><title></title>
+ <g id="barcode" fill="#000000">
+  <path d="M2 0h2v10h-2ZM14 0h2v10h-2ZM18 0h2v10h-2ZM30 0h2v10h-2ZM34 0h2v10h-2ZM42 0h10v10h-10ZM62 0h2v10h-2ZM66 0h8v10h-8ZM76 0h4v10h-4ZM82 0h2v10h-2ZM86 0h6v10h-6ZM96 0h2v10h-2ZM8 10h6v2h-6ZM16 10h2v2h-2ZM20 10h10v2h-10ZM32 10h2v2h-2ZM36 10h2v2h-2ZM40 10h2v2h-2ZM52 10h2v2h-2ZM56 10h2v2h-2ZM60 10h2v2h-2ZM64 10h2v2h-2ZM74 10h2v6h-2ZM80 10h2v2h-2ZM84 10h2v2h-2ZM10 12h2v2h-2ZM14 12h2v2h-2ZM18 12h2v2h-2ZM22 12h2v2h-2ZM26 12h2v2h-2ZM30 12h2v2h-2ZM34 12h2v2h-2ZM38 12h2v2h-2ZM42 12h2v4h-2ZM46 12h2v4h-2ZM50 12h2v4h-2ZM54 12h2v4h-2ZM58 12h2v2h-2ZM62 12h2v2h-2ZM66 12h2v2h-2ZM70 12h2v2h-2ZM78 12h2v2h-2ZM82 12h2v2h-2ZM86 12h2v2h-2ZM90 12h2v2h-2ZM8 14h4v2h-4ZM16 14h2v2h-2ZM24 14h2v2h-2ZM28 14h6v2h-6ZM36 14h2v2h-2ZM64 14h4v2h-4ZM80 14h2v2h-2ZM88 14h4v2h-4ZM0 16h2v10h-2ZM4 16h2v10h-2ZM12 16h4v10h-4ZM18 16h6v10h-6ZM26 16h2v10h-2ZM34 16h2v10h-2ZM38 16h4v10h-4ZM58 16h6v10h-6ZM68 16h6v10h-6ZM76 16h4v10h-4ZM82 16h6v10h-6ZM92 16h4v10h-4ZM98 16h2v10h-2Z"/>
+  <text x="50" y="39.34" text-anchor="middle" font-family="Arimo, Arial, sans-serif" font-size="14">
+   0950110153001
+  </text>
+ </g>
+</svg>

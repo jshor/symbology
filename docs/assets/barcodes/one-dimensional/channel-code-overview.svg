@@ -1,0 +1,11 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="78" height="117" version="1.1" xmlns="http://www.w3.org/2000/svg">
+ <desc></desc><title></title>
+ <g id="barcode" fill="#000000">
+  <path d="M0 0h2v100h-2ZM4 0h2v100h-2ZM8 0h2v100h-2ZM12 0h2v100h-2ZM16 0h2v100h-2ZM20 0h4v100h-4ZM30 0h4v100h-4ZM40 0h2v100h-2ZM44 0h4v100h-4ZM52 0h2v100h-2ZM56 0h8v100h-8ZM68 0h2v100h-2ZM74 0h4v100h-4Z"/>
+  <text x="39" y="113.34" text-anchor="middle" font-family="Arimo, Arial, sans-serif" font-size="14">
+   1234567
+  </text>
+ </g>
+</svg>

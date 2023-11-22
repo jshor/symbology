@@ -110,3 +110,9 @@ This creates `uspsExample.eps` which looks like:
 ## License
 
 [GPL-3](LICENSE.md).
+
+## Windows
+
+```sh
+npm config set msvs_version 2022 --global
+```

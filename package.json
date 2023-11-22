@@ -3,7 +3,7 @@
   "version": "4.0.1",
   "description": "🔖 Generates 1D, 2D, and composite barcodes in png, svg, or eps formats. Supports 50+ symbologies.",
   "scripts": {
-    "ye": "node ./test.js",
+    "gen": "ts-node ./testScript.ts",
     "commit": "git-cz",
     "release": "standard-version",
     "lint": "eslint ./src",
@@ -15,8 +15,9 @@
     "binary:rebuild": "node-pre-gyp rebuild package",
     "install": "node ./scripts/install.js && npm run binary:install",
     "install:rebuild": "rimraf bin && node ./scripts/install.js && npm run binary:rebuild",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -47,12 +48,9 @@
     "package_name": "{module_name}_{platform}_{arch}_{node_abi}.tar.gz",
     "host": "https://github.com/jshor/symbology/releases/download/"
   },
-  "engines": {
-    "node": ">=14.0.0 <23.00.0"
-  },
   "dependencies": {
-    "@mapbox/node-pre-gyp": "^1.0.11",
-    "nan": "^2.22.0",
+    "@mapbox/node-pre-gyp": "^2.0.0",
+    "nan": "^2.22.2",
     "node-fetch": "2",
     "pngjs": "^6.0.0",
     "replace-in-file": "^6.3.5",
@@ -79,11 +77,13 @@
     "husky": "^8.0.2",
     "jest": "^29.3.1",
     "jest-image-snapshot": "^6.0.0",
+    "markdown-it-footnote": "^3.0.3",
     "rollup": "^3.4.0",
     "rollup-plugin-terser": "^7.0.2",
     "standard-version": "^9.5.0",
     "ts-jest": "^29.0.3",
-    "typescript": ">=3.0.0",
+    "typescript": "^5.8.3",
+    "vitepress": "^1.0.0-rc.29",
     "vuepress": "^2.0.0-beta.53"
   },
   "packageManager": "yarn@1.22.22",
@@ -119,5 +119,5 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "zintVersion": "89518c4"
+  "zintVersion": "0eaa9f3"
 }

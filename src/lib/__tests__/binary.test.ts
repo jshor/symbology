@@ -1,8 +1,8 @@
-import EncodingMode from '../../types/enums/EncodingMode'
+import { EncodingMode } from '../../types/enums/EncodingMode'
 import OutputType from '../../types/enums/OutputType'
 import OutputOption from '../../types/enums/OutputOption'
 import binding from '../../binding'
-import binary from '../binary'
+import * as binary from '../binary'
 import SymbologyType from '../../types/enums/SymbologyType'
 
 describe('Binary methods', () => {
@@ -37,7 +37,7 @@ describe('Binary methods', () => {
         option2: 2,
         option3: 3,
         showHumanReadableText: false,
-        encoding: EncodingMode.DATA_MODE,
+        encoding: EncodingMode.DATA,
         eci: 0,
         primary: '',
         text: 'example text',
@@ -245,24 +245,6 @@ describe('Binary methods', () => {
           symbology: 10 as SymbologyType
         }, '12345', OutputType.SVG)).rejects.toEqual(result.message)
       })
-    })
-  })
-
-  describe('getOutputType()', () => {
-    it('should return PNG for a file with a .png extension', () => {
-      expect(binary.getOutputType('out.PNG')).toEqual(OutputType.PNG)
-    })
-
-    it('should return SVG for a file with a .svg extension', () => {
-      expect(binary.getOutputType('out.SVG')).toEqual(OutputType.SVG)
-    })
-
-    it('should return EPS for a file with a .eps extension', () => {
-      expect(binary.getOutputType('out.EPS')).toEqual(OutputType.EPS)
-    })
-
-    it('should fall back to PNG for an unrecognized file extension', () => {
-      expect(binary.getOutputType('out.tiff')).toEqual(OutputType.PNG)
     })
   })
 })

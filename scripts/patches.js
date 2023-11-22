@@ -3,60 +3,38 @@
  * These patches will be applied after each time time the library is cloned.
  */
 module.exports = [
-  /* initialize rendered_data, which will store the rendered SVG/PS string */
+  /* defines the output buffer type based on the file name */
   {
-    files: '.zint/**/zint.h',
-    from: /struct zint_symbol \{/g,
-    to: `
-    struct zint_symbol {
-        char rendered_data[1000000];
-`
+    files: '.zint/**/library.c',
+    from: 'OUT_BUFFER',
+    to: 'OUT_REPLACE_BUFFER'
   },
-  /* add stdlib as reference */
   {
-    files: '.zint/**/*.{c,h}',
-    from: /\<malloc\.h\>/g,
-    to: '<stdlib.h>'
+    files: '.zint/**/library.c',
+    from: 'OUT_BUFFER',
+    to: 'filetypes[filetype_idx(symbol->outfile + (int) strlen(symbol->outfile) - 3)].filetype'
   },
-  /* add stdio as reference */
   {
-    files: '.zint/**/{svg,ps}.{c,h}',
-    from: /\<stdlib\.h\>/g,
-    to: `<stdlib.h>
-#include <stdio.h>
-`
+    files: '.zint/**/library.c',
+    from: 'OUT_REPLACE_BUFFER',
+    to: 'OUT_BUFFER'
   },
-  /* redirects stdout to file buffer with size of symbol->rendered_data */
+  /* define the version in PostScript files */
   {
-    files: '.zint/**/{svg,ps}.{c,h}',
-    from: /([a-z]+)\s*=\s*stdout;/g,
-    to: ''
+    files: '.zint/**/{ps,svg}.c',
+    from: /%%Creator:\s+([\w\s]+)/g,
+    to: '%%Version: '
   },
-  /* assigns pointer to maintain file buffer */
+  /* support titles for PostScript files */
   {
-    files: '.zint/**/{svg,ps}.{c,h}',
-    from: /INTERNAL int ([a-z]+)_plot([^\n]+)/g,
-    to: `
-INTERNAL int $1_plot$2
-    char str[sizeof(symbol->rendered_data)];
-`
+    files: '.zint/**/{ps,svg}.c',
+    from: /%%Title:\s+([\w\s]+)\s/g,
+    to: '%%Title: {{ title }}'
   },
-  /* replaces the file buffer allocation with a string one */
+  /* support titles for SVG files */
   {
-    files: '.zint/**/{svg,ps}.{c,h}',
-    from: /FILE \*([a-z]+)/g,
-    to: 'char *$1 = str'
-  },
-  /* change file printing to string concatenation */
-  {
-    files: '.zint/**/{svg,ps}.{c,h}',
-    from: /fprintf\(([a-z]+), /g,
-    to: '$1 += sprintf($1, '
-  },
-  /* reads file buffer into symbol->rendered_data */
-  {
-    files: '.zint/**/{svg,ps}.{c,h}',
-    from: /fflush\(([a-z]+)\);/g,
-    to: 'strcpy(symbol->rendered_data, str);'
+    files: '.zint/**/{ps,svg}.c',
+    from: /<desc>\s*([\w\s]+)\s*<\/desc>/g,
+    to: '<desc>{{ title }}</desc><title>{{ title }}</title>'
   }
 ]

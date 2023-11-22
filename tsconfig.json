@@ -6,19 +6,9 @@
     "moduleResolution": "node",
     "allowJs": true,
     "declaration": true,
-    "strict": true,
-    "types": [
-      "node",
-      "jest",
-      "jest-image-snapshot"
-    ]
+    "strict": true
   },
   "include": [
     "./src/**/*"
-  ],
-  "exclude": [
-    "node_modules",
-    "test",
-    "./src/**/*.test.ts"
   ]
 }

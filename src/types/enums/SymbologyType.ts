@@ -25,10 +25,12 @@ enum SymbologyType {
   CODE32 = 129,
   /** Code 93 */
   CODE93 = 25,
-  /** Deutshe Post Leitcode */
+  /** Deutsche Post Leitcode */
   DPLEIT = 21,
-  /** Deutshe Post Identcode */
+  /** Deutsche Post Identcode */
   DPIDENT = 22,
+  /** Geopost (formerly DPD) DPDCode. */
+  DPD = 96,
   /** EAN */
   EANX = 13,
   /** EAN + Check Digit */
@@ -182,7 +184,11 @@ enum SymbologyType {
   /** FIM */
   FIM = 49,
   /** Flattermarken */
-  FLAT = 28
+  FLAT = 28,
+  /** RMQR */
+  RMQR = 145,
+  /** BC412 */
+  BC412 = 146
 }
 
 export default SymbologyType

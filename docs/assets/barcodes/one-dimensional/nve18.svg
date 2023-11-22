@@ -1,0 +1,11 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="312" height="117" version="1.1" xmlns="http://www.w3.org/2000/svg">
+ <desc></desc><title></title>
+ <g id="barcode" fill="#000000">
+  <path d="M0 0h4v100h-4ZM6 0h2v100h-2ZM12 0h6v100h-6ZM22 0h8v100h-8ZM32 0h2v100h-2ZM36 0h6v100h-6ZM44 0h4v100h-4ZM50 0h4v100h-4ZM58 0h4v100h-4ZM66 0h2v100h-2ZM74 0h4v100h-4ZM80 0h2v100h-2ZM88 0h4v100h-4ZM96 0h2v100h-2ZM106 0h2v100h-2ZM110 0h6v100h-6ZM118 0h4v100h-4ZM124 0h6v100h-6ZM132 0h2v100h-2ZM136 0h6v100h-6ZM144 0h4v100h-4ZM154 0h4v100h-4ZM160 0h4v100h-4ZM168 0h4v100h-4ZM176 0h4v100h-4ZM182 0h4v100h-4ZM190 0h4v100h-4ZM198 0h4v100h-4ZM206 0h4v100h-4ZM212 0h4v100h-4ZM220 0h4v100h-4ZM226 0h4v100h-4ZM234 0h4v100h-4ZM242 0h4v100h-4ZM248 0h2v100h-2ZM256 0h2v100h-2ZM264 0h2v100h-2ZM268 0h6v100h-6ZM280 0h4v100h-4ZM286 0h4v100h-4ZM296 0h6v100h-6ZM304 0h2v100h-2ZM308 0h4v100h-4Z"/>
+  <text x="156" y="113.34" text-anchor="middle" font-family="Arimo, Arial, sans-serif" font-size="14">
+   (00)376123450000010039
+  </text>
+ </g>
+</svg>

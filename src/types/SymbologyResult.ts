@@ -1,4 +1,4 @@
-type SymbologyResult = {
+export type SymbologyResult = {
   /** String output of symbology graphics */
   data?: string
   /** Width of the rendered symbology */
@@ -8,5 +8,3 @@ type SymbologyResult = {
   /** Messages produced by the library during render */
   message: string
 }
-
-export default SymbologyResult

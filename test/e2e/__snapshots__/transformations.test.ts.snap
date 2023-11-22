@@ -4,232 +4,114 @@ exports[`Symbology Transformations Portable Network Graphics should stream a bas
 
 exports[`Symbology Transformations PostScript should render an eps file 1`] = `
 "%!PS-Adobe-3.0 EPSF-3.0
-%%Creator: Zint 2.9.1.9
-%%Title: Zint Generated Symbol
+%%Version: 2.13.0.9
+%%Title: Symbol
 %%Pages: 0
-%%BoundingBox: 0 0 158 119
+%%BoundingBox: 0 0 158 117
 %%EndComments
-/TL { setlinewidth moveto lineto stroke } bind def
-/TD { newpath 0 360 arc fill } bind def
-/TH { 0 setlinewidth moveto lineto lineto lineto lineto lineto closepath fill } bind def
-/TB { 2 copy } bind def
-/TR { newpath 4 1 roll exch moveto 1 index 0 rlineto 0 exch rlineto neg 0 rlineto closepath fill } bind def
-/TE { pop pop } bind def
-newpath
-1.00 1.00 1.00 setrgbcolor
-118.90 0.00 TB 0.00 158.00 TR
-TE
-0.00 0.00 0.00 setrgbcolor
-100.00 18.90 TB 0.00 4.00 TR
-TE
-100.00 18.90 TB 6.00 2.00 TR
-TE
-100.00 18.90 TB 12.00 6.00 TR
-TE
-100.00 18.90 TB 22.00 2.00 TR
-TE
-100.00 18.90 TB 26.00 4.00 TR
-TE
-100.00 18.90 TB 34.00 6.00 TR
-TE
-100.00 18.90 TB 44.00 2.00 TR
-TE
-100.00 18.90 TB 52.00 2.00 TR
-TE
-100.00 18.90 TB 56.00 4.00 TR
-TE
-100.00 18.90 TB 66.00 2.00 TR
-TE
-100.00 18.90 TB 70.00 8.00 TR
-TE
-100.00 18.90 TB 80.00 6.00 TR
-TE
-100.00 18.90 TB 88.00 4.00 TR
-TE
-100.00 18.90 TB 94.00 6.00 TR
-TE
-100.00 18.90 TB 104.00 2.00 TR
-TE
-100.00 18.90 TB 110.00 6.00 TR
-TE
-100.00 18.90 TB 118.00 2.00 TR
-TE
-100.00 18.90 TB 122.00 4.00 TR
-TE
-100.00 18.90 TB 132.00 4.00 TR
-TE
-100.00 18.90 TB 142.00 6.00 TR
-TE
-100.00 18.90 TB 150.00 2.00 TR
-TE
-100.00 18.90 TB 154.00 4.00 TR
-TE
-matrix currentmatrix
-/Helvetica findfont
-14.00 scalefont setfont
- 0 0 moveto 79.00 3.50 translate 0.00 rotate 0 0 moveto
- (12345) stringwidth
-pop
--2 div 0 rmoveto
+/R { newpath 4 1 roll exch moveto 1 index 0 rlineto 0 exch rlineto neg 0 rlineto closepath fill } bind def
+/I { 2 copy } bind def
+1 1 1 setrgbcolor
+116.28 0 0 158 R
+0 0 0 setrgbcolor
+100 16.28 I 0 4 R
+I 6 2 R
+I 12 6 R
+I 22 2 R
+I 26 4 R
+I 34 6 R
+I 44 2 R
+I 52 2 R
+I 56 4 R
+I 66 2 R
+I 70 8 R
+I 80 6 R
+I 88 4 R
+I 94 6 R
+I 104 2 R
+I 110 6 R
+I 118 2 R
+I 122 4 R
+I 132 4 R
+I 142 6 R
+I 150 2 R
+154 4 R
+/Helvetica findfont 14 scalefont setfont
+ 79 2.94 moveto
+ (12345) stringwidth pop -2 div 0 rmoveto
  (12345) show
-setmatrix
 "
 `;
 
 exports[`Symbology Transformations PostScript should stream a PostScript image 1`] = `
 "%!PS-Adobe-3.0 EPSF-3.0
-%%Creator: Zint 2.9.1.9
-%%Title: Zint Generated Symbol
+%%Version: 2.13.0.9
+%%Title: Symbol
 %%Pages: 0
-%%BoundingBox: 0 0 158 119
+%%BoundingBox: 0 0 158 117
 %%EndComments
-/TL { setlinewidth moveto lineto stroke } bind def
-/TD { newpath 0 360 arc fill } bind def
-/TH { 0 setlinewidth moveto lineto lineto lineto lineto lineto closepath fill } bind def
-/TB { 2 copy } bind def
-/TR { newpath 4 1 roll exch moveto 1 index 0 rlineto 0 exch rlineto neg 0 rlineto closepath fill } bind def
-/TE { pop pop } bind def
-newpath
-1.00 1.00 1.00 setrgbcolor
-118.90 0.00 TB 0.00 158.00 TR
-TE
-0.00 0.00 0.00 setrgbcolor
-100.00 18.90 TB 0.00 4.00 TR
-TE
-100.00 18.90 TB 6.00 2.00 TR
-TE
-100.00 18.90 TB 12.00 6.00 TR
-TE
-100.00 18.90 TB 22.00 2.00 TR
-TE
-100.00 18.90 TB 26.00 4.00 TR
-TE
-100.00 18.90 TB 34.00 6.00 TR
-TE
-100.00 18.90 TB 44.00 2.00 TR
-TE
-100.00 18.90 TB 52.00 2.00 TR
-TE
-100.00 18.90 TB 56.00 4.00 TR
-TE
-100.00 18.90 TB 66.00 2.00 TR
-TE
-100.00 18.90 TB 70.00 8.00 TR
-TE
-100.00 18.90 TB 80.00 6.00 TR
-TE
-100.00 18.90 TB 88.00 4.00 TR
-TE
-100.00 18.90 TB 94.00 6.00 TR
-TE
-100.00 18.90 TB 104.00 2.00 TR
-TE
-100.00 18.90 TB 110.00 6.00 TR
-TE
-100.00 18.90 TB 118.00 2.00 TR
-TE
-100.00 18.90 TB 122.00 4.00 TR
-TE
-100.00 18.90 TB 132.00 4.00 TR
-TE
-100.00 18.90 TB 142.00 6.00 TR
-TE
-100.00 18.90 TB 150.00 2.00 TR
-TE
-100.00 18.90 TB 154.00 4.00 TR
-TE
-matrix currentmatrix
-/Helvetica findfont
-14.00 scalefont setfont
- 0 0 moveto 79.00 3.50 translate 0.00 rotate 0 0 moveto
- (12345) stringwidth
-pop
--2 div 0 rmoveto
+/R { newpath 4 1 roll exch moveto 1 index 0 rlineto 0 exch rlineto neg 0 rlineto closepath fill } bind def
+/I { 2 copy } bind def
+1 1 1 setrgbcolor
+116.28 0 0 158 R
+0 0 0 setrgbcolor
+100 16.28 I 0 4 R
+I 6 2 R
+I 12 6 R
+I 22 2 R
+I 26 4 R
+I 34 6 R
+I 44 2 R
+I 52 2 R
+I 56 4 R
+I 66 2 R
+I 70 8 R
+I 80 6 R
+I 88 4 R
+I 94 6 R
+I 104 2 R
+I 110 6 R
+I 118 2 R
+I 122 4 R
+I 132 4 R
+I 142 6 R
+I 150 2 R
+154 4 R
+/Helvetica findfont 14 scalefont setfont
+ 79 2.94 moveto
+ (12345) stringwidth pop -2 div 0 rmoveto
  (12345) show
-setmatrix
 "
 `;
 
 exports[`Symbology Transformations Scalable Vector Graphics should render an SVG file 1`] = `
 "<?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
-   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="158" height="119" version="1.1"
-   xmlns="http://www.w3.org/2000/svg">
-   <desc>Zint Generated Symbol
-   </desc>
-
-   <g id="barcode" fill="#000000">
-      <rect x="0" y="0" width="158" height="119" fill="#FFFFFF" />
-      <rect x="0.00" y="0.00" width="4.00" height="100.00" />
-      <rect x="6.00" y="0.00" width="2.00" height="100.00" />
-      <rect x="12.00" y="0.00" width="6.00" height="100.00" />
-      <rect x="22.00" y="0.00" width="2.00" height="100.00" />
-      <rect x="26.00" y="0.00" width="4.00" height="100.00" />
-      <rect x="34.00" y="0.00" width="6.00" height="100.00" />
-      <rect x="44.00" y="0.00" width="2.00" height="100.00" />
-      <rect x="52.00" y="0.00" width="2.00" height="100.00" />
-      <rect x="56.00" y="0.00" width="4.00" height="100.00" />
-      <rect x="66.00" y="0.00" width="2.00" height="100.00" />
-      <rect x="70.00" y="0.00" width="8.00" height="100.00" />
-      <rect x="80.00" y="0.00" width="6.00" height="100.00" />
-      <rect x="88.00" y="0.00" width="4.00" height="100.00" />
-      <rect x="94.00" y="0.00" width="6.00" height="100.00" />
-      <rect x="104.00" y="0.00" width="2.00" height="100.00" />
-      <rect x="110.00" y="0.00" width="6.00" height="100.00" />
-      <rect x="118.00" y="0.00" width="2.00" height="100.00" />
-      <rect x="122.00" y="0.00" width="4.00" height="100.00" />
-      <rect x="132.00" y="0.00" width="4.00" height="100.00" />
-      <rect x="142.00" y="0.00" width="6.00" height="100.00" />
-      <rect x="150.00" y="0.00" width="2.00" height="100.00" />
-      <rect x="154.00" y="0.00" width="4.00" height="100.00" />
-      <text x="79.00" y="115.40" text-anchor="middle"
-         font-family="Helvetica, sans-serif" font-size="14.0" >
-         12345
-      </text>
-   </g>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="158" height="117" version="1.1" xmlns="http://www.w3.org/2000/svg">
+ <desc></desc><title></title>
+ <g id="barcode" fill="#000000">
+  <rect x="0" y="0" width="158" height="117" fill="#FFFFFF"/>
+  <path d="M0 0h4v100h-4ZM6 0h2v100h-2ZM12 0h6v100h-6ZM22 0h2v100h-2ZM26 0h4v100h-4ZM34 0h6v100h-6ZM44 0h2v100h-2ZM52 0h2v100h-2ZM56 0h4v100h-4ZM66 0h2v100h-2ZM70 0h8v100h-8ZM80 0h6v100h-6ZM88 0h4v100h-4ZM94 0h6v100h-6ZM104 0h2v100h-2ZM110 0h6v100h-6ZM118 0h2v100h-2ZM122 0h4v100h-4ZM132 0h4v100h-4ZM142 0h6v100h-6ZM150 0h2v100h-2ZM154 0h4v100h-4Z"/>
+  <text x="79" y="113.34" text-anchor="middle" font-family="Arimo, Arial, sans-serif" font-size="14">
+   12345
+  </text>
+ </g>
 </svg>
 "
 `;
 
 exports[`Symbology Transformations Scalable Vector Graphics should stream an SVG image 1`] = `
 "<?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
-   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg width="158" height="119" version="1.1"
-   xmlns="http://www.w3.org/2000/svg">
-   <desc>Zint Generated Symbol
-   </desc>
-
-   <g id="barcode" fill="#000000">
-      <rect x="0" y="0" width="158" height="119" fill="#FFFFFF" />
-      <rect x="0.00" y="0.00" width="4.00" height="100.00" />
-      <rect x="6.00" y="0.00" width="2.00" height="100.00" />
-      <rect x="12.00" y="0.00" width="6.00" height="100.00" />
-      <rect x="22.00" y="0.00" width="2.00" height="100.00" />
-      <rect x="26.00" y="0.00" width="4.00" height="100.00" />
-      <rect x="34.00" y="0.00" width="6.00" height="100.00" />
-      <rect x="44.00" y="0.00" width="2.00" height="100.00" />
-      <rect x="52.00" y="0.00" width="2.00" height="100.00" />
-      <rect x="56.00" y="0.00" width="4.00" height="100.00" />
-      <rect x="66.00" y="0.00" width="2.00" height="100.00" />
-      <rect x="70.00" y="0.00" width="8.00" height="100.00" />
-      <rect x="80.00" y="0.00" width="6.00" height="100.00" />
-      <rect x="88.00" y="0.00" width="4.00" height="100.00" />
-      <rect x="94.00" y="0.00" width="6.00" height="100.00" />
-      <rect x="104.00" y="0.00" width="2.00" height="100.00" />
-      <rect x="110.00" y="0.00" width="6.00" height="100.00" />
-      <rect x="118.00" y="0.00" width="2.00" height="100.00" />
-      <rect x="122.00" y="0.00" width="4.00" height="100.00" />
-      <rect x="132.00" y="0.00" width="4.00" height="100.00" />
-      <rect x="142.00" y="0.00" width="6.00" height="100.00" />
-      <rect x="150.00" y="0.00" width="2.00" height="100.00" />
-      <rect x="154.00" y="0.00" width="4.00" height="100.00" />
-      <text x="79.00" y="115.40" text-anchor="middle"
-         font-family="Helvetica, sans-serif" font-size="14.0" >
-         12345
-      </text>
-   </g>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="158" height="117" version="1.1" xmlns="http://www.w3.org/2000/svg">
+ <desc></desc><title></title>
+ <g id="barcode" fill="#000000">
+  <rect x="0" y="0" width="158" height="117" fill="#FFFFFF"/>
+  <path d="M0 0h4v100h-4ZM6 0h2v100h-2ZM12 0h6v100h-6ZM22 0h2v100h-2ZM26 0h4v100h-4ZM34 0h6v100h-6ZM44 0h2v100h-2ZM52 0h2v100h-2ZM56 0h4v100h-4ZM66 0h2v100h-2ZM70 0h8v100h-8ZM80 0h6v100h-6ZM88 0h4v100h-4ZM94 0h6v100h-6ZM104 0h2v100h-2ZM110 0h6v100h-6ZM118 0h2v100h-2ZM122 0h4v100h-4ZM132 0h4v100h-4ZM142 0h6v100h-6ZM150 0h2v100h-2ZM154 0h4v100h-4Z"/>
+  <text x="79" y="113.34" text-anchor="middle" font-family="Arimo, Arial, sans-serif" font-size="14">
+   12345
+  </text>
+ </g>
 </svg>
 "
 `;
