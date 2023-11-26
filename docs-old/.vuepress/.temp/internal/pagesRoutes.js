@@ -1,0 +1,18 @@
+export const pagesRoutes = [
+  ["v-8daa1a0e","/",{"title":""},["/index.html","/README.md"]],
+  ["v-43879177","/development.html",{"title":"Development"},["/development","/development.md"]],
+  ["v-147825fb","/docs/",{"title":"Documentation"},["/docs/index.html","/docs/README.md"]],
+  ["v-d2e3fc0c","/docs/api.html",{"title":"API"},["/docs/api","/docs/api.md"]],
+  ["v-4cf1194b","/docs/encoding.html",{"title":"Encoding"},["/docs/encoding","/docs/encoding.md"]],
+  ["v-53196634","/docs/error-handling.html",{"title":"Error handling"},["/docs/error-handling","/docs/error-handling.md"]],
+  ["v-6b2ee644","/docs/installation.html",{"title":"Installation"},["/docs/installation","/docs/installation.md"]],
+  ["v-72d43276","/docs/options.html",{"title":"Options"},["/docs/options","/docs/options.md"]],
+  ["v-22a2f9fd","/reference/",{"title":"Symbology Reference"},["/reference/index.html","/reference/README.md"]],
+  ["v-0ef085ef","/reference/composite.html",{"title":"Composite symbols (ISO 24723)"},["/reference/composite","/reference/composite.md"]],
+  ["v-d7479528","/reference/one-dimensional.html",{"title":"One-Dimensional symbols"},["/reference/one-dimensional","/reference/one-dimensional.md"]],
+  ["v-4a700d86","/reference/other.html",{"title":"Other Barcode-Like Markings"},["/reference/other","/reference/other.md"]],
+  ["v-327cfa8f","/reference/stacked.html",{"title":"Stacked symbologies"},["/reference/stacked","/reference/stacked.md"]],
+  ["v-0335aa46","/reference/two-dimensional.html",{"title":"Two-Dimensional symbols"},["/reference/two-dimensional","/reference/two-dimensional.md"]],
+  ["v-136023cc","/reference/two-track.html",{"title":"Two-Track symbols"},["/reference/two-track","/reference/two-track.md"]],
+  ["v-3706649a","/404.html",{"title":""},["/404"]],
+]

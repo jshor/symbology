@@ -24,7 +24,7 @@ function createBuffer (config: SymbologyConfig, barcodeData: string): BinResult 
     config.foregroundColor,
     // indicate to the library that we want BMP instead of PNG
     // this is to force zint to return a bitmap array buffer instead PNG binary
-    config.fileName?.replace(/\.png$/g, '.bmp'),
+    config.fileName?.replace(/\.png$/gi, '.bmp'),
     config.scale,
     config.option1,
     config.option2,
@@ -69,6 +69,8 @@ function invoke (config: SymbologyConfig, barcodeData: string, outputType: Outpu
   }
 
   const res = binary.createBuffer(symbol, barcodeData)
+
+  console.log('RES: ', res)
 
   if (res.code <= 2) {
     if (res.code === 0) {

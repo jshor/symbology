@@ -1,0 +1,97 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="126" height="84" version="1.1"
+   xmlns="http://www.w3.org/2000/svg">
+   <desc>Zint Generated Symbol
+   </desc>
+
+   <g id="barcode" fill="#000000">
+      <circle cx="3.00" cy="3.00" r="2.40" />
+      <circle cx="27.00" cy="3.00" r="2.40" />
+      <circle cx="39.00" cy="3.00" r="2.40" />
+      <circle cx="51.00" cy="3.00" r="2.40" />
+      <circle cx="63.00" cy="3.00" r="2.40" />
+      <circle cx="99.00" cy="3.00" r="2.40" />
+      <circle cx="111.00" cy="3.00" r="2.40" />
+      <circle cx="123.00" cy="3.00" r="2.40" />
+      <circle cx="9.00" cy="9.00" r="2.40" />
+      <circle cx="33.00" cy="9.00" r="2.40" />
+      <circle cx="45.00" cy="9.00" r="2.40" />
+      <circle cx="69.00" cy="9.00" r="2.40" />
+      <circle cx="81.00" cy="9.00" r="2.40" />
+      <circle cx="105.00" cy="9.00" r="2.40" />
+      <circle cx="117.00" cy="9.00" r="2.40" />
+      <circle cx="3.00" cy="15.00" r="2.40" />
+      <circle cx="27.00" cy="15.00" r="2.40" />
+      <circle cx="87.00" cy="15.00" r="2.40" />
+      <circle cx="99.00" cy="15.00" r="2.40" />
+      <circle cx="111.00" cy="15.00" r="2.40" />
+      <circle cx="9.00" cy="21.00" r="2.40" />
+      <circle cx="21.00" cy="21.00" r="2.40" />
+      <circle cx="33.00" cy="21.00" r="2.40" />
+      <circle cx="45.00" cy="21.00" r="2.40" />
+      <circle cx="57.00" cy="21.00" r="2.40" />
+      <circle cx="69.00" cy="21.00" r="2.40" />
+      <circle cx="81.00" cy="21.00" r="2.40" />
+      <circle cx="93.00" cy="21.00" r="2.40" />
+      <circle cx="3.00" cy="27.00" r="2.40" />
+      <circle cx="15.00" cy="27.00" r="2.40" />
+      <circle cx="123.00" cy="27.00" r="2.40" />
+      <circle cx="9.00" cy="33.00" r="2.40" />
+      <circle cx="33.00" cy="33.00" r="2.40" />
+      <circle cx="45.00" cy="33.00" r="2.40" />
+      <circle cx="3.00" cy="39.00" r="2.40" />
+      <circle cx="39.00" cy="39.00" r="2.40" />
+      <circle cx="63.00" cy="39.00" r="2.40" />
+      <circle cx="75.00" cy="39.00" r="2.40" />
+      <circle cx="87.00" cy="39.00" r="2.40" />
+      <circle cx="99.00" cy="39.00" r="2.40" />
+      <circle cx="111.00" cy="39.00" r="2.40" />
+      <circle cx="21.00" cy="45.00" r="2.40" />
+      <circle cx="45.00" cy="45.00" r="2.40" />
+      <circle cx="57.00" cy="45.00" r="2.40" />
+      <circle cx="69.00" cy="45.00" r="2.40" />
+      <circle cx="105.00" cy="45.00" r="2.40" />
+      <circle cx="117.00" cy="45.00" r="2.40" />
+      <circle cx="15.00" cy="51.00" r="2.40" />
+      <circle cx="27.00" cy="51.00" r="2.40" />
+      <circle cx="51.00" cy="51.00" r="2.40" />
+      <circle cx="75.00" cy="51.00" r="2.40" />
+      <circle cx="87.00" cy="51.00" r="2.40" />
+      <circle cx="99.00" cy="51.00" r="2.40" />
+      <circle cx="111.00" cy="51.00" r="2.40" />
+      <circle cx="123.00" cy="51.00" r="2.40" />
+      <circle cx="57.00" cy="57.00" r="2.40" />
+      <circle cx="81.00" cy="57.00" r="2.40" />
+      <circle cx="93.00" cy="57.00" r="2.40" />
+      <circle cx="117.00" cy="57.00" r="2.40" />
+      <circle cx="3.00" cy="63.00" r="2.40" />
+      <circle cx="15.00" cy="63.00" r="2.40" />
+      <circle cx="39.00" cy="63.00" r="2.40" />
+      <circle cx="63.00" cy="63.00" r="2.40" />
+      <circle cx="87.00" cy="63.00" r="2.40" />
+      <circle cx="99.00" cy="63.00" r="2.40" />
+      <circle cx="111.00" cy="63.00" r="2.40" />
+      <circle cx="123.00" cy="63.00" r="2.40" />
+      <circle cx="21.00" cy="69.00" r="2.40" />
+      <circle cx="45.00" cy="69.00" r="2.40" />
+      <circle cx="57.00" cy="69.00" r="2.40" />
+      <circle cx="69.00" cy="69.00" r="2.40" />
+      <circle cx="3.00" cy="75.00" r="2.40" />
+      <circle cx="15.00" cy="75.00" r="2.40" />
+      <circle cx="27.00" cy="75.00" r="2.40" />
+      <circle cx="39.00" cy="75.00" r="2.40" />
+      <circle cx="51.00" cy="75.00" r="2.40" />
+      <circle cx="63.00" cy="75.00" r="2.40" />
+      <circle cx="75.00" cy="75.00" r="2.40" />
+      <circle cx="87.00" cy="75.00" r="2.40" />
+      <circle cx="111.00" cy="75.00" r="2.40" />
+      <circle cx="123.00" cy="75.00" r="2.40" />
+      <circle cx="9.00" cy="81.00" r="2.40" />
+      <circle cx="21.00" cy="81.00" r="2.40" />
+      <circle cx="69.00" cy="81.00" r="2.40" />
+      <circle cx="93.00" cy="81.00" r="2.40" />
+      <circle cx="117.00" cy="81.00" r="2.40" />
+   </g>
+</svg>

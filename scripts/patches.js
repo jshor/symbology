@@ -35,17 +35,15 @@ module.exports = [
   /* assigns pointer to maintain file buffer */
   {
     files: '.zint/**/{svg,ps}.{c,h}',
-    from: /INTERNAL int ([a-z]+)_plot([^\n]+)/g,
-    to: `
-INTERNAL int $1_plot$2
-    char str[sizeof(symbol->rendered_data)];
-`
+    // from: /INTERNAL int ([a-z]+)_plot(.+)/g,
+    from: /(\n\s+)FILE \*([a-z]+);/g,
+    to: `$1char str[sizeof(symbol->rendered_data)];$1char *$2 = str;`
   },
   /* replaces the file buffer allocation with a string one */
   {
     files: '.zint/**/{svg,ps}.{c,h}',
     from: /FILE \*([a-z]+)/g,
-    to: 'char *$1 = str'
+    to: 'char *$1'
   },
   /* change file printing to string concatenation */
   {
@@ -53,10 +51,15 @@ INTERNAL int $1_plot$2
     from: /fprintf\(([a-z]+), /g,
     to: '$1 += sprintf($1, '
   },
+  {
+    files: '.zint/**/{svg,ps}.{c,h}',
+    from: /fput(s|c)\((.*),\s*([a-z]+)\)/g,
+    to: '$3 += sprintf($3, $2)'
+  },
   /* reads file buffer into symbol->rendered_data */
   {
     files: '.zint/**/{svg,ps}.{c,h}',
-    from: /fflush\(([a-z]+)\);/g,
-    to: 'strcpy(symbol->rendered_data, str);'
+    from: /fflush\(([a-z]+)\) != 0/g,
+    to: 'strcpy(symbol->rendered_data, $1) != 0'
   }
 ]

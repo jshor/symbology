@@ -1,0 +1,8 @@
+html:not(.dark) .main img[src$=".svg"] {
+  /** See: https://isotropic.co/tool/hex-color-to-css-filter/ */
+  filter: invert(21%) sepia(12%) saturate(377%) hue-rotate(202deg) brightness(94%) contrast(88%);
+}
+
+html.dark .main img[src$=".svg"] {
+  filter: invert(66%) sepia(47%) saturate(638%) hue-rotate(199deg) brightness(100%) contrast(103%);
+}

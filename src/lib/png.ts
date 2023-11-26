@@ -91,11 +91,21 @@ function render (bitmap: number[], width: number, height: number, backgroundColo
       const color: RGBAColor = {
         red: bitmap[i],
         green: bitmap[i + 1],
-        blue: bitmap[i + 2]
+        blue: bitmap[i + 2],
+        alpha: 255
       }
-      const rgba = isEqualColor(color, backgroundColorRgba)
-        ? backgroundColorRgba
-        : foregroundColorRgba
+
+      const rgba = (() => {
+        if (isEqualColor(color, backgroundColorRgba)) {
+          color.alpha = backgroundColorRgba.alpha
+        }
+
+        if (isEqualColor(color, foregroundColorRgba)) {
+          color.alpha = foregroundColorRgba.alpha
+        }
+
+        return color
+      })()
       const pos = (png.width * y + x) << 2
 
       png.data[pos] = rgba.red
