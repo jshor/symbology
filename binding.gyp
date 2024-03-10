@@ -11,6 +11,7 @@
       },
       "sources": [
         ".zint/backend/output.c",
+        ".zint/backend/filemem.c",
         ".zint/backend/2of5.c",
         ".zint/backend/auspost.c",
         ".zint/backend/aztec.c",

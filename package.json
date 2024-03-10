@@ -3,7 +3,7 @@
   "version": "4.0.1",
   "description": "🔖 Generates 1D, 2D, and composite barcodes in png, svg, or eps formats. Supports 50+ symbologies.",
   "scripts": {
-    "ye": "node ./test.js",
+    "ye": "ts-node ./sample.ts",
     "commit": "git-cz",
     "release": "standard-version",
     "lint": "eslint ./src",
@@ -121,5 +121,5 @@
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "zintVersion": "77c1ef1"
+  "zintVersion": "0eaa9f3"
 }
