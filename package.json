@@ -48,7 +48,7 @@
     "host": "https://github.com/jshor/symbology/releases/download/"
   },
   "engines": {
-    "node": ">=14.0.0 <21.0.0"
+    "node": ">=14.0.0 <23.0.0"
   },
   "dependencies": {
     "@mapbox/node-pre-gyp": "^1.0.11",
