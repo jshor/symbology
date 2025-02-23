@@ -18,10 +18,11 @@ jobs:
     if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
     strategy:
       matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest]
+        # note: macos-13 supports x86, whereas macos-latest supports arm64
+        os: [windows-latest, macos-latest, macos-13, ubuntu-latest]
         node-version: [18, 20, 22]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
@@ -42,21 +43,21 @@ jobs:
       - name: Report coverage
         run: yarn codecov
       - name: Upload js bundle
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: js-bundle
           path: dist
       - name: Upload binary artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          name: binary-artifact
+          name: "${{ matrix.os }}.${{ matrix.node-version }}.zip"
           path: build/stage
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           persist-credentials: false
       - name: Pull latest
@@ -81,7 +82,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: TriPSs/conventional-changelog-action@v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -95,11 +96,11 @@ jobs:
     needs: release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Download binary artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
-          name: binary-artifact
+          name: "${{ matrix.os }}.${{ matrix.node-version }}.zip"
           path: build/stage
       - name: Upload binary artifacts to release
         # only one folder will be present in build/stage, which is named the new version number
@@ -119,17 +120,17 @@ jobs:
     needs: release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Pull latest
         run: git pull origin main
       - name: Download js bundle
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v4
         with:
           name: js-bundle
           path: dist
       - uses: actions/setup-node@v1
         with:
-          node-version: 20
+          node-version: 22
           registry-url: https://registry.npmjs.org/
       - run: npm publish
         env:
