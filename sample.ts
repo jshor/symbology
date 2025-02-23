@@ -4,7 +4,7 @@ import { DataMatrix, EncodingMode, OutputType, SymbologyType, createFile, create
   try {
     await createFile({
       symbology: SymbologyType.DATAMATRIX,
-      fileName: 'something.EPS', // must be one of 'SVG', 'EPS', or 'PNG' (uppercase!)
+      fileName: 'something.PNG', // must be one of 'SVG', 'EPS', or 'PNG' (uppercase!)
       backgroundColor: 'ffffff',
       foregroundColor: 'a8b1ff',
       showHumanReadableText: false,
