@@ -11,6 +11,8 @@ env:
   GIT_USER: 'GitHub Actions'
   GIT_EMAIL: 'github-actions[bot]@users.noreply.github.com'
   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+  DEFAULT_OS: ubuntu-latest
+  DEFAULT_NODE_VERSION: 22
 
 jobs:
   build:
@@ -23,7 +25,7 @@ jobs:
         node-version: [18, 20, 22]
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
       - name: Install Python setup tools
@@ -42,15 +44,10 @@ jobs:
         run: yarn test
       - name: Report coverage
         run: yarn codecov
-      - name: Upload js bundle
-        uses: actions/upload-artifact@v4
-        with:
-          name: js-bundle
-          path: dist
       - name: Upload binary artifact
         uses: actions/upload-artifact@v4
         with:
-          name: "${{ matrix.os }}.${{ matrix.node-version }}.zip"
+          name: "${{ matrix.os }}.${{ matrix.node-version }}"
           path: build/stage
 
   deploy:
@@ -58,12 +55,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          persist-credentials: false
-      - name: Pull latest
-        run: git pull origin main
-      - name: Install Vuepress
-        run: yarn add vuepress@next -D
+          node-version: ${{ env.DEFAULT_NODE_VERSION }}
+      - name: Install Python setup tools
+        run: pip install setuptools
+      - name: Install dependencies
+        run: yarn
+      - name: Build project
+        run: yarn build
+      - name: Upload js bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: js-bundle
+          path: dist
       - name: Build documentation
         run: yarn docs:build
       - name: Create CNAME Record
@@ -79,18 +84,16 @@ jobs:
           CLEAN: true
 
   release:
-    needs: build
+    needs: deploy
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: TriPSs/conventional-changelog-action@v3
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          git-user-name: ${{ env.GIT_USER }}
-          git-user-email: ${{ env.GIT_EMAIL }}
-          tag-prefix: 'v'
-          release-count: '0'
-          skip-on-empty: false
+      - name: Configure committer
+        run: |
+          git config user.name "${{ env.GIT_USER }}"
+          git config user.email "${{ env.GIT_EMAIL }}"
+      - name: Bump version
+        uses: qzb/standard-version-action@v1.0.5
 
   upload-binaries:
     needs: release
@@ -100,18 +103,18 @@ jobs:
       - name: Download binary artifacts
         uses: actions/download-artifact@v4
         with:
-          name: "${{ matrix.os }}.${{ matrix.node-version }}.zip"
           path: build/stage
       - name: Upload binary artifacts to release
         # only one folder will be present in build/stage, which is named the new version number
         # extract this name and set it as the release name, then upload artifact binaries to it
         run: |
+          rm -rf ./build/stage/js-bundle
           set -x
           assets=()
-          for asset in ./build/stage/**/*; do
+          for asset in ./build/stage/**/**/*; do
             assets+=("$asset")
           done
-          RELEASE_VERSION=$(echo $(ls build/stage| head -1))
+          RELEASE_VERSION=$(echo $(ls build/stage/${{ env.DEFAULT_OS }}.${{ env.DEFAULT_NODE_VERSION }}| head -1))
           gh release create -t "v$RELEASE_VERSION" "$RELEASE_VERSION" "${assets[@]}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -128,10 +131,18 @@ jobs:
         with:
           name: js-bundle
           path: dist
-      - uses: actions/setup-node@v1
+      - uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: ${{ env.DEFAULT_NODE_VERSION }}
           registry-url: https://registry.npmjs.org/
+      - name: Set git credentials
+        run: |
+          git config --global user.email ${{ env.GIT_USER }}
+          git config --global user.name ${{ env.GIT_EMAIL }}
+      - name: Install dependencies
+        run: yarn
+      - name: Create initial release
+        run: yarn release
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

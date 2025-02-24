@@ -1,9 +1,10 @@
 ---
 home: true
+title: Home
 heroImage: /assets/hero.svg
 actionText: Read the docs →
 actionLink: /docs/
-footer: © 2021 Symbology.js.
+footer: © 2025 Symbology.js.
 ---
 
 <div style="text-align: center">
