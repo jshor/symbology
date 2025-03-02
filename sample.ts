@@ -3,15 +3,16 @@ import { DataMatrix, EncodingMode, OutputType, SymbologyType, createFile, create
 (async () => {
   try {
     await createFile({
-      symbology: SymbologyType.DATAMATRIX,
-      fileName: 'something.EPS', // must be one of 'SVG', 'EPS', or 'PNG' (uppercase!)
-      backgroundColor: 'ffffff',
-      foregroundColor: 'a8b1ff',
-      showHumanReadableText: false,
+      symbology: SymbologyType.MAXICODE,
+      fileName: 'maxicode.SVG', // must be one of 'SVG', 'EPS', or 'PNG' (uppercase!)
+      backgroundColor: 'ffffff00',
+      foregroundColor: '000000',
+      // showHumanReadableText: false,
 
-      // option1: 4,
-      scale: 3
-    }, 'HEIMASÍÐA KENNARAHÁSKÓLA ÍSLANDS')
+      option2: 2,
+      scale: 3,
+  primary: '999999999840012'
+    }, 'Secondary Message Here')
   } catch (e) {
     console.log('E: ', e)
   }

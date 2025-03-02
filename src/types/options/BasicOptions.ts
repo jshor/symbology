@@ -3,6 +3,26 @@ import OutputOption from '../enums/OutputOption'
 import SymbologyType from '../enums/SymbologyType'
 
 /**
+ * TODO: create ParallelProcessor().
+ * e.g.,
+ *
+ * const processor = new ParallelProcessor({ max: 10 })
+ *
+ * const results = await processor.createStream(options)
+ *
+ * results.forEach(result => {
+ *   if (result.error) {
+ *     console.log('failed to render symbology:', result.error)
+ *   } else {
+ *     console.log('success!', result.data)
+ *   }
+ * })
+ *
+ * tip: use memoryUsage():
+ * https://stackoverflow.com/questions/20018588/how-to-monitor-the-memory-usage-of-node-js
+ */
+
+/**
  * Represents configuration options for a symbology.
  */
 type BasicOptions = {
@@ -47,8 +67,6 @@ type VeryBasicOptions = {
   backgroundColor?: string
   /** Degrees of right-angle rotation (0, 90, 180, or 270). Defaults to `0`. */
   rotation?: number
-  /** Whether or not to use a faster (if less optimal) encoding procedure. Defaults to `false`. */
-  fast?: boolean
 }
 
 type OptionsWithHumanReadableText = {
@@ -90,7 +108,9 @@ type OptionsWithSymbolSize = {
     SymbologyType.MICROQR |
     SymbologyType.HIBC_QR |
     SymbologyType.UPNQR |
-    SymbologyType.ONECODE
+    SymbologyType.ONECODE |
+    SymbologyType.DATAMATRIX |
+    SymbologyType.HIBC_DM
   /** The size of the generated symbol. */
   symbolSize?: number
 } | OptionsWithBasicSymbologyType
@@ -113,10 +133,12 @@ type OptionsWithDataMatrix = {
   square?: boolean
   /**
    * Whether or not to activate
-   * {@link http://localhost:5173/reference/datamatrix.html#data-matrix-rectangular-extension-dmre DMRE (Data Matrix Rectangular Extension)}
+   * [DMRE (Data Matrix Rectangular Extension)](http://localhost:5173/reference/datamatrix.html#data-matrix-rectangular-extension-dmre)
    * in automatic size mode.
    */
   dmre?: boolean
+  /** Whether or not to use a faster (if less optimal) encoding procedure. Defaults to `false`. */
+  fast?: boolean
 } | OptionsWithBasicSymbologyType
 
 type OptionsWithGS1 = {
@@ -169,9 +191,10 @@ type OptionsWithMode = {
   symbology: SymbologyType.QRCODE |
     SymbologyType.MICROQR |
     SymbologyType.HIBC_QR |
-    SymbologyType.UPNQR
+    SymbologyType.UPNQR |
+    SymbologyType.MAXICODE
   /** The {@link http://localhost:5173/reference/maxicode.html MaxiCode} mode to use. */
-  mode?: boolean
+  mode?: number
 } | OptionsWithBasicSymbologyType
 
 type AllOptions = VeryBasicOptions &
@@ -184,10 +207,15 @@ type AllOptions = VeryBasicOptions &
   OptionsWithGS1 &
   OptionsWithMode
 
-const options: AllOptions = {
-  symbology: SymbologyType.AZRUNE,
-  symbolSize: 30,
-  errorCorrectionLevel: 1,
-  showHumanReadableText: true,
-  bold: true
+// const options: AllOptions = {
+//   symbology: SymbologyType.AZRUNE,
+//   symbolSize: 30,
+//   errorCorrectionLevel: 1,
+//   showHumanReadableText: true,
+//   bold: true
+// }
+
+const sample: AllOptions = {
+  symbology: SymbologyType.MAXICODE,
+  mode: 2
 }
