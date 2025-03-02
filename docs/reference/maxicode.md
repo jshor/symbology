@@ -59,6 +59,8 @@ The primary message can be set via the `primary` option. The secondary message u
 
 ### Example
 
+![MaxiCode Mode 2](/assets/barcodes/maxicode-mode-2.svg)
+
 ```ts
 createStream({
   symbology: SymbologyType.MAXICODE,
@@ -80,6 +82,8 @@ When no mode is selected, the appropriate mode will be automatically selected ba
 Modes `4`, `5`, and `6` do not require a primary message.
 
 ### Example
+
+![MaxiCode Mode 4](/assets/barcodes/maxicode-mode-4.svg)
 
 ```ts
 createStream({

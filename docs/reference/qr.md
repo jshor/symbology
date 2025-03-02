@@ -1,6 +1,6 @@
 # QR Code
 
-Quick Response (QR) code is a two-dimensional matrix barcode that consists of black squares arranged in a square grid on a white background. It includes some [fiducial markers](https://en.wikipedia.org/wiki/Fiducial_marker) which can be read by an imaging device (i.e., a camera) and processed using [Reed–Solomon error correction](https://en.wikipedia.org/wiki/Reed%E2%80%93Solomon_error_correction) until the image can be appropriately interpreted.
+Quick Response (QR) code is a two-dimensional matrix barcode that consists of black squares arranged in a square grid on a white background. It includes some [fiducial markers](https://en.wikipedia.org/wiki/Fiducial_marker) which can be read by an imaging device (e.g., a camera) and processed using [Reed–Solomon error correction](https://en.wikipedia.org/wiki/Reed%E2%80%93Solomon_error_correction) until the image can be appropriately interpreted.
 
 ## Standard QR Code (ISO 18004)
 
@@ -78,7 +78,7 @@ The maximum capacity of a QR Code symbol (i.e., `symbolSize` = `40`) is `7089` n
 
 #### Example with symbol size
 
-![QR Code](/assets/barcodes/qr-173 x 173.svg)
+![QR Code](/assets/barcodes/qr-173x173.svg)
 
 ```ts
 createStream({
