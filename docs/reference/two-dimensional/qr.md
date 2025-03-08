@@ -1,49 +1,53 @@
-# QR Code
+# QR Code  (ISO 18004)
 
-Quick Response (QR) code is a two-dimensional matrix barcode that consists of black squares arranged in a square grid on a white background. It includes some [fiducial markers](https://en.wikipedia.org/wiki/Fiducial_marker) which can be read by an imaging device (e.g., a camera) and processed using [Reed–Solomon error correction](https://en.wikipedia.org/wiki/Reed%E2%80%93Solomon_error_correction) until the image can be appropriately interpreted.
+![QR Code](/assets/barcodes/two-dimensional/qr.svg)
 
-## Standard QR Code (ISO 18004)
+[Quick Response (QR) code](https://en.wikipedia.org/wiki/QR_code) is a two-dimensional matrix barcode that consists of black squares arranged in a square grid on a white background. It includes some [fiducial markers](https://en.wikipedia.org/wiki/Fiducial_marker) which can be read by an imaging device (e.g., a camera) and processed using [Reed–Solomon error correction](https://en.wikipedia.org/wiki/Reed%E2%80%93Solomon_error_correction) until the image can be appropriately interpreted.
 
 The standard QR symbology can rendered by using the `QRCODE` symbology type.
 
-### Example
+## Example
 
 ```ts
 createStream({
   symbology: SymbologyType.QRCODE
+  scale: 3,
+  showHumanReadableText: false
 }, 'https://example.com/hello-world')
 ```
 
-### Encoding
+## Encoding
 
 * QR Code symbols can by default encode either characters in the Latin-1 set, or members of the Shift JIS encoding scheme (Kanji, Katakana, or related ASCII characters).
 * Other character sets are supported via the [ECI encoding mechanism](/docs/advanced.md#eci-encoding).
 * Input should usually be entered as UTF-8. Conversion to Latin-1 or Shift JIS would be carried out automatically.
 
-#### Full multibyte encoding
+### Full multibyte encoding
 
 <!--@include: ./partials/fullmultibyte.md-->
 
-#### GS1 data encoding
+### GS1 data encoding
 
 <!--@include: ./partials/gs1.md-->
 
-### Masking
+## Masking
 
 There are 8 possible [mask patterns](https://en.wikipedia.org/wiki/QR_code#Encoding) to use. The optimal one is automatically selected but one may be defined explicitly by specifying `mask` to the desired value (any integer in the range `0` to `7`).
 
-#### Example with masking
+### Example with masking
 
-![QR Code](/assets/barcodes/qr-mask.svg)
+![QR Code](/assets/barcodes/two-dimensional/qr-mask.svg)
 
 ```ts
 createStream({
   symbology: SymbologyType.QRCODE,
-  mask: 3 // [!code focus]
+  mask: 3, // [!code focus]
+  scale: 3,
+  showHumanReadableText: false
 }, 'https://example.com/hello-world')
 ```
 
-### QR Code Size
+## QR Code Size
 
 The size of the symbol can be set to the QR Code version required (`1` to `40`).
 
@@ -76,18 +80,20 @@ The size of symbol generated can be set by setting `symbolSize` to one of the fo
 The maximum capacity of a QR Code symbol (i.e., `symbolSize` = `40`) is `7089` numeric digits (`4296` alphanumeric characters, or `2953` bytes of data).
 :::
 
-#### Example with symbol size
+### Example with symbol size
 
-![QR Code](/assets/barcodes/qr-173x173.svg)
+![QR Code](/assets/barcodes/two-dimensional/qr-173x173.svg)
 
 ```ts
 createStream({
   symbology: SymbologyType.QRCODE,
-  symbolSize: 39
+  scale: 3,
+  showHumanReadableText: false,
+  symbolSize: 39 // [!code focus]
 }, '1234567890')
 ```
 
-### Error correction
+## Error correction
 
 Four levels of error correction are available and can be defined by setting `errorCorrectionLevel` to one of the following values:
 
@@ -98,20 +104,22 @@ Four levels of error correction are available and can be defined by setting `err
 | 3                      | `Q`           | ~55% of symbol            | ~25%              |
 | 4                      | `H`           | ~65% of symbol            | ~30%              |
 
-#### Example with error correction
+### Example with error correction
 
-![QR Code](/assets/barcodes/qr-ecc.svg)
+![QR Code](/assets/barcodes/two-dimensional/qr-code-ecc-q.svg)
 
 ```ts
 createStream({
   symbology: SymbologyType.QRCODE,
+  scale: 3,
+  showHumanReadableText: false,
   errorCorrectionLevel: 3 // [!code focus]
 }, 'https://example.com/hello-world')
 ```
 
 ## Health Industry Barcode (HIBC) Data
 
-![HIBC QR Code](/assets/barcodes/qr-hibc.svg)
+![HIBC QR Code](/assets/barcodes/two-dimensional/qr-hibc.svg)
 
 [Health Industry Barcode (HIBC)](one-dimensional.md#hibc-code-39) data, which prepends a plus sign character (`+`) and a modulo-49 check digit to the encoded data, can be rendered by using the `HIBC_QR` symbology type.
 
@@ -123,7 +131,9 @@ The same [encoding](#encoding), [masking](#masking), and [size](#qr-code-size) f
 
 ```ts
 createStream({
-  symbology: SymbologyType.HIBC_QR,
+  symbology: SymbologyType.HIBC_QR, // [!code focus]
+  scale: 3,
+  showHumanReadableText: false,
   symbolSize: 39
 }, '1234567890')
 ```
@@ -163,12 +173,15 @@ Depending on the Micro QR version, up to three levels of error correction may be
 
 ### Example
 
-![Micro QR Code](/assets/barcodes/barcode_46.png)
+A Micro QR code of size `M3` (15 x 15) and ECC `M`:
+
+![QR Code with ECC Q](/assets/barcodes/two-dimensional/qr-micro-ecc.svg)
 
 ```ts
 createStream({
   symbology: SymbologyType.MICROQR,
-  symbolSize: 2
+  symbolSize: 3,
+  errorCorrectionLevel: 2
 }, '123')
 ```
 
@@ -221,12 +234,17 @@ Input values between `33` and `38` fix the height of the symbol while allowing t
 
 ### Example
 
-![Micro QR Code](/assets/barcodes/barcode_46.png)
+An rMQR code of size `R17 x 99` (17 x 99) and ECC `M`:
+
+![rMQR Code](/assets/barcodes/two-dimensional/rmqr.svg)
 
 ```ts
 createStream({
-  symbology: SymbologyType.MICROQR,
-  symbolSize: 31
+  symbology: SymbologyType.MICROQR, // [!code focus]
+  scale: 3,
+  errorCorrectionLevel: 2, // [!code focus]
+  symbolSize: 31, // [!code focus]
+  scale: 2
 }, '123')
 ```
 
@@ -240,7 +258,7 @@ The size, error correction level and ECI are automatically set and do not need t
 
 ### UPNQR Encoding
 
-UPNQR is unusual in that it uses [ISO-8859-2](https://en.wikipedia.org/wiki/ISO/IEC_8859-2)-encoded data. Any UTF-8 data will be automatically converted to ISO-8859-2 format.
+UPNQR uses [ISO-8859-2](https://en.wikipedia.org/wiki/ISO/IEC_8859-2)-encoded data. Any UTF-8 data will be automatically converted to ISO-8859-2 format.
 
 :::tip Note
 If your data is already formatted as ISO-8859-2, set `encoding` to `EncodingMode.DATA_MODE`.
@@ -248,14 +266,15 @@ If your data is already formatted as ISO-8859-2, set `encoding` to `EncodingMode
 
 ### Example
 
-![Micro QR Code](/assets/barcodes/barcode_46.png)
+![Micro QR Code](/assets/barcodes/two-dimensional/upnqr.svg)
 
 ```ts
 createStream({
   symbology: SymbologyType.UPNQR,
-  option1: 2,
-  borderWidth: 5,
-  scale: 3,
   encoding: EncodingMode.DATA_MODE
 }, 'to je testna črtna koda')
 ```
+
+## Full multibyte encoding
+
+<!--@include: ./partials/fullmultibyte.md-->

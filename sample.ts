@@ -3,16 +3,26 @@ import { DataMatrix, EncodingMode, OutputType, SymbologyType, createFile, create
 (async () => {
   try {
     await createFile({
-      symbology: SymbologyType.DATAMATRIX,
-      fileName: 'something.PNG', // must be one of 'SVG', 'EPS', or 'PNG' (uppercase!)
-      backgroundColor: 'ffffff',
-      foregroundColor: 'a8b1ff',
-      showHumanReadableText: false,
-      option2: 2,
-      scale: 3,
-  primary: '999999999840012'
-    }, 'Secondary Message Here')
+      symbology: SymbologyType.ONECODE,
+      scale: 2,
+      // encoding: EncodingMode.DATA_MODE,
+      fileName: 'test.SVG',
+      backgroundColor: 'ffffff00',
+      foregroundColor: '000000ff',
+      showHumanReadableText: false
+    }, '12345678901212345555')
+  //     option2: 2,
+  // primary: '999999999840012'
+  //   }, 'Secondary Message Here')
   } catch (e) {
     console.log('E: ', e)
   }
 })()
+
+// ```ts
+// createStream({
+//   symbology: SymbologyType.MAXICODE,
+//   mode: 2,
+//   primary: '152382802840001'
+// }, '1Z00004951\GUPSN\G06X610\G159\G1234567\G1/1\G\GY\G1 MAIN ST\GNY\GNY\R\E')
+// ```

@@ -1,8 +1,8 @@
-# DotCode
+# DotCode (ISO/IEC 15434)
 
-![DotCode](/assets/barcodes/dotcode.svg)
+![DotCode](/assets/barcodes/two-dimensional/dotcode.svg)
 
-DotCode uses a grid of dots in a rectangular formation to encode characters up to a maximum of ~450 characters (or 900 numeric digits).
+[DotCode](https://en.wikipedia.org/wiki/DotCode) uses a grid of dots in a rectangular formation to encode characters up to a maximum of ~450 characters (or 900 numeric digits).
 
 This symbology can be rendered using the `DOTCODE` type.
 
@@ -43,7 +43,7 @@ The optimal mask is automatically selected but one may be defined explicitly by 
 
 ### Basic encoding
 
-![Basic example](/assets/barcodes/dotcode.svg)
+![Basic example](/assets/barcodes/two-dimensional/dotcode.svg)
 
 ```ts
 createStream({
@@ -53,7 +53,7 @@ createStream({
 
 ### With masking (normal)
 
-![Example with masking, normal](/assets/barcodes/dotcode-mask-3.svg)
+![Example with masking, normal](/assets/barcodes/two-dimensional/dotcode-mask-3.svg)
 
 ```ts
 createStream({
@@ -64,7 +64,7 @@ createStream({
 
 ### With masking (corners lit)
 
-![Example with masking, corners lit](/assets/barcodes/dotcode-mask-7.svg)
+![Example with masking, corners lit](/assets/barcodes/two-dimensional/dotcode-mask-7.svg)
 
 ```ts
 createStream({
@@ -75,7 +75,7 @@ createStream({
 
 ### With GS1 Data
 
-![Example with GS1 data](/assets/barcodes/dotcode-gs1.svg)
+![Example with GS1 data](/assets/barcodes/two-dimensional/dotcode-gs1.svg)
 
 ```ts
 createStream({

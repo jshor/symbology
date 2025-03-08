@@ -21,17 +21,23 @@ export default defineConfig({
 
     sidebar: [
       {
+        text: 'One-Dimensional Barcodes',
+        items: [
+          { text: 'Code 11', link: '/reference/one-dimensional/code11' },
+        ]
+      },
+      {
         text: 'Two-Dimensional Barcodes',
         items: [
-          { text: 'Aztec Code', link: '/reference/aztec' },
-          { text: 'Code One', link: '/reference/codeone' },
-          { text: 'Data Matrix', link: '/reference/datamatrix' },
-          { text: 'DotCode', link: '/reference/dotcode' },
-          { text: 'Grid Matrix', link: '/reference/gridmatrix' },
-          { text: 'Han Xin Code', link: '/reference/hanxin' },
-          { text: 'MaxiCode', link: '/reference/maxicode' },
-          { text: 'QR Code', link: '/reference/qr' },
-          { text: 'Ultracode', link: '/reference/ultracode' }
+          { text: 'Aztec Code', link: '/reference/two-dimensional/aztec' },
+          { text: 'Code One', link: '/reference/two-dimensional/codeone' },
+          { text: 'Data Matrix', link: '/reference/two-dimensional/datamatrix' },
+          { text: 'DotCode', link: '/reference/two-dimensional/dotcode' },
+          { text: 'Grid Matrix', link: '/reference/two-dimensional/gridmatrix' },
+          { text: 'Han Xin Code', link: '/reference/two-dimensional/hanxin' },
+          { text: 'MaxiCode', link: '/reference/two-dimensional/maxicode' },
+          { text: 'QR Code', link: '/reference/two-dimensional/qr' },
+          { text: 'Ultracode', link: '/reference/two-dimensional/ultracode' }
         ]
       },
       {

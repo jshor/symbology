@@ -1,8 +1,12 @@
 # Ultracode
 
-![Ultracode](/assets/barcodes/ultracode.png)
+![Ultracode](/assets/barcodes/two-dimensional/ultracode.png)
 
 Ultracode uses a grid of coloured elements to encode data. It can be rendered using the `ULTRA` symbology type.
+
+:::warning Warning
+Ultracode is experimental only. Its use in production environments is discouraged.
+:::
 
 ## Error correction capacity
 
@@ -23,7 +27,7 @@ The amount of error correction can be set by setting `errorCorrectionLevel` to o
 
 ## Example
 
-![Ultracode](/assets/barcodes/ultracode.svg)
+![Ultracode](/assets/barcodes/two-dimensional/ultracode.png)
 
 ```ts
 createStream({

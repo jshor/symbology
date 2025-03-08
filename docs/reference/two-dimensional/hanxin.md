@@ -1,7 +1,9 @@
 
-# Han Xin Code
+# Han Xin Code (ISO/IEC 20830)
 
-![Han Xin Code](/assets/barcodes/hanxin.svg)
+![Han Xin Code](/assets/barcodes/two-dimensional/hanxin.svg)
+
+[Han Xin code](https://en.wikipedia.org/wiki/Han_Xin_code) (*Chinese-sensible code*, or 汉信码) is a two-dimensional matrix barcode that consists of black squares arranged in a square grid on a white background. It includes some [fiducial markers](https://en.wikipedia.org/wiki/Fiducial_marker) which can be read by an imaging device (e.g., a camera) and processed using [Reed–Solomon error correction](https://en.wikipedia.org/wiki/Reed%E2%80%93Solomon_error_correction) until the image can be appropriately interpreted.
 
 This symbology can be rendered using the `HANXIN` type.
 
@@ -17,6 +19,19 @@ To specify one, set `errorCorrectionLevel` to one of the following values:
 | 2                      | Approx 15%        |
 | 3                      | Approx 23%        |
 | 4                      | Approx 30%        |
+
+### Example
+
+The following will render a Han Xin symbol with ~23% error correction:
+
+![Han Xin Code (ECC Level 3)](/assets/barcodes/two-dimensional/hanxin-ecc-3.svg)
+
+```ts
+createStream({
+  symbology: SymbologyType.HANXIN,
+  errorCorrectionLevel: 3
+}, 'AAT2556 电池充电器+降压转换器 200mA至2A tel:86 019 82512738')
+```
 
 ## Symbol size
 
@@ -67,6 +82,19 @@ The size of the symbol can be specified by setting `symbolSize` to one of the fo
 | 41           | 103 x 103   | 83    | 187 x 187   |
 | 42           | 105 x 105   | 84    | 189 x 189   |
 
+## Example
+
+The following will render a 33 x 33 Han Xin symbol:
+
+![Han Xin Code (33 x 33)](/assets/barcodes/two-dimensional/hanxin-size-6.svg)
+
+```ts
+createStream({
+  symbology: SymbologyType.HANXIN,
+  symbolSize: 6
+}, 'AAT2556 电池充电器+降压转换器 200mA至2A tel:86 019 82512738')
+```
+
 :::warning Important
 It is not possible to select both symbol size and error correction capacity for the same symbol. If both options are selected then the error correction capacity selection will be ignored. 
 :::
@@ -80,23 +108,3 @@ This symbology is capable of encoding characters in the [GB-18030 character set]
 ### Masking
 
 There are four possible mask patterns to use. The optimal one is automatically selected but one may be defined explicitly by specifying `mask` to the desired value (any integer in the range `0` to `3`).
-
-## Examples
-
-The following will render a Han Xin symbol encoding `12345` with ~23% error correction:
-
-```ts
-createStream({
-  symbology: SymbologyType.HANXIN,
-  symbolSize: 6
-}, '1234567890121234')
-```
-
-The following will render a 33 x 33 Han Xin symbol encoding `12345`:
-
-```ts
-createStream({
-  symbology: SymbologyType.HANXIN,
-  errorCorrectionLevel: 3
-}, '1234567890121234')
-```

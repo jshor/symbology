@@ -193,8 +193,15 @@ type OptionsWithMode = {
     SymbologyType.HIBC_QR |
     SymbologyType.UPNQR |
     SymbologyType.MAXICODE
-  /** The {@link http://localhost:5173/reference/maxicode.html MaxiCode} mode to use. */
+  /** The {@link http://localhost:5173/reference/maxicode.html#modes-2-and-3 MaxiCode} mode to use. */
   mode?: number
+} | OptionsWithBasicSymbologyType
+
+type OptionsWithVersion = {
+  /** The type of symbology to use. */
+  symbology: SymbologyType.MAXICODE
+  /** The {@link http://localhost:5173/reference/maxicode.html#secondary-message-prefixing MaxiCode} version, for use with prefixing. */
+  version?: number
 } | OptionsWithBasicSymbologyType
 
 type AllOptions = VeryBasicOptions &
@@ -205,7 +212,8 @@ type AllOptions = VeryBasicOptions &
   OptionsWithFullMultibyte &
   OptionsWithEci &
   OptionsWithGS1 &
-  OptionsWithMode
+  OptionsWithMode &
+  OptionsWithVersion
 
 // const options: AllOptions = {
 //   symbology: SymbologyType.AZRUNE,
@@ -217,5 +225,6 @@ type AllOptions = VeryBasicOptions &
 
 const sample: AllOptions = {
   symbology: SymbologyType.MAXICODE,
+  version: 2,
   mode: 2
 }

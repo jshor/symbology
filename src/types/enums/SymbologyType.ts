@@ -182,7 +182,11 @@ enum SymbologyType {
   /** FIM */
   FIM = 49,
   /** Flattermarken */
-  FLAT = 28
+  FLAT = 28,
+  /** RMQR */
+  RMQR = 145,
+  /** BC412 */
+  BC412 = 146
 }
 
 export default SymbologyType

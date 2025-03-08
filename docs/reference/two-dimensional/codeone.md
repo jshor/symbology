@@ -1,5 +1,7 @@
 # Code One
 
+![Code One](/assets/barcodes/two-dimensional/codeone.svg)
+
 Code One was the first two-dimensional matrix symbology in the public domain and encodes data in a way similar to [Data Matrix ECC 200](#data-matrix-ecc200-iso-16022). It is used only with some Intermec printers.
 
 This symbology can rendered by using the `CODEONE` symbology type.
@@ -23,8 +25,8 @@ The type can be specified by setting `symbolSize` to one of the following input 
 | 6            | `F`     | 70 x 76    | 886                   | 553                        |
 | 7            | `G`     | 104 x 98   | 1755                  | 1096                       |
 | 8            | `H`     | 148 x 134  | 3550                  | 2218                       |
-| 9            | `S`     | 8X height  | 18                    | **N/A**                    |
-| 10           | `T`     | 16X height | 90                    | 55                         |
+| 9            | `S`     | *w* x 8    | 18                    | **N/A**                    |
+| 10           | `T`     | *w* x 16   | 90                    | 55                         |
 
 ## Encoding
 
@@ -37,6 +39,8 @@ Aztec Code supports [ECI encoding](/docs/advanced.md#eci-encoding) and can suppo
 ## Example
 
 The following will render a 22 x 22 Code One symbol encoding `An Example`:
+
+![Code One](/assets/barcodes/two-dimensional/codeone.svg)
 
 ```ts
 createStream({

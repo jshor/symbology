@@ -1,16 +1,16 @@
-# Aztec Code
+# Aztec Code (ISO 24778)
 
-![Aztec](/assets/barcodes/aztec.svg)
+![Aztec](/assets/barcodes/two-dimensional/aztec.svg)
 
-Aztec Code is a two-dimensional symbol that features a bulls-eye center and bears visual resemblance to the top-down view of an Aztec pyramid.
+[Aztec Code](https://en.wikipedia.org/wiki/Aztec_Code) is a two-dimensional symbol that features a bullseye center. It bears visual resemblance to the top-down view of an Aztec pyramid.
 
 It has the potential to use less space than other matrix barcodes because it does not require a surrounding blank "quiet zone."
 
-## Aztec Code (ISO 24778)
+## Compact Aztec
 
-Depending on the length of the input data, a **Compact Aztec Code** (sometimes called Small Aztec Code) or a "full-range" Aztec Code may be rendered.
+A **Compact Aztec** symbol (also known as *Small Aztec*) or a standard Aztec symbol would be generated depending on the length of the input data.
 
-The standard Aztec symbology can rendered by using the `AZTEC` symbology type.
+The standard Aztec symbol can rendered by using the `AZTEC` symbology type.
 
 ## Encoding
 
@@ -41,11 +41,11 @@ To specify the desired size of the symbol, set `symbolSize` to one of the follow
 | 17           | 71 x 71     | 35           | 147 x 147   |
 | 18           | 75 x 75     | 36           | 151 x 151   |
 
-[^1]: This symbol is "compact," meaning it has a smaller bulls-eye pattern at the center of the symbol.
+[^1]: This symbol is "compact," meaning it has a smaller bullseye pattern at the center of the symbol.
 
 ### Example
 
-![Aztec](/assets/barcodes/aztec.svg)
+![Aztec](/assets/barcodes/two-dimensional/aztec.svg)
 
 ```ts
 createStream({
@@ -90,7 +90,7 @@ The amount of error correction data can be specified by setting `errorCorrection
 
 ### Example
 
-![HIBC Aztec](/assets/barcodes/azhibc.svg)
+![HIBC Aztec](/assets/barcodes/two-dimensional/azhibc.svg)
 
 ```ts
 createStream({
@@ -100,7 +100,7 @@ createStream({
 
 ## Aztec Rune
 
-Defined in [ISO/IEC 24778 (Annex A)](https://www.iso.org/standard/41548.html), this is a truncated version of compact [Aztec Code](l#aztec-code-iso-24778) for encoding whole integers between `0` and `255`.
+Defined in [ISO/IEC 24778 (Annex A)](https://www.iso.org/standard/82441.html), this is a truncated version of compact [Aztec Code](l#aztec-code-iso-24778) for encoding whole integers between `0` and `255`.
 
 It includes [Reed-Solomon error correction](https://en.wikipedia.org/wiki/Reed%E2%80%93Solomon_error_correction).
 
@@ -108,7 +108,7 @@ It can be rendered by using the `AZRUNE` type.
 
 ### Example
 
-![Aztec Rune](/assets/barcodes/azrunes.svg)
+![Aztec Rune](/assets/barcodes/two-dimensional/azrunes.svg)
 
 ```ts
 createStream({

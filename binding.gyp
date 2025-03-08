@@ -4,7 +4,7 @@
   "targets": [
     {
       "target_name": "<(module_name)",
-      "defines": ["NO_PNG"],
+      "defines": ["NO_PNG", "ZINT_NO_PNG"],
       "cflags": ["-Wno-sign-compare"],
       "xcode_settings": {
         "OTHER_CFLAGS": ["-Wno-sign-compare"]
@@ -83,7 +83,7 @@
       "msvs_settings": {
         "VCCLCompilerTool": {
           "AdditionalOptions": [
-            "/w"
+            "/W3"
           ]
         }
       }

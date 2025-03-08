@@ -8,6 +8,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <nan.h>
+#include <vector>
 #include "../../.zint/backend/zint.h"
 
 namespace symbology {
@@ -40,14 +41,19 @@ namespace symbology {
    * Returns the encoded vector data as a string.
    */
   Local<String> getEncodedVector (zint_symbol *symbol) {
-    char memfile[symbol->memfile_size + 1];
-    int i;
+    char* memfile = (char*)malloc(symbol->memfile_size + 1); // allocate an extra byte for a null terminator
 
-    for (i = 0; i < sizeof(memfile); i++) {
-      memfile[i] = symbol->memfile[i];
+    if (!memfile) {
+      return Nan::New<String>("").ToLocalChecked(); // allocation failure
     }
 
-    return Nan::New<String>(memfile).ToLocalChecked();
+    memcpy(memfile, symbol->memfile, symbol->memfile_size);
+    memfile[symbol->memfile_size] = '\0'; // null-terminate the string
+
+    Local<String> result = Nan::New<String>(memfile).ToLocalChecked();
+    free(memfile);
+
+    return result;
   }
 
   /**
