@@ -18,17 +18,15 @@ createStream({
 
 ## Encoding
 
-* QR Code symbols can by default encode either characters in the Latin-1 set, or members of the Shift JIS encoding scheme (Kanji, Katakana, or related ASCII characters).
-* Other character sets are supported via the [ECI encoding mechanism](/docs/advanced.md#eci-encoding).
-* Input should usually be entered as UTF-8. Conversion to Latin-1 or Shift JIS would be carried out automatically.
+<!--@include: ./partials/encoding.md-->
+
+Members of the Shift JIS encoding scheme, including Kanji and Katakana, may also be encoded in addition to the Latin-1 set.
+
+Input should usually be entered as UTF-8. Conversion to Latin-1 or Shift JIS would be carried out automatically.
 
 ### Full multibyte encoding
 
 <!--@include: ./partials/fullmultibyte.md-->
-
-### GS1 data encoding
-
-<!--@include: ./partials/gs1.md-->
 
 ## Masking
 
@@ -121,7 +119,7 @@ createStream({
 
 ![HIBC QR Code](/assets/barcodes/two-dimensional/qr-hibc.svg)
 
-[Health Industry Barcode (HIBC)](one-dimensional.md#hibc-code-39) data, which prepends a plus sign character (`+`) and a modulo-49 check digit to the encoded data, can be rendered by using the `HIBC_QR` symbology type.
+Health Industry Barcode (HIBC) data, which prepends a plus sign character (`+`) and a modulo-49 check digit to the encoded data, can be rendered by using the `HIBC_QR` symbology type.
 
 :::tip Note
 The same [encoding](#encoding), [masking](#masking), and [size](#qr-code-size) features that apply to regular QR codes also apply to `HIBC_QR`.
@@ -261,7 +259,7 @@ The size, error correction level and ECI are automatically set and do not need t
 UPNQR uses [ISO-8859-2](https://en.wikipedia.org/wiki/ISO/IEC_8859-2)-encoded data. Any UTF-8 data will be automatically converted to ISO-8859-2 format.
 
 :::tip Note
-If your data is already formatted as ISO-8859-2, set `encoding` to `EncodingMode.DATA_MODE`.
+If your data is already formatted as ISO-8859-2, set `encodingMode` to `EncodingMode.DATA`.
 :::
 
 ### Example
@@ -271,7 +269,7 @@ If your data is already formatted as ISO-8859-2, set `encoding` to `EncodingMode
 ```ts
 createStream({
   symbology: SymbologyType.UPNQR,
-  encoding: EncodingMode.DATA_MODE
+  encodingMode: EncodingMode.DATA
 }, 'to je testna črtna koda')
 ```
 

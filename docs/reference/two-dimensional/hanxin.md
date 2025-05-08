@@ -105,6 +105,10 @@ This symbology is capable of encoding characters in the [GB-18030 character set]
 
 <!--@include: ./partials/fullmultibyte.md-->
 
+:::tip Note
+GS1 data is not supported.
+:::
+
 ### Masking
 
 There are four possible mask patterns to use. The optimal one is automatically selected but one may be defined explicitly by specifying `mask` to the desired value (any integer in the range `0` to `3`).

@@ -3,14 +3,12 @@ import { DataMatrix, EncodingMode, OutputType, SymbologyType, createFile, create
 (async () => {
   try {
     await createFile({
-      symbology: SymbologyType.ONECODE,
-      scale: 2,
-      // encoding: EncodingMode.DATA_MODE,
+      symbology: SymbologyType.CHANNEL,
       fileName: 'test.SVG',
+      option2: 8,
       backgroundColor: 'ffffff00',
-      foregroundColor: '000000ff',
-      showHumanReadableText: false
-    }, '12345678901212345555')
+      foregroundColor: '000000ff'
+    }, '1234567')
   //     option2: 2,
   // primary: '999999999840012'
   //   }, 'Secondary Message Here')

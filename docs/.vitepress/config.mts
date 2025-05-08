@@ -23,7 +23,18 @@ export default defineConfig({
       {
         text: 'One-Dimensional Barcodes',
         items: [
+          { text: 'Channel Code', link: '/reference/one-dimensional/channelcode' },
+          { text: 'Codabar', link: '/reference/one-dimensional/codabar' },
           { text: 'Code 11', link: '/reference/one-dimensional/code11' },
+          { text: 'Code 128', link: '/reference/one-dimensional/code128' },
+          { text: 'Code 39', link: '/reference/one-dimensional/code39' },
+          { text: 'GS1 DataBar', link: '/reference/one-dimensional/gs1databar' },
+          { text: 'International Article Number (EAN)', link: '/reference/one-dimensional/ean' },
+          { text: 'Pharmacode', link: '/reference/one-dimensional/pharmacode' },
+          { text: 'Plessey Code', link: '/reference/one-dimensional/plessey' },
+          { text: 'Telepen', link: '/reference/one-dimensional/telepen' },
+          { text: 'Two-out-of-five Code', link: '/reference/one-dimensional/code2of5' },
+          { text: 'Universal Product Code (UPC)', link: '/reference/one-dimensional/upc' },
         ]
       },
       {
@@ -38,6 +49,12 @@ export default defineConfig({
           { text: 'MaxiCode', link: '/reference/two-dimensional/maxicode' },
           { text: 'QR Code', link: '/reference/two-dimensional/qr' },
           { text: 'Ultracode', link: '/reference/two-dimensional/ultracode' }
+        ]
+      },
+      {
+        text: 'Postal Barcodes',
+        items: [
+          { text: 'Korea Post', link: '/reference/postal/korea' }
         ]
       },
       {

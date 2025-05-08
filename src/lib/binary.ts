@@ -18,6 +18,7 @@ function createBuffer (config: SymbologyConfig, barcodeData: string): BinResult 
     config.symbology,
     config.height,
     config.whitespaceWidth,
+    (config.whitespaceHeight || 0),
     config.borderWidth,
     config.outputOptions,
     config.backgroundColor,
@@ -35,7 +36,9 @@ function createBuffer (config: SymbologyConfig, barcodeData: string): BinResult 
     config.eci,
     config.primary,
     config.rotation,
-    config.dotSize
+    config.dotSize,
+    config.gapSize,
+    config.guardDescentHeight
   )
 }
 
@@ -69,6 +72,10 @@ function invoke (config: SymbologyConfig, barcodeData: string, outputType: Outpu
   }
 
   const res = binary.createBuffer(symbol, barcodeData)
+
+  if ([OutputType.SVG, OutputType.EPS].includes(outputType) && res.encodedData) {
+    res.encodedData = res.encodedData.replace(/\{\{ title \}\}/g, symbol.title || '')
+  }
 
   console.log('RES: ', res)
 

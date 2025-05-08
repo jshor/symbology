@@ -51,13 +51,34 @@ createStream({
 }, '1234567890')
 ```
 
-## GS1 data
+## Square Data Matrix
 
-<!--@include: ./partials/gs1.md-->
+When no symbol size is requested, the size will be automatically calculated. This behavior can be overridden to fit a square by setting the `square` property to `true`.
+
+### Example
+
+![Data Matrix ECC 200](/assets/barcodes/two-dimensional/dmre.svg)
+
+```ts
+createStream({
+  symbology: SymbologyType.DATAMATRIX,
+  square: true // [!code focus]
+}, '1234567890121234')
+```
+
+## Encoding
+
+<!--@include: ./partials/encoding.md-->
+
+GS1 data would be encoded using `FNC1` as the separator by default, but `GS` may be used instead by setting `gs1Separator` to `true`.
+
+## Fast Encoding
+
+For fast (and possibly less optimal) encoding, set `fast` to `true`.
 
 ## Health Industry Barcode (HIBC) Data
 
-[Health Industry Barcode (HIBC)](one-dimensional.md#hibc-code-39) data, which prepends a plus sign character (`+`) and a modulo-49 check digit to the encoded data, can be rendered by using the `HIBC_DM` symbology type.
+Health Industry Barcode (HIBC) data, which prepends a plus sign character (`+`) and a modulo-49 check digit to the encoded data, can be rendered by using the `HIBC_DM` symbology type.
 
 ### Example
 
@@ -94,23 +115,5 @@ createStream({
   symbology: SymbologyType.DATAMATRIX,
   dmre: true, // [!code focus]
   symbolSize: 37 // [!code focus]
-}, '1234567890121234')
-```
-
-## Square DMRE
-
-When activating DMRE by setting `dmre` to `true`, the resolution of the data matrix will be automatically determined based on its input.
-
-This behavior can be overridden to fit a square by setting the `square` property to `true`.
-
-### Example
-
-![Data Matrix ECC 200](/assets/barcodes/two-dimensional/dmre.svg)
-
-```ts
-createStream({
-  symbology: SymbologyType.DATAMATRIX,
-  dmre: true, // [!code focus]
-  square: true // [!code focus]
 }, '1234567890121234')
 ```

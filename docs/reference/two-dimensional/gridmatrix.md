@@ -77,3 +77,7 @@ Input should be entered as a Unicode UTF-8 stream with conversion to GB 2312 bei
 This symbology also supports [ECI encoding](/docs/advanced.md#eci-encoding).
 
 <!--@include: ./partials/fullmultibyte.md-->
+
+:::tip Note
+GS1 data is not supported.
+:::

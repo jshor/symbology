@@ -111,43 +111,36 @@ namespace symbology {
     symbol->symbology = (int)args[1]->NumberValue(context).FromJust();
     symbol->height = (int)args[2]->NumberValue(context).FromJust();
     symbol->whitespace_width = (int)args[3]->NumberValue(context).FromJust();
-    symbol->border_width = (int)args[4]->NumberValue(context).FromJust();
+    symbol->whitespace_height = (int)args[4]->NumberValue(context).FromJust();
+    symbol->border_width = (int)args[5]->NumberValue(context).FromJust();
 
     // options (-1 indicates not set)
     int option_1, option_2, option_3, output_options;
-    float scale, dot_size;
+    float scale, dot_size, text_gap, guard_descent;
 
-    scale = (float)args[9]->NumberValue(context).FromJust();
-    dot_size = (float)args[19]->NumberValue(context).FromJust();
-    option_1 = (int)args[10]->NumberValue(context).FromJust();
-    option_2 = (int)args[11]->NumberValue(context).FromJust();
-    option_3 = (int)args[12]->NumberValue(context).FromJust();
-    output_options = (int)args[5]->NumberValue(context).FromJust();
+    output_options = (int)args[6]->NumberValue(context).FromJust();
+    option_1 = (int)args[11]->NumberValue(context).FromJust();
+    option_2 = (int)args[12]->NumberValue(context).FromJust();
+    option_3 = (int)args[13]->NumberValue(context).FromJust();
+    dot_size = (float)args[20]->NumberValue(context).FromJust();
+    text_gap = (float)args[21]->NumberValue(context).FromJust();
+    guard_descent = (float)args[22]->NumberValue(context).FromJust();
+    scale = (float)args[10]->NumberValue(context).FromJust();
 
-    if(option_1 > -1) {
-      symbol->option_1 = option_1;
-    }
-    if(option_2 > -1) {
-      symbol->option_2 = option_2;
-    }
-    if(option_3 > -1) {
-      symbol->option_3 = option_3;
-    }
-    if(output_options > -1) {
-      symbol->output_options = output_options;
-    }
-    if(scale > 0) {
-      symbol->scale = scale;
-    }
-    if(dot_size > -1) {
-      symbol->dot_size = dot_size;
-    }
+    if(output_options > -1) symbol->output_options = output_options;
+    if(option_1 > -1) symbol->option_1 = option_1;
+    if(option_2 > -1) symbol->option_2 = option_2;
+    if(option_3 > -1) symbol->option_3 = option_3;
+    if(dot_size > -1) symbol->dot_size = dot_size;
+    if(text_gap > -1) symbol->text_gap = text_gap;
+    if(guard_descent > 0) symbol->guard_descent = guard_descent;
+    if(scale > 0) symbol->scale = scale;
 
-    Nan::Utf8String bgcolor(args[6]);
-    Nan::Utf8String fgcolor(args[7]);
-    Nan::Utf8String outfile(args[8]);
-    Nan::Utf8String text(args[14]);
-    Nan::Utf8String primary(args[17]);
+    Nan::Utf8String bgcolor(args[7]);
+    Nan::Utf8String fgcolor(args[8]);
+    Nan::Utf8String outfile(args[9]);
+    Nan::Utf8String text(args[15]);
+    Nan::Utf8String primary(args[18]);
 
     // colors
     strncpy((char*)&symbol->bgcolour[0], *bgcolor, sizeof(symbol->bgcolour) - 1);
@@ -163,13 +156,13 @@ namespace symbology {
     strncpy((char*)&symbol->text[0], *text, sizeof(symbol->text) - 1);
 
     // show/hide human-readable text
-    symbol->show_hrt = (int)args[13]->NumberValue(context).FromJust();
+    symbol->show_hrt = (int)args[14]->NumberValue(context).FromJust();
 
     // encoding mode
-    symbol->input_mode = (int)args[15]->NumberValue(context).FromJust();
+    symbol->input_mode = (int)args[16]->NumberValue(context).FromJust();
 
     // eci mode
-    symbol->eci = (int)args[16]->NumberValue(context).FromJust();
+    symbol->eci = (int)args[17]->NumberValue(context).FromJust();
 
     // text to display
     strncpy((char*)&symbol->text[0], *text, sizeof(symbol->text) - 1);

@@ -4,10 +4,6 @@
 
 Ultracode uses a grid of coloured elements to encode data. It can be rendered using the `ULTRA` symbology type.
 
-:::warning Warning
-Ultracode is experimental only. Its use in production environments is discouraged.
-:::
-
 ## Error correction capacity
 
 The amount of error correction can be set by setting `errorCorrectionLevel` to one of the following values:
@@ -23,7 +19,7 @@ The amount of error correction can be set by setting `errorCorrectionLevel` to o
 
 ## Encoding
 
-<!--@include: ./partials/gs1.md-->
+<!--@include: ./partials/encoding.md-->
 
 ## Example
 

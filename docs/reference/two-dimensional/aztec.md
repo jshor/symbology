@@ -86,7 +86,7 @@ The amount of error correction data can be specified by setting `errorCorrection
 
 ## Health Industry Barcode (HIBC) Data
 
-[Health Industry Barcode (HIBC)](one-dimensional.md#hibc-code-39) data, which prepends a plus sign character (`+`) and a modulo-49 check digit to the encoded data, can be rendered by using the `HIBC_AZTEC` symbology type.
+Health Industry Barcode (HIBC) data, which prepends a plus sign character (`+`) and a modulo-49 check digit to the encoded data, can be rendered by using the `HIBC_AZTEC` symbology type.
 
 ### Example
 

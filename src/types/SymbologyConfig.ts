@@ -12,6 +12,8 @@ type SymbologyConfig = {
   height?: number
   /** The width (in pixels) of the whitespace. */
   whitespaceWidth?: number
+  /** The height (in pixels) of the whitespace. */
+  whitespaceHeight?: number
   /** The width (in pixels) of the surrounding border. */
   borderWidth?: number
   /** Output options. Add multiple options using (+). */
@@ -44,6 +46,12 @@ type SymbologyConfig = {
   rotation?: number
   /** Dot size (for dotty mode). */
   dotSize?: number
+  /** Gap between barcode and text (HRT) in X-dimensions. Default: `1`. */
+  gapSize?: number
+  /** Height in X-dimensions that EAN/UPC guard bars descend. Default `5`. */
+  guardDescentHeight?: number
+  /** Title of the rendered symbol. */
+  title?: string
 }
 
 export default SymbologyConfig

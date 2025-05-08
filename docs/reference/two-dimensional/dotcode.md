@@ -8,17 +8,13 @@ This symbology can be rendered using the `DOTCODE` type.
 
 ## Encoding
 
-DotCode supports [ECI encoding](/docs/advanced.md#eci-encoding).
-
-### GS1 Data
-
-<!--@include: ./partials/gs1.md-->
+<!--@include: ./partials/encoding.md-->
 
 ## Size
 
 The default output is a symbol that is approximately square.
 
-To adjust the width of the symbol, set `width` to any positive integer in the range `1` to `200`.
+To adjust the width of the symbol, set `symbolSize` to width of any integer in the range `1` to `200`.
 
 :::warning Important
 Outputting DotCode to PNG will require setting the scale of the image to a larger value than its default (~10) for the dots to render readably.

@@ -32,9 +32,7 @@ The type can be specified by setting `symbolSize` to one of the following input 
 
 Aztec Code supports [ECI encoding](/docs/advanced.md#eci-encoding) and can supports all 256 ASCII characters, one pad/message separator character, and 8-bit binary data.
 
-### GS1 Data
-
-<!--@include: ./partials/gs1.md-->
+<!--@include: ./partials/encoding.md-->
 
 ## Example
 
