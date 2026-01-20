@@ -51,13 +51,13 @@
     "node": ">=14.0.0 <25.0.0"
   },
   "dependencies": {
-    "@mapbox/node-pre-gyp": "^1.0.11",
+    "@mapbox/node-pre-gyp": "^2.0.3",
     "nan": "^2.22.0",
     "node-fetch": "2",
     "pngjs": "^6.0.0",
     "replace-in-file": "^6.3.5",
     "rimraf": "^3.0.2",
-    "tar": "^6.1.12"
+    "tar": "^7.5.11"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",
