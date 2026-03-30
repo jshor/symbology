@@ -12,7 +12,7 @@ env:
   GIT_EMAIL: 'github-actions[bot]@users.noreply.github.com'
   CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
   DEFAULT_OS: ubuntu-latest
-  DEFAULT_NODE_VERSION: 22
+  DEFAULT_NODE_VERSION: 24
 
 jobs:
   build:
@@ -22,7 +22,7 @@ jobs:
       matrix:
         # note: macos-13 supports x86, whereas macos-latest supports arm64
         os: [windows-latest, macos-latest, macos-13, ubuntu-latest]
-        node-version: [18, 20, 22]
+        node-version: [20, 22, 24]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
